@@ -135,7 +135,7 @@ export const PHASES: Phase[] = [
   },
   {
     id: 'd1',
-    act: 'DECISÃO 1/4',
+    act: 'DECISÃO 1/5',
     title: 'Pedido: 14h30 – 15h30',
     prompt:
       'Já existe aula aprovada das 14h às 15h. Chegou um pedido das 14h30 às 15h30. Aceitar ou recusar?',
@@ -165,7 +165,7 @@ export const PHASES: Phase[] = [
   },
   {
     id: 'd2',
-    act: 'DECISÃO 2/4',
+    act: 'DECISÃO 2/5',
     title: 'Pedido: 15h – 16h  (fronteira)',
     prompt:
       'A aula existente termina às 15h. Chegou um pedido começando exatamente às 15h. Aceitar ou recusar?',
@@ -196,7 +196,7 @@ export const PHASES: Phase[] = [
   },
   {
     id: 'd3',
-    act: 'DECISÃO 3/4',
+    act: 'DECISÃO 3/5',
     title: 'Pedido: 16h – 15h',
     prompt: 'Chegou um pedido das 16h às 15h. Aceitar ou recusar?',
     kind: 'single',
@@ -213,10 +213,42 @@ export const PHASES: Phase[] = [
   },
   {
     id: 'd4',
-    act: 'DECISÃO 4/4',
-    title: 'Pedido: 15h – 15h30  (duas vizinhas)',
+    act: 'DECISÃO 4/5',
+    title: 'Pedido: 15h – 15h30  (encaixe entre duas)',
     prompt:
-      'Agora existem DUAS aulas aprovadas: 14h–15h e 15h–16h, na mesma sala. Chegou um pedido das 15h às 15h30. Aceitar ou recusar?',
+      'Existem DUAS aulas aprovadas: 14h–15h e 15h30–16h30, na mesma sala. Chegou um pedido das 15h às 15h30. Aceitar ou recusar?',
+    kind: 'single',
+    options: [
+      { id: 'aceitar', label: 'Aceitar' },
+      { id: 'recusar', label: 'Recusar' },
+    ],
+    correctIds: ['aceitar'],
+    timeline: {
+      day: 'hoje',
+      window: [13, 17],
+      lanes: [
+        {
+          name: 'Laboratório',
+          blocks: [
+            { start: 14, end: 15, label: '14–15', kind: 'existing' },
+            { start: 15.5, end: 16.5, label: '15h30–16h30', kind: 'existing' },
+            { start: 15, end: 15.5, label: 'pedido', kind: 'request' },
+          ],
+        },
+      ],
+    },
+    explain:
+      'O pedido encosta no FIM da primeira (15h) e no INÍCIO da segunda (15h30). Encostar é permitido — não há sobreposição. Compare com todas e aceite: é um encaixe perfeito.',
+    robotThinking: 'Verificando as duas pontas…',
+    robotCorrect: 'Aceitei: encostou nas duas e ainda sobrou espaço.',
+    robotWrong: 'Recusei um encaixe perfeito!',
+  },
+  {
+    id: 'd5',
+    act: 'DECISÃO 5/5',
+    title: 'Pedido: 15h15 – 15h45  (invade a segunda)',
+    prompt:
+      'Mesma situação: aprovadas 14h–15h e 15h30–16h30, na mesma sala. Agora o pedido é das 15h15 às 15h45. Aceitar ou recusar?',
     kind: 'single',
     options: [
       { id: 'aceitar', label: 'Aceitar' },
@@ -231,17 +263,17 @@ export const PHASES: Phase[] = [
           name: 'Laboratório',
           blocks: [
             { start: 14, end: 15, label: '14–15', kind: 'existing' },
-            { start: 15, end: 16, label: '15–16', kind: 'existing' },
-            { start: 15, end: 15.5, label: 'pedido', kind: 'request' },
+            { start: 15.5, end: 16.5, label: '15h30–16h30', kind: 'existing' },
+            { start: 15.25, end: 15.75, label: 'pedido', kind: 'request' },
           ],
         },
       ],
     },
     explain:
-      'Encostar em 14–15 até valeria, mas o pedido invade a reserva 15–16. Basta UM conflito para recusar — e compare com TODAS as reservas do dia, não só a primeira.',
-    robotThinking: 'Comparando com todas as reservas…',
-    robotCorrect: 'Recusei: apesar de encostar na primeira, invadi a segunda.',
-    robotWrong: 'Deixei passar um conflito com a segunda reserva!',
+      'O pedido NÃO toca a primeira reserva (começa depois das 15h), mas invade a segunda (15h30–16h30). Basta UM conflito — e ele pode estar em qualquer reserva, não só na primeira.',
+    robotThinking: 'Comparando com a segunda reserva…',
+    robotCorrect: 'Recusei: conflitei com a segunda reserva, não com a primeira.',
+    robotWrong: 'Escapou! Eu só comparei com a primeira reserva.',
   },
   {
     id: 'boss',
