@@ -176,7 +176,7 @@ function PlayerInner() {
         <div className="chars">
           {CHARACTERS.map((c) => (
             <button key={c.id} className="char" onClick={() => pickCharacter(c.id)}>
-              <CharAvatar c={c} size={44} />
+              <CharAvatar c={c} size={72} />
               <span className="char-text">
                 <b>{c.name}</b>
                 <small className="muted">({c.movie})</small>
