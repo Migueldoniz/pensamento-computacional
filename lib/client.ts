@@ -9,6 +9,7 @@ export interface RoomSnapshot {
   revealed: boolean
   votes: Record<string, Record<string, string>>
   scores: Record<string, PlayerScore>
+  characters: Record<string, string> // charId -> playerId
   deadline: number | null
   serverNow: number
 }
@@ -66,5 +67,29 @@ export async function postScore(
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ code, playerId, name, score, combo }),
+  })
+}
+
+export async function claimCharacter(
+  code: string,
+  playerId: string,
+  charId: string,
+): Promise<{ ok: boolean; reason?: string }> {
+  const r = await fetch('/api/character/claim', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ code, playerId, charId }),
+  })
+  return r.json()
+}
+
+export async function releaseCharacter(
+  code: string,
+  playerId: string,
+): Promise<void> {
+  await fetch('/api/character/release', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ code, playerId }),
   })
 }

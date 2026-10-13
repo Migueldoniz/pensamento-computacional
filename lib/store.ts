@@ -12,6 +12,7 @@ export interface RoomState {
   revealed: boolean
   votes: Record<string, Record<string, string>> // phaseId -> playerId -> choice
   scores: Record<string, PlayerScore> // playerId -> score
+  characters: Record<string, string> // charId -> playerId (quem pegou)
   deadline: number | null // epoch ms do fim do cronômetro da rodada
   token: string
   updatedAt: number
@@ -126,6 +127,7 @@ export async function createRoom(code: string, token: string): Promise<RoomState
     revealed: false,
     votes: {},
     scores: {},
+    characters: {},
     deadline: null,
     token,
     updatedAt: Date.now(),
@@ -163,6 +165,43 @@ export async function setScore(
   if (!room) return false
   room.scores = room.scores || {}
   room.scores[playerId] = { name, score, combo }
+  room.updatedAt = Date.now()
+  await kvSet(keyOf(code), room)
+  return true
+}
+
+export async function claimCharacter(
+  code: string,
+  playerId: string,
+  charId: string,
+): Promise<{ ok: boolean; reason?: string }> {
+  const room = await getRoom(code)
+  if (!room) return { ok: false, reason: 'sala não existe' }
+  room.characters = room.characters || {}
+  const takenBy = room.characters[charId]
+  if (takenBy && takenBy !== playerId) {
+    return { ok: false, reason: 'já escolhido' }
+  }
+  // libera o anterior desse jogador, se houver
+  for (const [cid, pid] of Object.entries(room.characters)) {
+    if (pid === playerId) delete room.characters[cid]
+  }
+  room.characters[charId] = playerId
+  room.updatedAt = Date.now()
+  await kvSet(keyOf(code), room)
+  return { ok: true }
+}
+
+export async function releaseCharacter(
+  code: string,
+  playerId: string,
+): Promise<boolean> {
+  const room = await getRoom(code)
+  if (!room) return false
+  room.characters = room.characters || {}
+  for (const [cid, pid] of Object.entries(room.characters)) {
+    if (pid === playerId) delete room.characters[cid]
+  }
   room.updatedAt = Date.now()
   await kvSet(keyOf(code), room)
   return true

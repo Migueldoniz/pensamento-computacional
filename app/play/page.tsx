@@ -3,7 +3,7 @@
 import { Suspense, useEffect, useRef, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { PHASES, encodeChoice, isCorrect } from '@/lib/game'
-import { getSnapshot, sendVote, postScore, PlayerScore } from '@/lib/client'
+import { getSnapshot, sendVote, postScore, claimCharacter, releaseCharacter, PlayerScore } from '@/lib/client'
 import { Timeline } from '@/components/Timeline'
 import { CHARACTERS, characterById } from '@/lib/characters'
 import { CharAvatar } from '@/components/CharAvatar'
@@ -41,6 +41,7 @@ function PlayerInner() {
   const [deadline, setDeadline] = useState<number | null>(null)
   const [offset, setOffset] = useState(0)
   const [scores, setScores] = useState<Record<string, PlayerScore>>({})
+  const [takenChars, setTakenChars] = useState<Record<string, string>>({})
 
   const [sent, setSent] = useState<string | null>(null)
   const [multi, setMulti] = useState<string[]>([])
@@ -89,6 +90,7 @@ function PlayerInner() {
       setRevealed(s.revealed)
       setDeadline(s.deadline ?? null)
       setScores(s.scores || {})
+      setTakenChars(s.characters || {})
       setOffset(s.serverNow - Date.now())
     }
     tick()
@@ -105,7 +107,6 @@ function PlayerInner() {
   const countdown = useCountdown(deadline, offset)
   const locked = revealed || (countdown !== null && countdown <= 0)
 
-  // Pontuação + ranking.
   useEffect(() => {
     if (!revealed || phase.kind === 'info') return
     if (scored.current.has(phase.id)) return
@@ -122,7 +123,6 @@ function PlayerInner() {
     if (room && playerId) postScore(room, playerId, name, next.score, next.combo)
   }, [revealed, phase.id, phase.kind, sent, score.score, score.combo, room, playerId, name])
 
-  // Som dos últimos segundos.
   useEffect(() => {
     if (countdown == null) {
       prevSec.current = null
@@ -139,7 +139,12 @@ function PlayerInner() {
     .sort((a, b) => b.score - a.score)
     .findIndex((r) => r.id === playerId)
 
-  function pickCharacter(id: string) {
+  async function pickCharacter(id: string) {
+    if (!room || !playerId) return
+    const res = await claimCharacter(room, playerId, id)
+    if (!res.ok) {
+      return
+    }
     localStorage.setItem('oa_name', id)
     setCharId(id)
     setReady(true)
@@ -166,15 +171,19 @@ function PlayerInner() {
   }
 
   if (!ready) {
+    const available = CHARACTERS.filter((c) => {
+      const takenBy = takenChars[c.id]
+      return !takenBy || takenBy === playerId
+    })
     return (
       <div className="wrap col" style={{ maxWidth: 820, margin: '0 auto' }}>
         <div>
           <div className="act">Operação Agenda · sala {room}</div>
           <h1 style={{ marginBottom: 4 }}>Escolha seu personagem</h1>
-          <p className="muted">Ele será o seu nickname no jogo.</p>
+          <p className="muted">Ele será o seu nickname no jogo. Personagens já escolhidos somem da lista.</p>
         </div>
         <div className="chars">
-          {CHARACTERS.map((c) => (
+          {available.map((c) => (
             <button key={c.id} className="char" onClick={() => pickCharacter(c.id)}>
               <CharAvatar c={c} size={72} />
               <span className="char-text">
@@ -206,9 +215,12 @@ function PlayerInner() {
           >
             {muted ? '🔇' : '🔊'}
           </button>
-          <button className="ghost" onClick={() => setReady(false)}>
-            {char?.emoji} trocar
-          </button>
+          <button className="ghost" onClick={async () => {
+              if (room && playerId && charId) await releaseCharacter(room, playerId)
+              setReady(false)
+            }}>
+              {char?.emoji} trocar
+            </button>
           <span className="pill">sala {room}</span>
         </span>
       </div>
