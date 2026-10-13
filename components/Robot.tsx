@@ -18,12 +18,17 @@ export function Robot({ mood, size = 220 }: { mood: Mood; size?: number }) {
     : 'M 74 134 L 126 134'
 
   return (
-    <svg width={size} height={size} viewBox="0 0 200 200" role="img" aria-label={`Robô ${mood}`}>
+    <svg
+      className={`robot robot-${mood}`}
+      width={size}
+      height={size}
+      viewBox="0 0 200 200"
+      role="img"
+      aria-label={`Robô ${mood}`}
+    >
       <rect x="18" y="18" width="164" height="164" rx="28" fill="#101735" stroke={c} strokeWidth="4" />
-      {/* antenna */}
       <line x1="100" y1="18" x2="100" y2="4" stroke={c} strokeWidth="4" />
-      <circle cx="100" cy="4" r="6" fill={c} />
-      {/* eyes */}
+      <circle className="robot-antenna" cx="100" cy="4" r="6" fill={c} />
       <circle cx="70" cy="80" r="14" fill="#0b1020" stroke={c} strokeWidth="3" />
       <circle cx="130" cy="80" r="14" fill="#0b1020" stroke={c} strokeWidth="3" />
       <text x="70" y="88" textAnchor="middle" fontSize="20" fill={c} fontFamily="monospace">
@@ -32,10 +37,8 @@ export function Robot({ mood, size = 220 }: { mood: Mood; size?: number }) {
       <text x="130" y="88" textAnchor="middle" fontSize="20" fill={c} fontFamily="monospace">
         {eye}
       </text>
-      {/* mouth */}
       <path d={mouth} fill="none" stroke={c} strokeWidth="4" strokeLinecap="round" />
-      {/* chest light */}
-      <circle cx="100" cy="160" r="7" fill={c} opacity="0.8" />
+      <circle className="robot-heart" cx="100" cy="160" r="7" fill={c} />
     </svg>
   )
 }
