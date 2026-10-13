@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "gallery": "node scripts/gen_gallery.mjs"
   },
   "dependencies": {
     "next": "^14.2.15",
