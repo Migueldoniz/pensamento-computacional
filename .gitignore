@@ -6,3 +6,4 @@ out
 *.log
 .vercel
 .data
+tsconfig.tsbuildinfo
