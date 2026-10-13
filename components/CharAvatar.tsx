@@ -14,12 +14,13 @@ function hue(id: string) {
  * - Se `CHAR_IMAGES` estiver ligado e houver foto em `/public/chars/<id>`, usa a foto.
  * - Caso contrário, desenha um avatar redondo original (cor única + emoji).
  */
-export function CharAvatar({ c, size = 40 }: { c?: Character; size?: number }) {
+export function CharAvatar({ c, size = 40, pos }: { c?: Character; size?: number; pos?: string }) {
   const [err, setErr] = useState(false)
 
   // Usa a foto se houver uma URL em `c.img`, ou (quando CHAR_IMAGES = true)
   // um arquivo local em /public/chars/<id>.
   const src = c?.img || (c && CHAR_IMAGES ? charImg(c) : undefined)
+  const objectPosition = pos ?? c?.pos ?? '50% 20%'
 
   if (c && src && !err) {
     return (
@@ -30,7 +31,7 @@ export function CharAvatar({ c, size = 40 }: { c?: Character; size?: number }) {
         alt={c.name}
         width={size}
         height={size}
-        style={{ width: size, height: size, borderRadius: '16px', objectFit: 'cover', flex: 'none' }}
+        style={{ width: size, height: size, borderRadius: '16px', objectFit: 'cover', objectPosition, flex: 'none' }}
         onError={() => setErr(true)}
       />
     )
