@@ -1,87 +1,343 @@
 <!DOCTYPE html>
-<html lang="pt-BR"><head><meta charset="UTF-8"><title>Galeria</title>
+<html lang="pt-BR"><head><meta charset="UTF-8"><title>Galeria — Yelena Belova</title>
 <style>
 body{font-family:sans-serif;background:#111;color:#eee;padding:20px}
-h1{margin-bottom:10px}
+h1{margin:0 0 4px}p.sub{color:#9aa;margin:0 0 16px}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
 .card{background:#222;border-radius:12px;overflow:hidden;border:2px solid transparent}
-.card.current{border-color:#4f8cff}
-img{width:100%;height:auto;display:block}
-.info{padding:12px;font-size:13px;color:#aaa;word-break:break-all}
-.tag{display:inline-block;background:#4f8cff;color:#000;font-weight:700;font-size:11px;border-radius:6px;padding:2px 8px;margin:0 12px}
-button{margin:8px 12px 12px;padding:6px 12px;background:#4f8cff;border:none;border-radius:8px;color:#000;font-weight:700;cursor:pointer}
+.card.box{border-color:#4f8cff}
+img{width:100%;height:auto;display:block;background:#000}
+.info{padding:10px 12px 0;font-size:13px;color:#aaa;word-break:break-all}
+.bar{display:flex;align-items:center;justify-content:space-between;padding:8px 12px 12px}
+.tag{background:#4f8cff;color:#000;font-weight:700;font-size:11px;border-radius:6px;padding:2px 8px}
+button{padding:6px 12px;background:#4f8cff;border:none;border-radius:8px;color:#000;font-weight:700;cursor:pointer}
 </style></head><body>
-<h1>Korg — 11 imagens</h1>
+<h1>Yelena Belova — 40 imagens</h1>
+<p class="sub">O card azul é a imagem de infobox (a que o app costuma usar). Clique em “Copiar URL” e cole no campo <code>img</code> do personagem em <code>lib/characters.ts</code>.</p>
 <div class="grid">
 
-<div class="card current">
-  <img src="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/8/80/Korg_-_Infobox.jpg/revision/latest?cb=20231021012818" alt="INFOBOX (atual)" loading="lazy">
-  <span class="tag">EM USO NO APP</span>
-  <div class="info">INFOBOX (atual)</div>
-  <button data-url="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/8/80/Korg_-_Infobox.jpg/revision/latest?cb=20231021012818">Copiar URL</button>
+<div class="card ">
+  <img src="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/2/2c/Yelena_Belova%27s_Escape.png/revision/latest?cb=20211208185652" alt="Yelena_Belova's_Escape.png" loading="lazy">
+  <div class="info">Yelena_Belova's_Escape.png</div>
+  <div class="bar">
+    <span></span>
+    <button data-url="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/2/2c/Yelena_Belova%27s_Escape.png/revision/latest?cb=20211208185652">Copiar URL</button>
+  </div>
 </div>
 <div class="card ">
-  <img src="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/9/9f/1040946-korg.jpg/revision/latest?cb=20171204193133" alt="File:1040946-korg.jpg" loading="lazy">
-  
-  <div class="info">File:1040946-korg.jpg</div>
-  <button data-url="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/9/9f/1040946-korg.jpg/revision/latest?cb=20171204193133">Copiar URL</button>
+  <img src="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/5/52/Yelena_Belova.jpg/revision/latest?cb=20230510064255" alt="Yelena_Belova.jpg" loading="lazy">
+  <div class="info">Yelena_Belova.jpg</div>
+  <div class="bar">
+    <span></span>
+    <button data-url="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/5/52/Yelena_Belova.jpg/revision/latest?cb=20230510064255">Copiar URL</button>
+  </div>
 </div>
 <div class="card ">
-  <img src="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/0/0c/Another_Day_Another_Doug.jpg/revision/latest?cb=20180407203800" alt="File:Another Day Another Doug.jpg" loading="lazy">
-  
-  <div class="info">File:Another Day Another Doug.jpg</div>
-  <button data-url="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/0/0c/Another_Day_Another_Doug.jpg/revision/latest?cb=20180407203800">Copiar URL</button>
+  <img src="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/a/a8/Yelena_Belova.png/revision/latest?cb=20200309131207" alt="Yelena_Belova.png" loading="lazy">
+  <div class="info">Yelena_Belova.png</div>
+  <div class="bar">
+    <span></span>
+    <button data-url="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/a/a8/Yelena_Belova.png/revision/latest?cb=20200309131207">Copiar URL</button>
+  </div>
 </div>
 <div class="card ">
-  <img src="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/e/ee/BTS_Thor_Ragnarok-06.jpg/revision/latest?cb=20180728192954" alt="File:BTS Thor Ragnarok-06.jpg" loading="lazy">
-  
-  <div class="info">File:BTS Thor Ragnarok-06.jpg</div>
-  <button data-url="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/e/ee/BTS_Thor_Ragnarok-06.jpg/revision/latest?cb=20180728192954">Copiar URL</button>
+  <img src="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/c/c1/Yelena_Belova_%26_Bob_Reynolds.jpg/revision/latest?cb=20250423134150" alt="Yelena_Belova_&_Bob_Reynolds.jpg" loading="lazy">
+  <div class="info">Yelena_Belova_&_Bob_Reynolds.jpg</div>
+  <div class="bar">
+    <span></span>
+    <button data-url="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/c/c1/Yelena_Belova_%26_Bob_Reynolds.jpg/revision/latest?cb=20250423134150">Copiar URL</button>
+  </div>
 </div>
 <div class="card ">
-  <img src="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/4/45/4D129FAD-8F65-4902-BE5B-FBE5F8229B8A.jpeg/revision/latest?cb=20190218002012" alt="File:4D129FAD-8F65-4902-BE5B-FBE5F8229B8A.jpeg" loading="lazy">
-  
-  <div class="info">File:4D129FAD-8F65-4902-BE5B-FBE5F8229B8A.jpeg</div>
-  <button data-url="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/4/45/4D129FAD-8F65-4902-BE5B-FBE5F8229B8A.jpeg/revision/latest?cb=20190218002012">Copiar URL</button>
+  <img src="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/6/6b/Yelena_Belova_%26_Bucky_Barnes.png/revision/latest?cb=20250701153114" alt="Yelena_Belova_&_Bucky_Barnes.png" loading="lazy">
+  <div class="info">Yelena_Belova_&_Bucky_Barnes.png</div>
+  <div class="bar">
+    <span></span>
+    <button data-url="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/6/6b/Yelena_Belova_%26_Bucky_Barnes.png/revision/latest?cb=20250701153114">Copiar URL</button>
+  </div>
 </div>
 <div class="card ">
-  <img src="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/d/d2/Avengers-endgame-vfx-19.jpg/revision/latest?cb=20190518060940" alt="File:Avengers-endgame-vfx-19.jpg" loading="lazy">
-  
-  <div class="info">File:Avengers-endgame-vfx-19.jpg</div>
-  <button data-url="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/d/d2/Avengers-endgame-vfx-19.jpg/revision/latest?cb=20190518060940">Copiar URL</button>
+  <img src="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/e/e1/Yelena_Belova_%26_Clint_Barton.png/revision/latest?cb=20211228103036" alt="Yelena_Belova_&_Clint_Barton.png" loading="lazy">
+  <div class="info">Yelena_Belova_&_Clint_Barton.png</div>
+  <div class="bar">
+    <span></span>
+    <button data-url="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/e/e1/Yelena_Belova_%26_Clint_Barton.png/revision/latest?cb=20211228103036">Copiar URL</button>
+  </div>
 </div>
 <div class="card ">
-  <img src="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/c/c9/Battle_of_Earth_concept_art_19.jpg/revision/latest?cb=20191125213453" alt="File:Battle of Earth concept art 19.jpg" loading="lazy">
-  
-  <div class="info">File:Battle of Earth concept art 19.jpg</div>
-  <button data-url="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/c/c9/Battle_of_Earth_concept_art_19.jpg/revision/latest?cb=20191125213453">Copiar URL</button>
+  <img src="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/d/dd/Yelena_Belova_%26_Clint_Barton_%28BTS%29.png/revision/latest?cb=20211222063309" alt="Yelena_Belova_&_Clint_Barton_(BTS).png" loading="lazy">
+  <div class="info">Yelena_Belova_&_Clint_Barton_(BTS).png</div>
+  <div class="bar">
+    <span></span>
+    <button data-url="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/d/dd/Yelena_Belova_%26_Clint_Barton_%28BTS%29.png/revision/latest?cb=20211222063309">Copiar URL</button>
+  </div>
 </div>
 <div class="card ">
-  <img src="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/f/fe/Battle_of_Earth_concept_art_10.jpg/revision/latest?cb=20200410082104" alt="File:Battle of Earth concept art 10.jpg" loading="lazy">
-  
-  <div class="info">File:Battle of Earth concept art 10.jpg</div>
-  <button data-url="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/f/fe/Battle_of_Earth_concept_art_10.jpg/revision/latest?cb=20200410082104">Copiar URL</button>
+  <img src="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/d/df/Yelena_Belova_%26_Kate_Bishop.png/revision/latest?cb=20211226041114" alt="Yelena_Belova_&_Kate_Bishop.png" loading="lazy">
+  <div class="info">Yelena_Belova_&_Kate_Bishop.png</div>
+  <div class="bar">
+    <span></span>
+    <button data-url="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/d/df/Yelena_Belova_%26_Kate_Bishop.png/revision/latest?cb=20211226041114">Copiar URL</button>
+  </div>
 </div>
 <div class="card ">
-  <img src="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/c/ca/Avengers-endgame-movie-screencaps.com-6261.jpg/revision/latest?cb=20200619202632" alt="File:Avengers-endgame-movie-screencaps.com-6261.jpg" loading="lazy">
-  
-  <div class="info">File:Avengers-endgame-movie-screencaps.com-6261.jpg</div>
-  <button data-url="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/c/ca/Avengers-endgame-movie-screencaps.com-6261.jpg/revision/latest?cb=20200619202632">Copiar URL</button>
+  <img src="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/1/10/Yelena_Belova_%26_Melina_Vostokoff.png/revision/latest?cb=20210710145918" alt="Yelena_Belova_&_Melina_Vostokoff.png" loading="lazy">
+  <div class="info">Yelena_Belova_&_Melina_Vostokoff.png</div>
+  <div class="bar">
+    <span></span>
+    <button data-url="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/1/10/Yelena_Belova_%26_Melina_Vostokoff.png/revision/latest?cb=20210710145918">Copiar URL</button>
+  </div>
 </div>
 <div class="card ">
-  <img src="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/a/a9/Asgardians_of_the_Galaxy_%28LaT%29.png/revision/latest?cb=20220627034501" alt="File:Asgardians of the Galaxy (LaT).png" loading="lazy">
-  
-  <div class="info">File:Asgardians of the Galaxy (LaT).png</div>
-  <button data-url="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/a/a9/Asgardians_of_the_Galaxy_%28LaT%29.png/revision/latest?cb=20220627034501">Copiar URL</button>
+  <img src="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/2/2e/Yelena_Belova_%26_Melina_Vostokoff_%281995%29.png/revision/latest?cb=20210710054655" alt="Yelena_Belova_&_Melina_Vostokoff_(1995).png" loading="lazy">
+  <div class="info">Yelena_Belova_&_Melina_Vostokoff_(1995).png</div>
+  <div class="bar">
+    <span></span>
+    <button data-url="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/2/2e/Yelena_Belova_%26_Melina_Vostokoff_%281995%29.png/revision/latest?cb=20210710054655">Copiar URL</button>
+  </div>
 </div>
 <div class="card ">
-  <img src="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/c/c1/Battle_of_Indigarr.png/revision/latest?cb=20221202111120" alt="File:Battle of Indigarr.png" loading="lazy">
-  
-  <div class="info">File:Battle of Indigarr.png</div>
-  <button data-url="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/c/c1/Battle_of_Indigarr.png/revision/latest?cb=20221202111120">Copiar URL</button>
+  <img src="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/a/aa/Yelena_Belova_%26_Natasha_Romanoff.png/revision/latest?cb=20210711113952" alt="Yelena_Belova_&_Natasha_Romanoff.png" loading="lazy">
+  <div class="info">Yelena_Belova_&_Natasha_Romanoff.png</div>
+  <div class="bar">
+    <span></span>
+    <button data-url="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/a/aa/Yelena_Belova_%26_Natasha_Romanoff.png/revision/latest?cb=20210711113952">Copiar URL</button>
+  </div>
+</div>
+<div class="card ">
+  <img src="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/c/ca/Yelena_Belova_%26_Natasha_Romanoff_%281995%29.png/revision/latest?cb=20210710064329" alt="Yelena_Belova_&_Natasha_Romanoff_(1995).png" loading="lazy">
+  <div class="info">Yelena_Belova_&_Natasha_Romanoff_(1995).png</div>
+  <div class="bar">
+    <span></span>
+    <button data-url="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/c/ca/Yelena_Belova_%26_Natasha_Romanoff_%281995%29.png/revision/latest?cb=20210710064329">Copiar URL</button>
+  </div>
+</div>
+<div class="card ">
+  <img src="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/7/73/Yelena_Belova_%26_Red_Guardian.png/revision/latest?cb=20210710151735" alt="Yelena_Belova_&_Red_Guardian.png" loading="lazy">
+  <div class="info">Yelena_Belova_&_Red_Guardian.png</div>
+  <div class="bar">
+    <span></span>
+    <button data-url="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/7/73/Yelena_Belova_%26_Red_Guardian.png/revision/latest?cb=20210710151735">Copiar URL</button>
+  </div>
+</div>
+<div class="card ">
+  <img src="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/e/ea/Yelena_Belova_%26_Rick_Mason.png/revision/latest?cb=20210710133038" alt="Yelena_Belova_&_Rick_Mason.png" loading="lazy">
+  <div class="info">Yelena_Belova_&_Rick_Mason.png</div>
+  <div class="bar">
+    <span></span>
+    <button data-url="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/e/ea/Yelena_Belova_%26_Rick_Mason.png/revision/latest?cb=20210710133038">Copiar URL</button>
+  </div>
+</div>
+<div class="card ">
+  <img src="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/f/fd/Yelena_Belova_%26_Valentina_Allegra_de_Fontaine.png/revision/latest?cb=20210709142129" alt="Yelena_Belova_&_Valentina_Allegra_de_Fontaine.png" loading="lazy">
+  <div class="info">Yelena_Belova_&_Valentina_Allegra_de_Fontaine.png</div>
+  <div class="bar">
+    <span></span>
+    <button data-url="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/f/fd/Yelena_Belova_%26_Valentina_Allegra_de_Fontaine.png/revision/latest?cb=20210709142129">Copiar URL</button>
+  </div>
+</div>
+<div class="card ">
+  <img src="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/c/cd/Yelena_Belova_%2812.24.2024%29.png/revision/latest?cb=20211228091841" alt="Yelena_Belova_(12.24.2024).png" loading="lazy">
+  <div class="info">Yelena_Belova_(12.24.2024).png</div>
+  <div class="bar">
+    <span></span>
+    <button data-url="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/c/cd/Yelena_Belova_%2812.24.2024%29.png/revision/latest?cb=20211228091841">Copiar URL</button>
+  </div>
+</div>
+<div class="card ">
+  <img src="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/0/08/Yelena_Belova_%281995%29.png/revision/latest?cb=20210710054217" alt="Yelena_Belova_(1995).png" loading="lazy">
+  <div class="info">Yelena_Belova_(1995).png</div>
+  <div class="bar">
+    <span></span>
+    <button data-url="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/0/08/Yelena_Belova_%281995%29.png/revision/latest?cb=20210710054217">Copiar URL</button>
+  </div>
+</div>
+<div class="card ">
+  <img src="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/a/a3/Yelena_Belova_%282016%29.png/revision/latest?cb=20210710124022" alt="Yelena_Belova_(2016).png" loading="lazy">
+  <div class="info">Yelena_Belova_(2016).png</div>
+  <div class="bar">
+    <span></span>
+    <button data-url="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/a/a3/Yelena_Belova_%282016%29.png/revision/latest?cb=20210710124022">Copiar URL</button>
+  </div>
+</div>
+<div class="card ">
+  <img src="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/1/1a/Yelena_Belova_%282018%29.png/revision/latest?cb=20211216201258" alt="Yelena_Belova_(2018).png" loading="lazy">
+  <div class="info">Yelena_Belova_(2018).png</div>
+  <div class="bar">
+    <span></span>
+    <button data-url="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/1/1a/Yelena_Belova_%282018%29.png/revision/latest?cb=20211216201258">Copiar URL</button>
+  </div>
+</div>
+<div class="card ">
+  <img src="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/b/b5/Yelena_Belova_%282023%29.png/revision/latest?cb=20211216203118" alt="Yelena_Belova_(2023).png" loading="lazy">
+  <div class="info">Yelena_Belova_(2023).png</div>
+  <div class="bar">
+    <span></span>
+    <button data-url="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/b/b5/Yelena_Belova_%282023%29.png/revision/latest?cb=20211216203118">Copiar URL</button>
+  </div>
+</div>
+<div class="card ">
+  <img src="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/a/ac/Yelena_Belova_%282024%29.jpeg/revision/latest?cb=20211223051728" alt="Yelena_Belova_(2024).jpeg" loading="lazy">
+  <div class="info">Yelena_Belova_(2024).jpeg</div>
+  <div class="bar">
+    <span></span>
+    <button data-url="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/a/ac/Yelena_Belova_%282024%29.jpeg/revision/latest?cb=20211223051728">Copiar URL</button>
+  </div>
+</div>
+<div class="card ">
+  <img src="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/7/7c/Yelena_Belova_%282024%29.png/revision/latest?cb=20211218000805" alt="Yelena_Belova_(2024).png" loading="lazy">
+  <div class="info">Yelena_Belova_(2024).png</div>
+  <div class="bar">
+    <span></span>
+    <button data-url="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/7/7c/Yelena_Belova_%282024%29.png/revision/latest?cb=20211218000805">Copiar URL</button>
+  </div>
+</div>
+<div class="card ">
+  <img src="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/a/a2/Yelena_Belova_%2830_Rock%29.png/revision/latest?cb=20211226024239" alt="Yelena_Belova_(30_Rock).png" loading="lazy">
+  <div class="info">Yelena_Belova_(30_Rock).png</div>
+  <div class="bar">
+    <span></span>
+    <button data-url="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/a/a2/Yelena_Belova_%2830_Rock%29.png/revision/latest?cb=20211226024239">Copiar URL</button>
+  </div>
+</div>
+<div class="card ">
+  <img src="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/2/27/Yelena_Belova_%2830_Rockefeller_Plaza%29.png/revision/latest?cb=20211226045803" alt="Yelena_Belova_(30_Rockefeller_Plaza).png" loading="lazy">
+  <div class="info">Yelena_Belova_(30_Rockefeller_Plaza).png</div>
+  <div class="bar">
+    <span></span>
+    <button data-url="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/2/27/Yelena_Belova_%2830_Rockefeller_Plaza%29.png/revision/latest?cb=20211226045803">Copiar URL</button>
+  </div>
+</div>
+<div class="card ">
+  <img src="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/d/d5/Yelena_Belova_%28BW%29.png/revision/latest?cb=20210710144059" alt="Yelena_Belova_(BW).png" loading="lazy">
+  <div class="info">Yelena_Belova_(BW).png</div>
+  <div class="bar">
+    <span></span>
+    <button data-url="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/d/d5/Yelena_Belova_%28BW%29.png/revision/latest?cb=20210710144059">Copiar URL</button>
+  </div>
+</div>
+<div class="card ">
+  <img src="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/f/fc/Yelena_Belova_%28Black_Widow%29.png/revision/latest?cb=20210710132014" alt="Yelena_Belova_(Black_Widow).png" loading="lazy">
+  <div class="info">Yelena_Belova_(Black_Widow).png</div>
+  <div class="bar">
+    <span></span>
+    <button data-url="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/f/fc/Yelena_Belova_%28Black_Widow%29.png/revision/latest?cb=20210710132014">Copiar URL</button>
+  </div>
+</div>
+<div class="card ">
+  <img src="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/3/3c/Yelena_Belova_%28Black_Widow_Assassin%29.png/revision/latest?cb=20211208181447" alt="Yelena_Belova_(Black_Widow_Assassin).png" loading="lazy">
+  <div class="info">Yelena_Belova_(Black_Widow_Assassin).png</div>
+  <div class="bar">
+    <span></span>
+    <button data-url="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/3/3c/Yelena_Belova_%28Black_Widow_Assassin%29.png/revision/latest?cb=20211208181447">Copiar URL</button>
+  </div>
+</div>
+<div class="card ">
+  <img src="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/d/d6/Yelena_Belova_%28Budapest%29.png/revision/latest?cb=20210710124138" alt="Yelena_Belova_(Budapest).png" loading="lazy">
+  <div class="info">Yelena_Belova_(Budapest).png</div>
+  <div class="bar">
+    <span></span>
+    <button data-url="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/d/d6/Yelena_Belova_%28Budapest%29.png/revision/latest?cb=20210710124138">Copiar URL</button>
+  </div>
+</div>
+<div class="card ">
+  <img src="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/c/c2/Yelena_Belova_%28Christmas_Eve%29.png/revision/latest?cb=20211226013925" alt="Yelena_Belova_(Christmas_Eve).png" loading="lazy">
+  <div class="info">Yelena_Belova_(Christmas_Eve).png</div>
+  <div class="bar">
+    <span></span>
+    <button data-url="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/c/c2/Yelena_Belova_%28Christmas_Eve%29.png/revision/latest?cb=20211226013925">Copiar URL</button>
+  </div>
+</div>
+<div class="card ">
+  <img src="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/0/0a/Yelena_Belova_%28Christmas_Eve_2024%29.png/revision/latest?cb=20211228064608" alt="Yelena_Belova_(Christmas_Eve_2024).png" loading="lazy">
+  <div class="info">Yelena_Belova_(Christmas_Eve_2024).png</div>
+  <div class="bar">
+    <span></span>
+    <button data-url="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/0/0a/Yelena_Belova_%28Christmas_Eve_2024%29.png/revision/latest?cb=20211228064608">Copiar URL</button>
+  </div>
+</div>
+<div class="card ">
+  <img src="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/4/45/Yelena_Belova_%28December_2024%29.jpeg/revision/latest?cb=20211223051441" alt="Yelena_Belova_(December_2024).jpeg" loading="lazy">
+  <div class="info">Yelena_Belova_(December_2024).jpeg</div>
+  <div class="bar">
+    <span></span>
+    <button data-url="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/4/45/Yelena_Belova_%28December_2024%29.jpeg/revision/latest?cb=20211223051441">Copiar URL</button>
+  </div>
+</div>
+<div class="card ">
+  <img src="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/7/71/Yelena_Belova_%28December_2024%29.png/revision/latest?cb=20211208185422" alt="Yelena_Belova_(December_2024).png" loading="lazy">
+  <div class="info">Yelena_Belova_(December_2024).png</div>
+  <div class="bar">
+    <span></span>
+    <button data-url="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/7/71/Yelena_Belova_%28December_2024%29.png/revision/latest?cb=20211208185422">Copiar URL</button>
+  </div>
+</div>
+<div class="card ">
+  <img src="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/5/57/Yelena_Belova_%28December_24%2C_2024%29.png/revision/latest?cb=20211228064439" alt="Yelena_Belova_(December_24,_2024).png" loading="lazy">
+  <div class="info">Yelena_Belova_(December_24,_2024).png</div>
+  <div class="bar">
+    <span></span>
+    <button data-url="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/5/57/Yelena_Belova_%28December_24%2C_2024%29.png/revision/latest?cb=20211228064439">Copiar URL</button>
+  </div>
+</div>
+<div class="card ">
+  <img src="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/b/b0/Yelena_Belova_%28HAWKEYE%29.png/revision/latest?cb=20211218001308" alt="Yelena_Belova_(HAWKEYE).png" loading="lazy">
+  <div class="info">Yelena_Belova_(HAWKEYE).png</div>
+  <div class="bar">
+    <span></span>
+    <button data-url="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/b/b0/Yelena_Belova_%28HAWKEYE%29.png/revision/latest?cb=20211218001308">Copiar URL</button>
+  </div>
+</div>
+<div class="card ">
+  <img src="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/c/c5/Yelena_Belova_%28Hawkeye%29.png/revision/latest?cb=20211208184907" alt="Yelena_Belova_(Hawkeye).png" loading="lazy">
+  <div class="info">Yelena_Belova_(Hawkeye).png</div>
+  <div class="bar">
+    <span></span>
+    <button data-url="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/c/c5/Yelena_Belova_%28Hawkeye%29.png/revision/latest?cb=20211208184907">Copiar URL</button>
+  </div>
+</div>
+<div class="card ">
+  <img src="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/1/14/Yelena_Belova_%28Hawkeye_Promo%29.jpg/revision/latest?cb=20241125171800" alt="Yelena_Belova_(Hawkeye_Promo).jpg" loading="lazy">
+  <div class="info">Yelena_Belova_(Hawkeye_Promo).jpg</div>
+  <div class="bar">
+    <span></span>
+    <button data-url="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/1/14/Yelena_Belova_%28Hawkeye_Promo%29.jpg/revision/latest?cb=20241125171800">Copiar URL</button>
+  </div>
+</div>
+<div class="card ">
+  <img src="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/0/0f/Yelena_Belova_%28Hawkeye_Promotional%29.png/revision/latest?cb=20211222062845" alt="Yelena_Belova_(Hawkeye_Promotional).png" loading="lazy">
+  <div class="info">Yelena_Belova_(Hawkeye_Promotional).png</div>
+  <div class="bar">
+    <span></span>
+    <button data-url="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/0/0f/Yelena_Belova_%28Hawkeye_Promotional%29.png/revision/latest?cb=20211222062845">Copiar URL</button>
+  </div>
+</div>
+<div class="card ">
+  <img src="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/d/d6/Yelena_Belova_%28Kate_Bishop%27s_apartment%29.png/revision/latest?cb=20211217232942" alt="Yelena_Belova_(Kate_Bishop's_apartment).png" loading="lazy">
+  <div class="info">Yelena_Belova_(Kate_Bishop's_apartment).png</div>
+  <div class="bar">
+    <span></span>
+    <button data-url="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/d/d6/Yelena_Belova_%28Kate_Bishop%27s_apartment%29.png/revision/latest?cb=20211217232942">Copiar URL</button>
+  </div>
+</div>
+<div class="card ">
+  <img src="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/6/6c/Yelena_Belova_%28Morocco%29.png/revision/latest?cb=20210710103924" alt="Yelena_Belova_(Morocco).png" loading="lazy">
+  <div class="info">Yelena_Belova_(Morocco).png</div>
+  <div class="bar">
+    <span></span>
+    <button data-url="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/6/6c/Yelena_Belova_%28Morocco%29.png/revision/latest?cb=20210710103924">Copiar URL</button>
+  </div>
+</div>
+<div class="card ">
+  <img src="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/7/7a/Yelena_Belova_%28New_York_City%29.png/revision/latest?cb=20211219020830" alt="Yelena_Belova_(New_York_City).png" loading="lazy">
+  <div class="info">Yelena_Belova_(New_York_City).png</div>
+  <div class="bar">
+    <span></span>
+    <button data-url="https://static.wikia.nocookie.net/marvelcinematicuniverse/images/7/7a/Yelena_Belova_%28New_York_City%29.png/revision/latest?cb=20211219020830">Copiar URL</button>
+  </div>
 </div>
 </div>
 <script>
-document.querySelectorAll('button').forEach(b=>b.onclick=()=>{navigator.clipboard.writeText(b.dataset.url);b.textContent='Copiado!'})
+document.querySelectorAll('button').forEach(b=>b.onclick=()=>{navigator.clipboard.writeText(b.dataset.url);b.textContent='Copiado!';setTimeout(()=>b.textContent='Copiar URL',1200)})
 </script>
 </body></html>
