@@ -1,7 +1,16 @@
+export interface PlayerScore {
+  name: string
+  score: number
+  combo: number
+}
+
 export interface RoomSnapshot {
   index: number
   revealed: boolean
   votes: Record<string, Record<string, string>>
+  scores: Record<string, PlayerScore>
+  deadline: number | null
+  serverNow: number
 }
 
 export async function recordRoom(code?: string): Promise<{ code: string; token: string }> {
@@ -24,11 +33,12 @@ export async function setProgress(
   index: number,
   revealed: boolean,
   token: string,
+  deadline: number | null,
 ): Promise<void> {
   await fetch('/api/progress', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ code, index, revealed, token }),
+    body: JSON.stringify({ code, index, revealed, token, deadline }),
   })
 }
 
@@ -42,5 +52,19 @@ export async function sendVote(
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ code, playerId, phaseId, choice }),
+  })
+}
+
+export async function postScore(
+  code: string,
+  playerId: string,
+  name: string,
+  score: number,
+  combo: number,
+): Promise<void> {
+  await fetch('/api/score', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ code, playerId, name, score, combo }),
   })
 }

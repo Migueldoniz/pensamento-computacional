@@ -168,3 +168,30 @@ input[type="text"] {
 @media (prefers-reduced-motion: reduce) {
   .robot, .robot-heart, .robot-antenna { animation: none; }
 }
+
+/* ---------- Cronômetro ---------- */
+.timer {
+  display: inline-flex; align-items: baseline; gap: 6px;
+  border: 2px solid var(--accent); border-radius: 14px; padding: 6px 14px;
+  background: var(--panel-2);
+}
+.timer span { font-size: 34px; font-weight: 800; line-height: 1; }
+.timer small { color: var(--muted); }
+.timer.warn { border-color: var(--bad); color: var(--bad); animation: pulse 0.9s ease-in-out infinite; }
+
+/* ---------- Ranking ---------- */
+.lb-row { display: flex; align-items: center; gap: 10px; font-size: 15px; }
+.lb-pos { width: 34px; flex: none; text-align: center; }
+.lb-name { flex: 1; }
+.lb-score { font-weight: 800; color: var(--warn); }
+
+/* ---------- Personagens ---------- */
+.chars {
+  display: grid; gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+}
+.char {
+  display: flex; align-items: center; gap: 10px; justify-content: flex-start;
+  padding: 12px 14px; font-size: 15px;
+}
+.char-emoji { font-size: 22px; }

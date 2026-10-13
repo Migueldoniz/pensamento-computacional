@@ -4,9 +4,11 @@ import { Suspense, useEffect, useRef, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { QRCodeSVG } from 'qrcode.react'
 import { PHASES, optionCounts, correctSoFar } from '@/lib/game'
-import { getSnapshot, recordRoom, setProgress } from '@/lib/client'
+import { getSnapshot, recordRoom, setProgress, PlayerScore } from '@/lib/client'
 import { Robot, type Mood } from '@/components/Robot'
 import { Timeline } from '@/components/Timeline'
+import { useCountdown } from '@/lib/useCountdown'
+import { initSound, isMuted, setMuted, sfxCorrect, sfxWrong, sfxStart, sfxTick, sfxClick } from '@/lib/sound'
 
 function HostInner() {
   const params = useSearchParams()
@@ -19,10 +21,18 @@ function HostInner() {
   const [index, setIndex] = useState(0)
   const [revealed, setRevealed] = useState(false)
   const [votes, setVotes] = useState<Record<string, Record<string, string>>>({})
+  const [scores, setScores] = useState<Record<string, PlayerScore>>({})
+  const [deadline, setDeadline] = useState<number | null>(null)
+  const [offset, setOffset] = useState(0)
   const [origin, setOrigin] = useState('')
   const [notFound, setNotFound] = useState(false)
+  const [muted, setMutedState] = useState(false)
 
-  useEffect(() => setOrigin(window.location.origin), [])
+  useEffect(() => {
+    initSound()
+    setMutedState(isMuted())
+    setOrigin(window.location.origin)
+  }, [])
 
   useEffect(() => {
     if (codeParam) {
@@ -52,9 +62,12 @@ function HostInner() {
         setNotFound(true)
         return
       }
+      setOffset(s.serverNow - Date.now())
       setIndex(s.index)
       setRevealed(s.revealed)
       setVotes(s.votes)
+      setScores(s.scores || {})
+      setDeadline(s.deadline ?? null)
       initialized.current = true
     })()
     return () => {
@@ -66,15 +79,44 @@ function HostInner() {
     if (!room || notFound) return
     const t = setInterval(async () => {
       const s = await getSnapshot(room)
-      if (s) setVotes(s.votes)
+      if (!s) return
+      setVotes(s.votes)
+      setScores(s.scores || {})
+      setOffset(s.serverNow - Date.now())
     }, 1200)
     return () => clearInterval(t)
   }, [room, notFound])
 
   useEffect(() => {
     if (!room || !token || !initialized.current) return
-    setProgress(room, index, revealed, token)
-  }, [index, revealed, room, token])
+    setProgress(room, index, revealed, token, deadline)
+  }, [index, revealed, deadline, room, token])
+
+  const countdown = useCountdown(deadline, offset)
+
+  // Som nos últimos 3 segundos.
+  const prevSec = useRef<number | null>(null)
+  useEffect(() => {
+    if (countdown == null) {
+      prevSec.current = null
+      return
+    }
+    if (countdown !== prevSec.current) {
+      prevSec.current = countdown
+      if (countdown > 0 && countdown <= 3) sfxTick()
+    }
+  }, [countdown])
+
+  // Som ao revelar.
+  const prevRevealed = useRef(false)
+  useEffect(() => {
+    if (revealed && !prevRevealed.current && phase.kind !== 'info') {
+      if (hits >= Math.max(1, players / 2)) sfxCorrect()
+      else sfxWrong()
+    }
+    prevRevealed.current = revealed
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [revealed])
 
   const phase = PHASES[index]
   const phaseVotes = votes[phase.id] || {}
@@ -84,11 +126,6 @@ function HostInner() {
   const hits = correctSoFar(phaseVotes, phase)
 
   const labelOf = (id: string) => phase.options?.find((o) => o.id === id)?.label ?? id
-
-  const topId = phase.options
-    ? [...phase.options].sort((a, b) => (counts[b.id] || 0) - (counts[a.id] || 0))[0]?.id
-    : undefined
-  const majorityCorrect = Boolean(phase.correctIds?.[0] && topId === phase.correctIds[0])
 
   const mood: Mood = phase.kind === 'info'
     ? 'idle'
@@ -106,9 +143,20 @@ function HostInner() {
 
   const joinUrl = origin && room ? `${origin}/play?room=${room}` : ''
 
+  const ranking = Object.entries(scores)
+    .map(([id, v]) => ({ id, ...v }))
+    .sort((a, b) => b.score - a.score || a.name.localeCompare(b.name))
+    .slice(0, 6)
+
   const go = (delta: number) => {
     setIndex((i) => Math.min(PHASES.length - 1, Math.max(0, i + delta)))
     setRevealed(false)
+    setDeadline(null)
+  }
+
+  const startTimer = (seconds: number) => {
+    setDeadline(Date.now() + offset + seconds * 1000)
+    sfxStart()
   }
 
   if (notFound) {
@@ -122,6 +170,8 @@ function HostInner() {
     )
   }
 
+  const timerClass = countdown == null ? '' : countdown <= 3 ? 'timer warn' : 'timer'
+
   return (
     <div className="wrap">
       <div className="row spread" style={{ marginBottom: 16 }}>
@@ -132,6 +182,16 @@ function HostInner() {
         <div className="row">
           <span className="pill">{players} responderam</span>
           <span className="pill">sala {room || '…'}</span>
+          <button
+            className="ghost"
+            onClick={() => {
+              const m = !muted
+              setMuted(m)
+              setMutedState(m)
+            }}
+          >
+            {muted ? '🔇 som' : '🔊 som'}
+          </button>
         </div>
       </div>
 
@@ -146,7 +206,7 @@ function HostInner() {
             <div className="col" style={{ alignItems: 'center', gap: 6 }}>
               <div className="small muted">entre pela sua tela</div>
               <div style={{ background: '#fff', padding: 8, borderRadius: 12 }}>
-                <QRCodeSVG value={joinUrl} size={128} />
+                <QRCodeSVG value={joinUrl} size={120} />
               </div>
               <div className="mono big" style={{ letterSpacing: 4 }}>
                 {room}
@@ -154,14 +214,32 @@ function HostInner() {
             </div>
           )}
 
+          {countdown != null && (
+            <div className={timerClass}>
+              <span>{countdown}</span>
+              <small>segundos</small>
+            </div>
+          )}
+
           <div className="row" style={{ justifyContent: 'center' }}>
-            <button onClick={() => go(-1)} disabled={index === 0}>◀ anterior</button>
-            <button onClick={() => go(1)} disabled={index === PHASES.length - 1}>próximo ▶</button>
+            <button onClick={() => go(-1)} disabled={index === 0}>◀</button>
+            <button onClick={() => go(1)} disabled={index === PHASES.length - 1}>▶</button>
           </div>
+
           {phase.kind !== 'info' && (
-            <button className="primary" onClick={() => setRevealed((r) => !r)}>
-              {revealed ? 'esconder resposta' : 'revelar resposta'}
-            </button>
+            <>
+              <div className="row" style={{ justifyContent: 'center' }}>
+                <button onClick={() => startTimer(15)}>⏱ 15s</button>
+                <button onClick={() => startTimer(20)}>20s</button>
+                <button onClick={() => startTimer(30)}>30s</button>
+                <button className="ghost" onClick={() => setDeadline(null)} disabled={deadline == null}>
+                  limpar
+                </button>
+              </div>
+              <button className="primary" onClick={() => { sfxClick(); setRevealed((r) => !r) }}>
+                {revealed ? 'esconder resposta' : 'revelar resposta'}
+              </button>
+            </>
           )}
         </div>
 
@@ -222,6 +300,21 @@ function HostInner() {
               <strong>Por quê:</strong> {phase.explain}
             </div>
           )}
+
+          {ranking.length > 0 && (
+            <div className="col" style={{ marginTop: 8 }}>
+              <div className="act">Ranking</div>
+              <div className="col" style={{ gap: 6 }}>
+                {ranking.map((r, i) => (
+                  <div key={r.id} className="lb-row">
+                    <span className="lb-pos">{['🥇', '🥈', '🥉'][i] || `${i + 1}º`}</span>
+                    <span className="lb-name">{r.name}</span>
+                    <span className="lb-score">{r.score}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
@@ -234,6 +327,7 @@ function HostInner() {
             onClick={() => {
               setIndex(i)
               setRevealed(false)
+              setDeadline(null)
             }}
           >
             {p.act}

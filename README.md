@@ -2,7 +2,7 @@
 
 Jogo de 15 minutos sobre **agendamento de laboratório** e **pensamento computacional**, baseado no plano `aula_pc.md` (Aula 1).
 
-A plateia entra por **QR/código**, vota pelo celular, e você conduz pela sua tela. O robô reage: acerta ou faz besteira.
+A plateia entra por **QR/código**, **escolhe um personagem secundário da Marvel** como nickname e vota pelo celular. O robô reage com **som**, há **cronômetro por rodada** e **ranking ao vivo**.
 
 **Sem Supabase.** O armazenamento é plugável:
 
@@ -45,7 +45,6 @@ UPSTASH_REDIS_REST_TOKEN=...
 > Sem Upstash no Vercel, a gravação em arquivo não persiste entre invocações — use Upstash em produção.
 
 ## As fases (Aula 1)
-
 | Fase | Conceito |
 | --- | --- |
 | BOOT | Você é o robô: aceitar/recusar reservas sem deixar duas aulas na mesma sala. |

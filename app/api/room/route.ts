@@ -17,5 +17,12 @@ export async function GET(req: Request) {
   const code = (new URL(req.url).searchParams.get('code') || '').toUpperCase()
   const room = await getRoom(code)
   if (!room) return NextResponse.json({ error: 'not_found' }, { status: 404 })
-  return NextResponse.json({ index: room.index, revealed: room.revealed, votes: room.votes })
+  return NextResponse.json({
+    index: room.index,
+    revealed: room.revealed,
+    votes: room.votes,
+    scores: room.scores || {},
+    deadline: room.deadline ?? null,
+    serverNow: Date.now(),
+  })
 }

@@ -1,10 +1,18 @@
 import { promises as fs } from 'fs'
 import path from 'path'
 
+export interface PlayerScore {
+  name: string
+  score: number
+  combo: number
+}
+
 export interface RoomState {
   index: number
   revealed: boolean
   votes: Record<string, Record<string, string>> // phaseId -> playerId -> choice
+  scores: Record<string, PlayerScore> // playerId -> score
+  deadline: number | null // epoch ms do fim do cronômetro da rodada
   token: string
   updatedAt: number
 }
@@ -113,7 +121,15 @@ export async function getRoom(code: string): Promise<RoomState | null> {
 }
 
 export async function createRoom(code: string, token: string): Promise<RoomState> {
-  const state: RoomState = { index: 0, revealed: false, votes: {}, token, updatedAt: Date.now() }
+  const state: RoomState = {
+    index: 0,
+    revealed: false,
+    votes: {},
+    scores: {},
+    deadline: null,
+    token,
+    updatedAt: Date.now(),
+  }
   await kvSet(keyOf(code), state)
   return state
 }
@@ -123,11 +139,30 @@ export async function setProgress(
   index: number,
   revealed: boolean,
   token: string,
+  deadline: number | null,
 ): Promise<boolean> {
   const room = await getRoom(code)
   if (!room || room.token !== token) return false
   room.index = index
   room.revealed = revealed
+  room.deadline = deadline
+  room.scores = room.scores || {}
+  room.updatedAt = Date.now()
+  await kvSet(keyOf(code), room)
+  return true
+}
+
+export async function setScore(
+  code: string,
+  playerId: string,
+  name: string,
+  score: number,
+  combo: number,
+): Promise<boolean> {
+  const room = await getRoom(code)
+  if (!room) return false
+  room.scores = room.scores || {}
+  room.scores[playerId] = { name, score, combo }
   room.updatedAt = Date.now()
   await kvSet(keyOf(code), room)
   return true
