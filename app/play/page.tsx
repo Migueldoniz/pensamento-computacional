@@ -176,16 +176,18 @@ function PlayerInner() {
       return !takenBy || takenBy === playerId
     })
     return (
-      <div className="wrap col" style={{ maxWidth: 820, margin: '0 auto' }}>
+      <div className="wrap col" style={{ maxWidth: 1000, margin: '0 auto' }}>
         <div>
           <div className="act">Operação Agenda · sala {room}</div>
           <h1 style={{ marginBottom: 4 }}>Escolha seu personagem</h1>
-          <p className="muted">Ele será o seu nickname no jogo. Personagens já escolhidos somem da lista.</p>
+          <p className="muted" style={{ margin: '0 0 8px' }}>
+            Ele será o seu nickname no jogo. Personagens já escolhidos somem da lista.
+          </p>
         </div>
         <div className="chars">
           {available.map((c) => (
             <button key={c.id} className="char" onClick={() => pickCharacter(c.id)}>
-              <CharAvatar c={c} size={72} />
+              <CharAvatar c={c} size={56} />
               <span className="char-text">
                 <b>{c.name}</b>
                 <small className="muted">({c.movie})</small>
