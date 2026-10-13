@@ -29,6 +29,7 @@ function HostInner() {
   const [origin, setOrigin] = useState('')
   const [notFound, setNotFound] = useState(false)
   const [muted, setMutedState] = useState(false)
+  const [copied, setCopied] = useState(false)
 
   useEffect(() => {
     initSound()
@@ -161,6 +162,17 @@ function HostInner() {
     sfxStart()
   }
 
+  const copyLink = async () => {
+    try {
+      await navigator.clipboard.writeText(joinUrl)
+      setCopied(true)
+      sfxClick()
+      setTimeout(() => setCopied(false), 1600)
+    } catch {
+      /* clipboard bloqueado: o link fica visível para copiar à mão */
+    }
+  }
+
   if (notFound) {
     return (
       <div className="wrap">
@@ -213,6 +225,17 @@ function HostInner() {
               <div className="mono big" style={{ letterSpacing: 4 }}>
                 {room}
               </div>
+              <button className="primary" onClick={copyLink} style={{ width: '100%' }}>
+                {copied ? '✅ link copiado!' : '🔗 copiar link da sala'}
+              </button>
+              <input
+                type="text"
+                readOnly
+                value={joinUrl}
+                onFocus={(e) => e.currentTarget.select()}
+                style={{ fontSize: 12, textAlign: 'center' }}
+              />
+              <div className="small muted">cole no chat da chamada</div>
             </div>
           )}
 
