@@ -12,6 +12,7 @@ interface XY {
 export default function FramePage() {
   const [vals, setVals] = useState<Record<string, XY>>({})
   const [copied, setCopied] = useState('')
+  const [copiedAll, setCopiedAll] = useState(false)
 
   useEffect(() => {
     try {
@@ -33,6 +34,12 @@ export default function FramePage() {
   const set = (id: string, patch: Partial<XY>) =>
     setVals((v) => ({ ...v, [id]: { ...get(id), ...patch } }))
 
+  const allText = () =>
+    CHARACTERS.map((c) => {
+      const g = get(c.id)
+      return `${c.id} ${g.x}% ${g.y}%`
+    }).join('\n')
+
   return (
     <div className="wrap">
       <div className="act">Operação Agenda · ajuste de enquadramento</div>
@@ -41,6 +48,35 @@ export default function FramePage() {
         Arraste os controles até a foto ficar boa. Copie o valor de <code>pos</code> e cole no
         personagem em <code>lib/characters.ts</code>. Os ajustes ficam salvos no navegador.
       </p>
+
+      <div className="row" style={{ margin: '8px 0 4px' }}>
+        <button
+          className="primary"
+          onClick={() => {
+            navigator.clipboard.writeText(allText())
+            setCopiedAll(true)
+            setTimeout(() => setCopiedAll(false), 1500)
+          }}
+        >
+          {copiedAll ? '✅ copiado!' : '📋 copiar todos os ajustes'}
+        </button>
+        <button
+          onClick={() => {
+            setVals({})
+          }}
+        >
+          resetar
+        </button>
+        <span className="small muted">depois cole aqui no chat que eu aplico</span>
+      </div>
+
+      <textarea
+        readOnly
+        value={allText()}
+        onFocus={(e) => e.currentTarget.select()}
+        rows={6}
+        style={{ width: '100%', marginTop: 8, fontFamily: 'monospace', fontSize: 13 }}
+      />
 
       <div className="chars" style={{ marginTop: 16 }}>
         {CHARACTERS.map((c) => {
