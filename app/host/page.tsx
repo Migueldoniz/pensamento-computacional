@@ -110,6 +110,13 @@ function HostInner() {
     }
   }, [countdown])
 
+  const phase = PHASES[index]
+  const phaseVotes = votes[phase.id] || {}
+  const counts = optionCounts(phaseVotes, phase)
+  const totalVotes = Object.values(counts).reduce((a, b) => a + b, 0)
+  const players = Object.keys(phaseVotes).length
+  const hits = correctSoFar(phaseVotes, phase)
+
   // Som ao revelar.
   const prevRevealed = useRef(false)
   useEffect(() => {
@@ -121,25 +128,12 @@ function HostInner() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [revealed])
 
-  const phase = PHASES[index]
-  const phaseVotes = votes[phase.id] || {}
-  const counts = optionCounts(phaseVotes, phase)
-  const totalVotes = Object.values(counts).reduce((a, b) => a + b, 0)
-  const players = Object.keys(phaseVotes).length
-  const hits = correctSoFar(phaseVotes, phase)
-
   const labelOf = (id: string) => phase.options?.find((o) => o.id === id)?.label ?? id
 
-  const mood: Mood = phase.kind === 'info'
-    ? 'idle'
-    : revealed
-      ? hits >= Math.max(1, players / 2)
-        ? 'correct'
-        : 'wrong'
-      : 'thinking'
-
+  const majorityOk = hits >= Math.max(1, players / 2)
+  const mood: Mood = phase.kind === 'info' ? 'idle' : revealed ? (majorityOk ? 'correct' : 'wrong') : 'thinking'
   const line = revealed
-    ? hits >= Math.max(1, players / 2)
+    ? majorityOk
       ? phase.robotCorrect || 'Decisão correta.'
       : phase.robotWrong || 'Decisão incorreta.'
     : phase.robotThinking
@@ -149,7 +143,7 @@ function HostInner() {
   const ranking = Object.entries(scores)
     .map(([id, v]) => ({ id, ...v }))
     .sort((a, b) => b.score - a.score || a.name.localeCompare(b.name))
-    .slice(0, 6)
+    .slice(0, 5)
 
   const go = (delta: number) => {
     setIndex((i) => Math.min(PHASES.length - 1, Math.max(0, i + delta)))
@@ -188,14 +182,13 @@ function HostInner() {
 
   return (
     <div className="wrap">
-      <div className="row spread" style={{ marginBottom: 16 }}>
-        <div>
-          <div className="act">Operação Agenda · apresentador</div>
-          <h1 style={{ margin: 0 }}>Você é o Robô</h1>
+      <div className="row spread" style={{ marginBottom: 10 }}>
+        <div className="row" style={{ gap: 10 }}>
+          <h1 style={{ margin: 0, fontSize: 22 }}>Você é o Robô</h1>
+          <span className="act">apresentador · sala {room || '…'}</span>
         </div>
-        <div className="row">
+        <div className="row" style={{ gap: 8 }}>
           <span className="pill">{players} responderam</span>
-          <span className="pill">sala {room || '…'}</span>
           <button
             className="ghost"
             onClick={() => {
@@ -204,87 +197,89 @@ function HostInner() {
               setMutedState(m)
             }}
           >
-            {muted ? '🔇 som' : '🔊 som'}
+            {muted ? '🔇' : '🔊'}
           </button>
         </div>
       </div>
 
       <div className="grid2">
-        <div className="card col" style={{ alignItems: 'center' }}>
-          <Robot mood={mood} />
-          <div className="bubble" style={{ width: '100%', textAlign: 'center' }}>
+        <div className="card col" style={{ alignItems: 'center', gap: 10 }}>
+          <Robot mood={mood} size={150} />
+          <div className="bubble" style={{ width: '100%', textAlign: 'center', fontSize: 15, padding: '10px 12px' }}>
             {line}
           </div>
 
           {joinUrl && (
-            <div className="col" style={{ alignItems: 'center', gap: 6 }}>
-              <div className="small muted">entre pela sua tela</div>
-              <div style={{ background: '#fff', padding: 8, borderRadius: 12 }}>
-                <QRCodeSVG value={joinUrl} size={120} />
+            <div className="row" style={{ gap: 10, width: '100%', flexWrap: 'nowrap' }}>
+              <div style={{ background: '#fff', padding: 6, borderRadius: 10, flex: 'none' }}>
+                <QRCodeSVG value={joinUrl} size={92} />
               </div>
-              <div className="mono big" style={{ letterSpacing: 4 }}>
-                {room}
+              <div className="col" style={{ gap: 6, flex: 1, minWidth: 0 }}>
+                <div className="mono" style={{ letterSpacing: 3, fontSize: 22, fontWeight: 800 }}>
+                  {room}
+                </div>
+                <button className="primary" onClick={copyLink} style={{ padding: '8px 10px' }}>
+                  {copied ? '✅ copiado!' : '🔗 copiar link'}
+                </button>
+                <input
+                  type="text"
+                  readOnly
+                  value={joinUrl}
+                  onFocus={(e) => e.currentTarget.select()}
+                  style={{ fontSize: 10.5, textAlign: 'center' }}
+                />
               </div>
-              <button className="primary" onClick={copyLink} style={{ width: '100%' }}>
-                {copied ? '✅ link copiado!' : '🔗 copiar link da sala'}
-              </button>
-              <input
-                type="text"
-                readOnly
-                value={joinUrl}
-                onFocus={(e) => e.currentTarget.select()}
-                style={{ fontSize: 12, textAlign: 'center' }}
-              />
-              <div className="small muted">cole no chat da chamada</div>
             </div>
           )}
 
           {countdown != null && (
-            <div className={timerClass}>
-              <span>{countdown}</span>
-              <small>segundos</small>
+            <div className={timerClass} style={{ padding: '2px 14px' }}>
+              <span style={{ fontSize: 26 }}>{countdown}</span>
+              <small>s</small>
             </div>
           )}
 
-          <div className="row" style={{ justifyContent: 'center' }}>
+          <div className="row" style={{ justifyContent: 'center', gap: 8 }}>
             <button onClick={() => go(-1)} disabled={index === 0}>◀</button>
             <button onClick={() => go(1)} disabled={index === PHASES.length - 1}>▶</button>
+            {phase.kind !== 'info' && (
+              <button className="primary" onClick={() => { sfxClick(); setRevealed((r) => !r) }}>
+                {revealed ? 'esconder' : 'revelar'}
+              </button>
+            )}
           </div>
 
           {phase.kind !== 'info' && (
-            <>
-              <div className="row" style={{ justifyContent: 'center' }}>
-                <button onClick={() => startTimer(15)}>⏱ 15s</button>
-                <button onClick={() => startTimer(20)}>20s</button>
-                <button onClick={() => startTimer(30)}>30s</button>
-                <button className="ghost" onClick={() => setDeadline(null)} disabled={deadline == null}>
-                  limpar
-                </button>
-              </div>
-              <button className="primary" onClick={() => { sfxClick(); setRevealed((r) => !r) }}>
-                {revealed ? 'esconder resposta' : 'revelar resposta'}
+            <div className="row" style={{ justifyContent: 'center', gap: 6 }}>
+              <button onClick={() => startTimer(15)}>⏱15s</button>
+              <button onClick={() => startTimer(20)}>20s</button>
+              <button onClick={() => startTimer(30)}>30s</button>
+              <button className="ghost" onClick={() => setDeadline(null)} disabled={deadline == null}>
+                limpar
               </button>
-            </>
+            </div>
           )}
         </div>
 
-        <div className="card col">
-          <div className="act">{phase.act}</div>
-          <h2>{phase.title}</h2>
-          <p>{phase.prompt}</p>
+        <div className="card col" style={{ gap: 8 }}>
+          <div className="row" style={{ gap: 8 }}>
+            <span className="act">{phase.act}</span>
+            <h2 style={{ margin: 0, fontSize: 20 }}>{phase.title}</h2>
+          </div>
+          <p style={{ margin: 0 }}>{phase.prompt}</p>
 
           {phase.timeline && <Timeline spec={phase.timeline} />}
 
           {phase.kind === 'single' || phase.kind === 'multi' ? (
-            <div className="col" style={{ gap: 12 }}>
+            <div className="col" style={{ gap: 8 }}>
               {phase.options?.map((o) => {
                 const c = counts[o.id] || 0
                 const pct = totalVotes ? Math.round((c / totalVotes) * 100) : 0
                 const isCorrect = revealed && (phase.correctIds || []).includes(o.id)
                 return (
-                  <div key={o.id} className="col" style={{ gap: 6 }}>
+                  <div key={o.id} className="col" style={{ gap: 4 }}>
                     <div className="row spread">
-                      <span style={{ fontSize: 17 }}>
+                      <span style={{ fontSize: 15 }}>
                         {isCorrect ? '✅ ' : ''}
                         {o.label}
                       </span>
@@ -301,7 +296,7 @@ function HostInner() {
             <div className="col">
               <div className="small muted">{players} enviaram uma ordem</div>
               {revealed && (
-                <div className="col" style={{ gap: 8 }}>
+                <div className="col" style={{ gap: 6 }}>
                   {phase.correctOrder?.map((id, i) => (
                     <div key={id} className="chip">
                       <b>{i + 1}</b> {labelOf(id)}
@@ -311,7 +306,7 @@ function HostInner() {
               )}
             </div>
           ) : (
-            <p className="muted">
+            <p className="muted" style={{ margin: 0 }}>
               {index === 0 ? 'Leia o desafio em voz alta e conduza.' : 'Fechamento: conecte com a próxima aula.'}
             </p>
           )}
@@ -321,30 +316,28 @@ function HostInner() {
           )}
 
           {revealed && phase.explain && (
-            <div className="bubble" style={{ borderColor: 'var(--ok)' }}>
+            <div className="bubble" style={{ borderColor: 'var(--ok)', fontSize: 14, padding: '10px 12px' }}>
               <strong>Por quê:</strong> {phase.explain}
             </div>
           )}
 
           {ranking.length > 0 && (
-            <div className="col" style={{ marginTop: 8 }}>
+            <div className="col" style={{ gap: 4 }}>
               <div className="act">Ranking</div>
-              <div className="col" style={{ gap: 6 }}>
-                {ranking.map((r, i) => (
-                  <div key={r.id} className="lb-row">
-                    <span className="lb-pos">{['🥇', '🥈', '🥉'][i] || `${i + 1}º`}</span>
-                    <CharAvatar c={characterByName(r.name)} size={22} />
-                    <span className="lb-name">{r.name}</span>
-                    <span className="lb-score">{r.score}</span>
-                  </div>
-                ))}
-              </div>
+              {ranking.map((r, i) => (
+                <div key={r.id} className="lb-row" style={{ fontSize: 14 }}>
+                  <span className="lb-pos">{['🥇', '🥈', '🥉'][i] || `${i + 1}º`}</span>
+                  <CharAvatar c={characterByName(r.name)} size={20} />
+                  <span className="lb-name">{r.name}</span>
+                  <span className="lb-score">{r.score}</span>
+                </div>
+              ))}
             </div>
           )}
         </div>
       </div>
 
-      <div className="row" style={{ marginTop: 16 }}>
+      <div className="row" style={{ marginTop: 10, gap: 6 }}>
         {PHASES.map((p, i) => (
           <span
             key={p.id}
