@@ -6,6 +6,8 @@ export interface Character {
   img?: string
   /** ponto focal da foto no corte quadrado, ex.: '50% 15%' (x% y%) */
   pos?: string
+  /** zoom da foto (1 = sem zoom) */
+  zoom?: number
 }
 
 /**

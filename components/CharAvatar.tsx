@@ -11,29 +11,58 @@ function hue(id: string) {
 
 /**
  * Avatar do personagem.
- * - Se `CHAR_IMAGES` estiver ligado e houver foto em `/public/chars/<id>`, usa a foto.
- * - Caso contrário, desenha um avatar redondo original (cor única + emoji).
+ * - Usa a foto se houver `img`/arquivo local; senão, avatar redondo original.
+ * - `pos` ajusta o ponto focal (object-position) e `zoom` dá o zoom.
  */
-export function CharAvatar({ c, size = 40, pos }: { c?: Character; size?: number; pos?: string }) {
+export function CharAvatar({
+  c,
+  size = 40,
+  pos,
+  zoom,
+}: {
+  c?: Character
+  size?: number
+  pos?: string
+  zoom?: number
+}) {
   const [err, setErr] = useState(false)
 
-  // Usa a foto se houver uma URL em `c.img`, ou (quando CHAR_IMAGES = true)
-  // um arquivo local em /public/chars/<id>.
   const src = c?.img || (c && CHAR_IMAGES ? charImg(c) : undefined)
   const objectPosition = pos ?? c?.pos ?? '50% 20%'
+  const scale = zoom ?? c?.zoom ?? 1
 
   if (c && src && !err) {
     return (
-      // eslint-disable-next-line @next/next/no-img-element
-      <img
-        className="char-img"
-        src={src}
-        alt={c.name}
-        width={size}
-        height={size}
-        style={{ width: size, height: size, borderRadius: '16px', objectFit: 'cover', objectPosition, flex: 'none' }}
-        onError={() => setErr(true)}
-      />
+      <span
+        style={{
+          width: size,
+          height: size,
+          flex: 'none',
+          display: 'inline-block',
+          borderRadius: '16px',
+          overflow: 'hidden',
+          background: '#0b1020',
+        }}
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          className="char-img"
+          src={src}
+          alt={c.name}
+          width={size}
+          height={size}
+          style={{
+            width: size,
+            height: size,
+            objectFit: 'cover',
+            objectPosition,
+            transform: scale !== 1 ? `scale(${scale})` : undefined,
+            transformOrigin: objectPosition,
+            display: 'block',
+          }}
+          onError={() => setErr(true)}
+        />
+      </span>
     )
   }
 
