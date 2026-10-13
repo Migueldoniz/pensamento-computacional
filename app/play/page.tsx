@@ -6,6 +6,7 @@ import { PHASES, encodeChoice, isCorrect } from '@/lib/game'
 import { getSnapshot, sendVote, postScore, PlayerScore } from '@/lib/client'
 import { Timeline } from '@/components/Timeline'
 import { CHARACTERS, characterById } from '@/lib/characters'
+import { CharAvatar } from '@/components/CharAvatar'
 import { useCountdown } from '@/lib/useCountdown'
 import { initSound, isMuted, setMuted, sfxCorrect, sfxWrong, sfxTick, sfxClick, sfxWin } from '@/lib/sound'
 
@@ -175,8 +176,11 @@ function PlayerInner() {
         <div className="chars">
           {CHARACTERS.map((c) => (
             <button key={c.id} className="char" onClick={() => pickCharacter(c.id)}>
-              <span className="char-emoji">{c.emoji}</span>
-              <span>{c.name}</span>
+              <CharAvatar c={c} size={44} />
+              <span className="char-text">
+                <b>{c.name}</b>
+                <small className="muted">({c.movie})</small>
+              </span>
             </button>
           ))}
         </div>
@@ -211,7 +215,7 @@ function PlayerInner() {
 
       <div className="row spread">
         <span className="pill">
-          {char?.emoji} {name}
+          <CharAvatar c={char} size={20} /> {name}
         </span>
         <span className="row">
           <span className="pill">{score.score} pts{score.combo > 1 ? ` · combo ${score.combo}` : ''}</span>

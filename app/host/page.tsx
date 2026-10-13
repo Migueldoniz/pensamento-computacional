@@ -9,6 +9,8 @@ import { Robot, type Mood } from '@/components/Robot'
 import { Timeline } from '@/components/Timeline'
 import { useCountdown } from '@/lib/useCountdown'
 import { initSound, isMuted, setMuted, sfxCorrect, sfxWrong, sfxStart, sfxTick, sfxClick } from '@/lib/sound'
+import { CharAvatar } from '@/components/CharAvatar'
+import { characterByName } from '@/lib/characters'
 
 function HostInner() {
   const params = useSearchParams()
@@ -308,6 +310,7 @@ function HostInner() {
                 {ranking.map((r, i) => (
                   <div key={r.id} className="lb-row">
                     <span className="lb-pos">{['🥇', '🥈', '🥉'][i] || `${i + 1}º`}</span>
+                    <CharAvatar c={characterByName(r.name)} size={22} />
                     <span className="lb-name">{r.name}</span>
                     <span className="lb-score">{r.score}</span>
                   </div>
