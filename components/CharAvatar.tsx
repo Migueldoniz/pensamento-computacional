@@ -30,7 +30,7 @@ export function CharAvatar({ c, size = 40 }: { c?: Character; size?: number }) {
         alt={c.name}
         width={size}
         height={size}
-        style={{ width: size, height: size, borderRadius: '50%', objectFit: 'cover', flex: 'none' }}
+        style={{ width: size, height: size, borderRadius: '16px', objectFit: 'cover', flex: 'none' }}
         onError={() => setErr(true)}
       />
     )
@@ -47,7 +47,7 @@ export function CharAvatar({ c, size = 40 }: { c?: Character; size?: number }) {
         display: 'inline-flex',
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: '50%',
+        borderRadius: '16px',
         fontSize: Math.round(size * 0.55),
         background: `linear-gradient(135deg, hsl(${h} 62% 48%), hsl(${(h + 45) % 360} 68% 30%))`,
         boxShadow: 'inset 0 0 0 2px rgba(255,255,255,.18)',
