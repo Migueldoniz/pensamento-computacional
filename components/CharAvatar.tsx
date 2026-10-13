@@ -17,12 +17,16 @@ function hue(id: string) {
 export function CharAvatar({ c, size = 40 }: { c?: Character; size?: number }) {
   const [err, setErr] = useState(false)
 
-  if (c && CHAR_IMAGES && !err) {
+  // Usa a foto se houver uma URL em `c.img`, ou (quando CHAR_IMAGES = true)
+  // um arquivo local em /public/chars/<id>.
+  const src = c?.img || (c && CHAR_IMAGES ? charImg(c) : undefined)
+
+  if (c && src && !err) {
     return (
       // eslint-disable-next-line @next/next/no-img-element
       <img
         className="char-img"
-        src={charImg(c)}
+        src={src}
         alt={c.name}
         width={size}
         height={size}

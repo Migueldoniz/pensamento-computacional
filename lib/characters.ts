@@ -25,7 +25,14 @@ export function characterByName(name: string) {
   return CHARACTERS.find((c) => c.name === name)
 }
 
-/** Personagens secundários da Marvel para escolher como nickname. */
+/**
+ * Personagens secundários da Marvel para escolher como nickname.
+ *
+ * QUER USAR FOTO? Cada personagem aceita um campo `img` com a URL da imagem.
+ * Ex.:  { id: 'korg', name: 'Korg', emoji: '🪨', movie: 'Thor: Ragnarok',
+ *         img: 'https://exemplo.com/korg.jpg' }
+ * Se `img` estiver preenchido, a foto aparece; senão, usa o avatar redondo.
+ */
 export const CHARACTERS: Character[] = [
   { id: 'howard', name: 'Howard, o Pato', emoji: '🦆', movie: 'Guardiões da Galáxia' },
   { id: 'korg', name: 'Korg', emoji: '🪨', movie: 'Thor: Ragnarok' },
