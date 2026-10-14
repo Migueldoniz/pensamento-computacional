@@ -93,3 +93,31 @@ export async function releaseCharacter(
     body: JSON.stringify({ code, playerId }),
   })
 }
+
+export interface Worksheet {
+  destacar: string
+  ignorar: string
+  steps: string[]
+}
+
+export async function saveWorksheet(
+  code: string,
+  playerId: string,
+  ws: Worksheet,
+): Promise<void> {
+  await fetch('/api/worksheet', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ code, playerId, ...ws }),
+  })
+}
+
+export async function getWorksheet(code: string, playerId: string): Promise<Worksheet | null> {
+  const r = await fetch(
+    `/api/worksheet?code=${encodeURIComponent(code)}&playerId=${encodeURIComponent(playerId)}`,
+    { cache: 'no-store' },
+  )
+  if (!r.ok) return null
+  const j = await r.json()
+  return j.worksheet ?? null
+}

@@ -203,9 +203,9 @@ export const PHASES: Phase[] = [
         'Escolha uma decisão simples do seu dia e diga: (1) quais informações importam, (2) quais não importam e (3) em que passos você decide.',
       scaffold: [
         'Escolha uma decisão do dia (ex.: "dá pra encaixar mais uma reunião na minha agenda?").',
-        'O que muda a decisão? (o que você destaca)',
-        'O que NÃO muda? (o que você ignora)',
-        'Em que etapas você decide, na ordem?',
+        'O que realmente impacta a decisão? (o que você destaca)',
+        'O que não importa para realizar a decisão? (o que você ignora)',
+        'Em que etapas você decide, na ordem? (mínimo 3 passos)',
       ],
       example: [
         { label: 'Decisão', value: 'qual fila do supermercado escolher' },

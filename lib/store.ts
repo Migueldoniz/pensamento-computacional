@@ -7,12 +7,20 @@ export interface PlayerScore {
   combo: number
 }
 
+export interface Worksheet {
+  destacar: string
+  ignorar: string
+  steps: string[]
+  updatedAt: number
+}
+
 export interface RoomState {
   index: number
   revealed: boolean
   votes: Record<string, Record<string, string>> // phaseId -> playerId -> choice
   scores: Record<string, PlayerScore> // playerId -> score
   characters: Record<string, string> // charId -> playerId (quem pegou)
+  worksheets: Record<string, Worksheet> // playerId -> ficha da pesquisa (privada)
   deadline: number | null // epoch ms do fim do cronômetro da rodada
   token: string
   updatedAt: number
@@ -128,6 +136,7 @@ export async function createRoom(code: string, token: string): Promise<RoomState
     votes: {},
     scores: {},
     characters: {},
+    worksheets: {},
     deadline: null,
     token,
     updatedAt: Date.now(),
@@ -220,4 +229,24 @@ export async function recordVote(
   room.updatedAt = Date.now()
   await kvSet(keyOf(code), room)
   return true
+}
+
+export async function setWorksheet(
+  code: string,
+  playerId: string,
+  data: { destacar: string; ignorar: string; steps: string[] },
+): Promise<boolean> {
+  const room = await getRoom(code)
+  if (!room) return false
+  room.worksheets = room.worksheets || {}
+  room.worksheets[playerId] = { ...data, updatedAt: Date.now() }
+  room.updatedAt = Date.now()
+  await kvSet(keyOf(code), room)
+  return true
+}
+
+export async function getWorksheet(code: string, playerId: string): Promise<Worksheet | null> {
+  const room = await getRoom(code)
+  if (!room) return null
+  return room.worksheets?.[playerId] ?? null
 }
