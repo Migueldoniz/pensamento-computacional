@@ -143,10 +143,10 @@ export const PHASES: Phase[] = [
     kind: 'conceito',
     concept: [
       { label: 'Decisão humana "de bate-pronto"', detail: '"Essa mensagem é um elogio ou uma zombaria?" — você decide na hora, pelo tom e pelo contexto.' },
-      { label: 'Por que a máquina trava', detail: 'Não há dado claro nem regra clara. O que representar: o texto? o tom? o histórico? Só decidir o que representar já é difícil.' },
-      { label: 'Abstrair = escolher o que representar', detail: 'Sem uma boa abstração (dados + regras), não existe decisão computacional. É aí que entra o pensamento computacional.' },
-      { label: 'Contraste: uma decisão que abstrai bem', detail: '"Cabe uma reserva das 15h às 16h?" → dados: data, início, fim, reservas; regra: sobreposição. Fácil de formalizar — e de decompor.' },
-      { label: 'Decompor', detail: 'receber → validar → selecionar → comparar → decidir.' },
+      { label: 'Por que a máquina trava', detail: 'Não há dado claro nem regra clara. O que representar: o texto? o tom? o histórico? Decidir o que representar já é difícil.' },
+      { label: 'Abstrair = filtrar o ruído e isolar o essencial', detail: 'Filtrar os detalhes irrelevantes do mundo real e escolher a representação exata (dados + regras) para o propósito (Wing, 2006).' },
+      { label: 'Ruidoso (mundo real) → Abstrato (computacional)', detail: 'E-mail de 3 parágrafos ("Professor João precisa da sala urgente porque…") → (solicitante: João, sala: Lab 1, início: 15h, fim: 16h). Só o que muda a decisão — é o que a fase SENSORES vai praticar.' },
+      { label: 'Decompor a decisão', detail: 'receber → validar → selecionar → comparar → decidir. (Bloom: Analisar — diferenciar e organizar.)' },
       { label: 'O que fica', detail: 'O difícil não é programar — é achar a abstração certa. Computar é decidir.' },
     ],
     sources: [
