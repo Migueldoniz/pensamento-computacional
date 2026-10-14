@@ -19,7 +19,8 @@ export interface Research {
   intro?: string
   prompt: string
   scaffold?: string[]
-  example?: string
+  example?: { label: string; value: string }[]
+  exampleNote?: string
   excerpt?: string
   template?: string
   hint?: string
@@ -173,8 +174,14 @@ export const PHASES: Phase[] = [
         'O que NÃO muda? (o que você ignora)',
         'Em que etapas você decide, na ordem?',
       ],
-      example:
-        'Decisão: qual fila do supermercado escolher  ·  Destacar: nº de pessoas na fila, itens de cada pessoa, caixas abertos  ·  Ignorar: cor da roupa, o que estão comprando  ·  Passos: contar as pessoas → estimar os itens → comparar as filas → escolher.  (Wing, 2006: "Which line do you stand in at the supermarket? That’s performance modeling".)',
+      example: [
+        { label: 'Decisão', value: 'qual fila do supermercado escolher' },
+        { label: 'Destacar', value: 'nº de pessoas na fila · itens de cada pessoa · caixas abertos' },
+        { label: 'Ignorar', value: 'cor da roupa · o que estão comprando' },
+        { label: 'Passos', value: 'contar as pessoas → estimar os itens → comparar as filas → escolher' },
+      ],
+      exampleNote:
+        'Exemplo do próprio Wing (2006): “Which line do you stand in at the supermarket? That’s performance modeling”.',
       template: 'Decisão: ____   ·   Destacar: ____   ·   Ignorar: ____   ·   Passos: ____',
       hint: 'Registre no chat do Meet (ou Mentimeter/Padlet).',
       sourceLabel: 'Abrir as fontes (Wing 2006 + Bombasar et al. 2017)',

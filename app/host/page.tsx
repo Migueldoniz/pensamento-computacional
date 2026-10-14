@@ -335,12 +335,22 @@ function HostInner() {
               )}
 
               {phase.research.example && (
-                <details className="hintbox">
-                  <summary>Ver exemplo de resposta</summary>
-                  <div className="small muted" style={{ marginTop: 8 }}>
-                    {phase.research.example}
+                <div className="model">
+                  <div className="act">Exemplo de resposta</div>
+                  <div className="model-body">
+                    {phase.research.example.map((l, i) => (
+                      <div key={i} className="model-row">
+                        <span className="model-label">{l.label}</span>
+                        <span>{l.value}</span>
+                      </div>
+                    ))}
                   </div>
-                </details>
+                  {phase.research.exampleNote && (
+                    <div className="small muted" style={{ marginTop: 8 }}>
+                      {phase.research.exampleNote}
+                    </div>
+                  )}
+                </div>
               )}
 
               {phase.research.sourceUrl && (

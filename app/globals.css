@@ -560,3 +560,23 @@ input[type="text"] {
   margin: 12px 0;
   line-height: 1.6;
 }
+.model {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px 14px;
+  background: var(--panel-2);
+}
+.model-body {
+  display: grid;
+  gap: 4px;
+  margin-top: 8px;
+}
+.model-row {
+  display: grid;
+  grid-template-columns: 92px 1fr;
+  gap: 10px;
+}
+.model-label {
+  color: var(--accent);
+  font-weight: 700;
+}
