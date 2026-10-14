@@ -188,7 +188,7 @@ export const PHASES: Phase[] = [
     act: 'PESQUISA',
     activity: 2,
     title: 'Pesquisa (3 minutos)',
-    prompt: 'Pesquise na internet e traga 1 regra. Depois voltamos para o jogo.',
+    prompt: '',
     kind: 'pesquisa',
     research: {
       intro: 'Transforme uma decisão do seu dia numa decisão "computável" — usando abstração.',

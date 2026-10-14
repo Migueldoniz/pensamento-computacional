@@ -314,7 +314,7 @@ function HostInner() {
             <span className="act">{phase.act}</span>
             <h2 style={{ margin: 0, fontSize: 20 }}>{phase.title}</h2>
           </div>
-          <p style={{ margin: 0, whiteSpace: 'pre-line' }}>{phase.prompt}</p>
+          {phase.prompt && <p style={{ margin: 0, whiteSpace: 'pre-line' }}>{phase.prompt}</p>}
 
           {phase.definition && <div className="quote">{phase.definition}</div>}
 
