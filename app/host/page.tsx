@@ -224,7 +224,7 @@ function HostInner() {
           <span className="act">sala {room || '…'}</span>
         </div>
         <div className="row" style={{ gap: 8 }}>
-          <span className="pill">{players} responderam</span>
+          {phase.activity >= 3 && <span className="pill">{players} responderam</span>}
           <button
             className="ghost"
             onClick={() => {

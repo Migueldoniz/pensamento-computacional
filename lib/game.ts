@@ -108,6 +108,18 @@ export function isCorrect(phase: Phase | undefined, choice: string | null): bool
 
 export const PHASES: Phase[] = [
   {
+    id: 'boot',
+    act: 'BOOT',
+    activity: 1,
+    title: 'Você é o robô',
+    prompt:
+      'Você é o robô de agendamento do laboratório. Missão: aceitar ou recusar pedidos — sem nunca deixar duas aulas na mesma sala. Entre pela sua tela e escolha um personagem.',
+    kind: 'info',
+    robotThinking: 'Sistema iniciado. Aguardando a equipe entrar.',
+    robotCorrect: '',
+    robotWrong: '',
+  },
+  {
     id: 'objetivos',
     act: 'OBJETIVOS',
     activity: 1,
@@ -167,26 +179,12 @@ export const PHASES: Phase[] = [
       { name: 'Relacionar camadas', detail: 'Especificação → algoritmo → implementação: o que cada nível deixa explícito e o que esconde.' },
       { name: 'Cuidado: limites de borda', detail: 'Onde a abstração perde informação — ex.: o instante 15h e o tempo de troca de turma.' },
     ],
-    note:
-      'No jogo de hoje: SENSORES = Abstração de Dados · CÉREBRO = Abstração Procedural + Decomposição. No fim, veremos onde a abstração perde informação.',
     sources: [
       'Wing (2006; 2008): decidir o que destacar/ignorar; camadas e relações entre elas.',
       'Kramer (2007): seleção de detalhes + generalização — e a abstração depende do propósito.',
       'Armoni (2013): como ensinar abstração a iniciantes (omitir + justificar + revisar).',
     ],
     robotThinking: 'Nomeando as estratégias de abstração…',
-    robotCorrect: '',
-    robotWrong: '',
-  },
-  {
-    id: 'boot',
-    act: 'BOOT',
-    activity: 1,
-    title: 'Você é o robô',
-    prompt:
-      'Você é o robô de agendamento do laboratório. Missão: aceitar ou recusar pedidos — sem nunca deixar duas aulas na mesma sala. Entre pela sua tela e escolha um personagem.',
-    kind: 'info',
-    robotThinking: 'Sistema iniciado. Aguardando a equipe entrar.',
     robotCorrect: '',
     robotWrong: '',
   },
