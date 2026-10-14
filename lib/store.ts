@@ -8,6 +8,7 @@ export interface PlayerScore {
 }
 
 export interface Worksheet {
+  decisao: string
   destacar: string
   ignorar: string
   steps: string[]
@@ -234,7 +235,7 @@ export async function recordVote(
 export async function setWorksheet(
   code: string,
   playerId: string,
-  data: { destacar: string; ignorar: string; steps: string[] },
+  data: { decisao: string; destacar: string; ignorar: string; steps: string[] },
 ): Promise<boolean> {
   const room = await getRoom(code)
   if (!room) return false

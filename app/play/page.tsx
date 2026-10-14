@@ -53,6 +53,7 @@ function PlayerInner() {
   const [score, setScore] = useState<Score>({ score: 0, combo: 0 })
 
   // Ficha da pesquisa (worksheet) — privada por aluno
+  const [wcDecisao, setWcDecisao] = useState('')
   const [wcDestacar, setWcDestacar] = useState('')
   const [wcIgnorar, setWcIgnorar] = useState('')
   const [wcStep, setWcStep] = useState('')
@@ -157,6 +158,7 @@ function PlayerInner() {
     ;(async () => {
       const w = await getWorksheet(room, playerId)
       if (w) {
+        setWcDecisao(w.decisao || '')
         setWcDestacar(w.destacar)
         setWcIgnorar(w.ignorar)
         setWcSteps(w.steps || [])
@@ -207,6 +209,7 @@ function PlayerInner() {
   async function saveWs() {
     if (!room || !playerId) return
     await saveWorksheet(room, playerId, {
+      decisao: wcDecisao.trim(),
       destacar: wcDestacar.trim(),
       ignorar: wcIgnorar.trim(),
       steps: wcSteps,
@@ -379,6 +382,7 @@ function PlayerInner() {
             {wcSaved && (
               <div className="bubble" style={{ borderColor: 'var(--ok)' }}>
                 <div className="small muted" style={{ marginBottom: 4 }}>Na pesquisa você respondeu</div>
+                <div className="small">Decisão: {wcDecisao || '—'}</div>
                 <div className="small">Destacar: {wcDestacar || '—'} · Ignorar: {wcIgnorar || '—'}</div>
                 <div className="small">Passos: {wcSteps.length ? wcSteps.join(' → ') : '—'}</div>
                 <div style={{ marginTop: 6 }}><strong>Você mudaria algo agora?</strong></div>
@@ -415,6 +419,15 @@ function PlayerInner() {
 
             <div className="col" style={{ gap: 8 }}>
               <div className="act">Sua ficha</div>
+              <label className="small muted">
+                Nome da decisão
+                <input
+                  type="text"
+                  value={wcDecisao}
+                  onChange={(e) => setWcDecisao(e.target.value)}
+                  placeholder="ex.: dá pra encaixar mais uma reunião?"
+                />
+              </label>
               <label className="small muted">
                 O que impacta a decisão (destacar)
                 <input
@@ -462,7 +475,7 @@ function PlayerInner() {
               )}
               <button
                 className="primary"
-                disabled={wcSteps.length < 3 || !wcDestacar.trim() || !wcIgnorar.trim()}
+                disabled={wcSteps.length < 3 || !wcDecisao.trim() || !wcDestacar.trim() || !wcIgnorar.trim()}
                 onClick={saveWs}
               >
                 {wcSaved ? 'salvar de novo' : 'salvar minha ficha'}

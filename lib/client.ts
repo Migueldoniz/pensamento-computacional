@@ -95,6 +95,7 @@ export async function releaseCharacter(
 }
 
 export interface Worksheet {
+  decisao: string
   destacar: string
   ignorar: string
   steps: string[]

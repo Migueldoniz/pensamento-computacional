@@ -19,6 +19,7 @@ export async function POST(req: Request) {
   if (!code || !playerId) return NextResponse.json({ ok: false }, { status: 400 })
   const steps = Array.isArray(b?.steps) ? b.steps.map((s: unknown) => String(s)).filter(Boolean) : []
   const ok = await setWorksheet(code, playerId, {
+    decisao: String(b?.decisao || ''),
     destacar: String(b?.destacar || ''),
     ignorar: String(b?.ignorar || ''),
     steps,
