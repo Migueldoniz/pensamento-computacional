@@ -60,6 +60,7 @@ export interface Phase {
   explain?: string
   timeline?: TimelineSpec
   objectives?: Objective[] // kind 'objetivos'
+  objectivesText?: string // kind 'objetivos' (texto único, com **negrito**)
   concept?: ConceptStep[] // kind 'conceito'
   definition?: string // conceito: definição destacada
   strategies?: { name: string; detail?: string }[] // estratégias (ex.: de abstração)
@@ -113,7 +114,7 @@ export const PHASES: Phase[] = [
     activity: 1,
     title: 'Você é o robô',
     prompt:
-      'Você é o robô de agendamento do laboratório. Missão: aceitar ou recusar pedidos — sem nunca deixar duas aulas na mesma sala. Entre pela sua tela e escolha um personagem.',
+      'Bem-vindo(a)! Você é o robô. Vai receber situações e precisará decidir — e nem toda decisão é fácil. Entre pela sua tela e escolha um personagem: é por ele que você joga.',
     kind: 'info',
     robotThinking: 'Sistema iniciado. Aguardando a equipe entrar.',
     robotCorrect: '',
@@ -123,18 +124,12 @@ export const PHASES: Phase[] = [
     id: 'objetivos',
     act: 'OBJETIVOS',
     activity: 1,
-    title: 'Objetivos da disciplina',
-    prompt:
-      'Computar é decidir: um programa é uma máquina que decide contra o que o ambiente manda. Base da aula (Taxonomia de Bloom Revisada):',
+    title: 'Objetivos da aula',
+    prompt: 'Computar é decidir: um programa é uma máquina que decide contra o que o ambiente manda.',
     kind: 'objetivos',
-    objectives: [
-      { text: 'Entender o que é uma decisão computável (decidir caso a caso).', cell: 'B2' },
-      { text: 'Analisar quais dados bastam para decidir um conflito (abstração).', cell: 'B4' },
-      { text: 'Decompor a decisão e distinguir o que conflita.', cell: 'B4' },
-      { text: 'Planejar as verificações para aceitar ou rejeitar uma reserva.', cell: 'C6' },
-      { text: 'Transferir o plano para um cenário novo (dois laboratórios).', cell: 'A1' },
-    ],
-    robotThinking: 'Objetivos carregados. Pronto para jogar.',
+    objectivesText:
+      'Ao final desta aula, você vai **entender** o que é decidir, **analisar** o que realmente importa, **decompor** o problema em partes, **planejar** a solução passo a passo e **transferir** o que aprendeu para uma situação nova.',
+    robotThinking: 'Objetivos carregados.',
     robotCorrect: '',
     robotWrong: '',
   },

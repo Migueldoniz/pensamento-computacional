@@ -7,6 +7,7 @@ import { getSnapshot, sendVote, postScore, claimCharacter, releaseCharacter, sav
 import { Timeline } from '@/components/Timeline'
 import { CHARACTERS, characterById } from '@/lib/characters'
 import { CharAvatar } from '@/components/CharAvatar'
+import { Rich } from '@/components/Rich'
 import { useCountdown } from '@/lib/useCountdown'
 import { initSound, isMuted, setMuted, sfxCorrect, sfxWrong, sfxTick, sfxClick, sfxWin } from '@/lib/sound'
 
@@ -359,12 +360,18 @@ function PlayerInner() {
 
         {phase.kind === 'objetivos' && (
           <div className="col" style={{ gap: 6 }}>
-            {phase.objectives?.map((o, i) => (
-              <div key={i} className="row spread">
-                <span>{o.text}</span>
-                <span className="pill on">{o.cell}</span>
-              </div>
-            ))}
+            {phase.objectivesText ? (
+              <p style={{ margin: 0, fontSize: 17, lineHeight: 1.6 }}>
+                <Rich text={phase.objectivesText} />
+              </p>
+            ) : (
+              phase.objectives?.map((o, i) => (
+                <div key={i} className="row spread">
+                  <span>{o.text}</span>
+                  <span className="pill on">{o.cell}</span>
+                </div>
+              ))
+            )}
           </div>
         )}
 

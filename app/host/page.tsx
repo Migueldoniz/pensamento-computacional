@@ -10,6 +10,7 @@ import { Timeline } from '@/components/Timeline'
 import { useCountdown } from '@/lib/useCountdown'
 import { initSound, isMuted, setMuted, sfxCorrect, sfxWrong, sfxStart, sfxTick, sfxClick } from '@/lib/sound'
 import { CharAvatar } from '@/components/CharAvatar'
+import { Rich } from '@/components/Rich'
 import { characterByName } from '@/lib/characters'
 
 function fmtTime(s: number) {
@@ -319,12 +320,18 @@ function HostInner() {
 
           {phase.kind === 'objetivos' && (
             <div className="col" style={{ gap: 8 }}>
-              {phase.objectives?.map((o, i) => (
-                <div key={i} className="row spread" style={{ alignItems: 'center' }}>
-                  <span>{o.text}</span>
-                  <span className="pill on">{o.cell}</span>
-                </div>
-              ))}
+              {phase.objectivesText ? (
+                <p style={{ margin: 0, fontSize: 18, lineHeight: 1.6 }}>
+                  <Rich text={phase.objectivesText} />
+                </p>
+              ) : (
+                phase.objectives?.map((o, i) => (
+                  <div key={i} className="row spread" style={{ alignItems: 'center' }}>
+                    <span>{o.text}</span>
+                    <span className="pill on">{o.cell}</span>
+                  </div>
+                ))
+              )}
             </div>
           )}
 
