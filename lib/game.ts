@@ -187,7 +187,7 @@ export const PHASES: Phase[] = [
     id: 'pesquisa',
     act: 'PESQUISA',
     activity: 2,
-    title: 'Pesquisa (3 minutos)',
+    title: 'Pesquisa (2 minutos)',
     prompt: '',
     kind: 'pesquisa',
     research: {
@@ -212,7 +212,7 @@ export const PHASES: Phase[] = [
       hint: 'Registre no chat do Meet (ou Mentimeter/Padlet).',
       sourceLabel: 'Abrir as fontes (Wing 2006 + Bombasar et al. 2017)',
       sourceUrl: '/fonte',
-      minutes: 3,
+      minutes: 2,
     },
     robotThinking: 'Enquanto vocês pesquisam, eu espero.',
     robotCorrect: '',
