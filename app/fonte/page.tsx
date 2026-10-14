@@ -20,19 +20,19 @@ export default function FontePage({ searchParams }: { searchParams: { room?: str
           <div className="source-tag">Fonte 1</div>
           <h3>Wing (2006) — abstração e decomposição</h3>
           <div className="quote">
-            “Thinking like a computer scientist means more than being able to program a computer. It
-            requires thinking at multiple levels of abstraction.{' '}
-            <mark>Computational thinking is using abstraction and decomposition when attacking a large
-            complex task or designing a large complex system. It is separation of concerns. It is
-            choosing an appropriate representation for a problem or modeling the relevant aspects of
-            a problem to make it tractable.</mark>{' '}
-            … Most fundamentally it addresses the question: What is computable?”
+            “Pensamento computacional é usar <mark>abstração e decomposição</mark> ao atacar uma tarefa
+            grande e complexa ou projetar um sistema complexo e grande. É a separação de interesses. É{' '}
+            <mark>escolher uma representação apropriada para um problema ou modelagem dos aspectos
+            relevantes de um problema para torná-lo tratável</mark>. … De forma mais fundamental, ele
+            trata a questão: <em>O que é computável?</em>”
+            <div className="small muted" style={{ marginTop: 6 }}>
+              — Tradução de Cleverson Sebastião dos Anjos (WING, 2016, RBECT; CC BY 4.0)
+            </div>
           </div>
           <p className="small muted" style={{ margin: '0 0 12px' }}>
-            Em português: pensar como cientista da computação é mais do que programar — é usar
-            <strong> abstração e decomposição</strong>, escolhendo a representação adequada e modelando
-            os aspectos relevantes para tornar o problema tratável. Wing também pergunta:
-            <em> “o que é computável?”</em>.
+            Original (2006): “Computational thinking is using <strong>abstraction and decomposition</strong>…
+            It is <strong>choosing an appropriate representation</strong> for a problem or modeling the
+            relevant aspects of a problem to make it tractable.”
           </p>
           <div className="row" style={{ gap: 10, alignItems: 'center' }}>
             <a className="btn" href="/ler?doc=wing" target="_blank" rel="noreferrer">
@@ -40,11 +40,11 @@ export default function FontePage({ searchParams }: { searchParams: { room?: str
             </a>
             <a
               className="small"
-              href="https://www.cs.cmu.edu/~wing/publications/Wing06.pdf"
+              href="https://periodicos.utfpr.edu.br/rbect/article/view/4711"
               target="_blank"
               rel="noreferrer"
             >
-              PDF direto (baixa)
+              Tradução PT (RBECT, CC BY)
             </a>
             <a
               className="small"
@@ -52,7 +52,7 @@ export default function FontePage({ searchParams }: { searchParams: { room?: str
               target="_blank"
               rel="noreferrer"
             >
-              Wing (2008) — PDF
+              Original (2008) — PDF
             </a>
           </div>
         </section>
