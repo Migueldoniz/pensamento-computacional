@@ -18,6 +18,8 @@ export interface ConceptStep {
 export interface Research {
   intro?: string
   prompt: string
+  scaffold?: string[]
+  example?: string
   excerpt?: string
   template?: string
   hint?: string
@@ -162,9 +164,17 @@ export const PHASES: Phase[] = [
     prompt: 'Pesquise na internet e traga 1 regra. Depois voltamos para o jogo.',
     kind: 'pesquisa',
     research: {
-      intro: 'Transforme uma decisão humana numa decisão computacional — usando a ideia de abstração da fonte.',
+      intro: 'Transforme uma decisão do seu dia numa decisão "computável" — usando abstração.',
       prompt:
-        'Wing (2006) diz que pensamento computacional é usar ABSTRAÇÃO e DECOMPOSIÇÃO: escolher a representação adequada e modelar os aspectos relevantes. Escolha UMA decisão do seu dia (fora do computador) e mostre: quais dados você destacaria, quais ignoraria e em que passos dividiria a decisão.',
+        'Escolha uma decisão simples do seu dia e diga: (1) quais informações importam, (2) quais não importam e (3) em que passos você decide.',
+      scaffold: [
+        'Escolha uma decisão do dia (ex.: "dá pra encaixar mais uma reunião na minha agenda?").',
+        'O que muda a decisão? (o que você destaca)',
+        'O que NÃO muda? (o que você ignora)',
+        'Em que etapas você decide, na ordem?',
+      ],
+      example:
+        'Decisão: encaixar mais uma reunião na agenda  ·  Destacar: horários (início/fim) das reuniões + duração da nova  ·  Ignorar: assunto da reunião, quem convocou  ·  Passos: ver os horários → comparar sobreposição → decidir.',
       template: 'Decisão: ____   ·   Destacar: ____   ·   Ignorar: ____   ·   Passos: ____',
       hint: 'Registre no chat do Meet (ou Mentimeter/Padlet).',
       sourceLabel: 'Abrir as fontes (Wing 2006 + Bombasar et al. 2017)',

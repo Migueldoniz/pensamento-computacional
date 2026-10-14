@@ -314,6 +314,22 @@ function PlayerInner() {
             <div className="bubble" style={{ borderColor: 'var(--warn)' }}>
               <div style={{ fontSize: 16 }}>{phase.research.prompt}</div>
             </div>
+            {phase.research.scaffold && (
+              <div>
+                <div className="act">Texto de apoio</div>
+                <ol style={{ margin: '4px 0 0', paddingLeft: 20, lineHeight: 1.5 }}>
+                  {phase.research.scaffold.map((s, i) => (
+                    <li key={i}>{s}</li>
+                  ))}
+                </ol>
+              </div>
+            )}
+            {phase.research.example && (
+              <div className="bubble" style={{ borderColor: 'var(--line)' }}>
+                <div className="small muted" style={{ marginBottom: 4 }}>Exemplo de resposta (outro tema)</div>
+                <div className="small">{phase.research.example}</div>
+              </div>
+            )}
             {phase.research.sourceUrl && (
               <a
                 href={
