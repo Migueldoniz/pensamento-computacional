@@ -1,14 +1,14 @@
 :root {
-  --bg: #f5f6f8;
-  --panel: #ffffff;
-  --panel-2: #f1f3f6;
-  --line: #e5e8ee;
-  --text: #1b2430;
-  --muted: #6b7686;
-  --accent: #2563eb;
-  --ok: #16a34a;
-  --bad: #dc2626;
-  --warn: #d97706;
+  --bg: #0f1216;
+  --panel: #171b22;
+  --panel-2: #1e242e;
+  --line: #2a313d;
+  --text: #e7eaf0;
+  --muted: #9aa4b2;
+  --accent: #4f8cff;
+  --ok: #34d399;
+  --bad: #f87171;
+  --warn: #fbbf24;
 }
 
 * {
@@ -46,7 +46,7 @@ a {
   border: 1px solid var(--line);
   border-radius: 16px;
   padding: 20px;
-  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04), 0 1px 3px rgba(16, 24, 40, 0.06);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
 }
 
 .row {
@@ -133,23 +133,23 @@ button.opt {
 
 button.opt.sel {
   border-color: var(--accent);
-  background: #e8f0ff;
+  background: rgba(79, 140, 255, 0.16);
 }
 
 button.opt.correct {
   border-color: var(--ok);
-  background: #e7f7ec;
+  background: rgba(52, 211, 153, 0.16);
 }
 
 button.opt.wrong {
   border-color: var(--bad);
-  background: #fdecec;
+  background: rgba(248, 113, 113, 0.16);
 }
 
 button.primary {
   background: var(--accent);
   border-color: var(--accent);
-  color: #ffffff;
+  color: #0b1020;
   font-weight: 700;
 }
 
@@ -287,7 +287,7 @@ input[type="text"] {
   top: 0;
   bottom: 0;
   width: 1px;
-  background: rgba(0, 0, 0, .07);
+  background: rgba(255, 255, 255, .06);
 }
 
 .tl-block {
@@ -300,20 +300,20 @@ input[type="text"] {
   justify-content: center;
   font-size: 11px;
   font-weight: 700;
-  color: #1b2430;
+  color: #0b1020;
   overflow: hidden;
   padding: 0 6px;
   white-space: nowrap;
 }
 
 .tl-block.existing {
-  background: #cbd5e1;
-  color: #1b2430;
+  background: #64748b;
+  color: #0b1020;
 }
 
 .tl-block.request {
   background: var(--warn);
-  color: #fff;
+  color: #0b1020;
 }
 
 .tl-block.invalid {
@@ -335,7 +335,7 @@ input[type="text"] {
 
 .chip b {
   background: var(--accent);
-  color: #ffffff;
+  color: #0b1020;
   border-radius: 6px;
   width: 20px;
   height: 20px;
@@ -511,14 +511,14 @@ input[type="text"] {
 }
 
 .char-img {
-  background: #eef1f5;
+  background: #0b1020;
 }
 
 /* ---------- Utilidades ---------- */
 .btn {
   display: inline-block;
   background: var(--accent);
-  color: #ffffff;
+  color: #0b1020;
   font-weight: 700;
   border-radius: 12px;
   padding: 10px 16px;
