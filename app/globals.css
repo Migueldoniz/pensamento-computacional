@@ -511,3 +511,52 @@ input[type="text"] {
 .char-img {
   background: #0b1020;
 }
+
+/* ---------- Utilidades ---------- */
+.btn {
+  display: inline-block;
+  background: var(--accent);
+  color: #05122c;
+  font-weight: 700;
+  border-radius: 12px;
+  padding: 10px 16px;
+  text-decoration: none;
+}
+.steps {
+  margin: 0;
+  padding-left: 22px;
+  line-height: 1.7;
+}
+.hintbox {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 10px 14px;
+  background: var(--panel-2);
+}
+.hintbox summary {
+  cursor: pointer;
+  font-weight: 700;
+}
+.source {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 18px;
+  background: var(--panel);
+}
+.source h3 {
+  margin: 6px 0 0;
+  font-size: 17px;
+}
+.source-tag {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  font-weight: 700;
+}
+.quote {
+  border-left: 3px solid var(--accent);
+  padding: 6px 0 6px 12px;
+  margin: 12px 0;
+  line-height: 1.6;
+}

@@ -309,56 +309,49 @@ function PlayerInner() {
         )}
 
         {phase.kind === 'pesquisa' && phase.research && (
-          <div className="col" style={{ gap: 8 }}>
-            {phase.research.intro && <p style={{ margin: 0 }}>{phase.research.intro}</p>}
-            <div className="bubble" style={{ borderColor: 'var(--warn)' }}>
-              <div style={{ fontSize: 16 }}>{phase.research.prompt}</div>
-            </div>
+          <div className="col" style={{ gap: 14 }}>
+            <p style={{ margin: 0, fontSize: 17, lineHeight: 1.5 }}>{phase.research.prompt}</p>
+
             {phase.research.scaffold && (
-              <div>
-                <div className="act">Texto de apoio</div>
-                <ol style={{ margin: '4px 0 0', paddingLeft: 20, lineHeight: 1.5 }}>
+              <div className="col" style={{ gap: 6 }}>
+                <div className="act">Passo a passo</div>
+                <ol className="steps">
                   {phase.research.scaffold.map((s, i) => (
                     <li key={i}>{s}</li>
                   ))}
                 </ol>
               </div>
             )}
+
             {phase.research.example && (
-              <div className="bubble" style={{ borderColor: 'var(--line)' }}>
-                <div className="small muted" style={{ marginBottom: 4 }}>Exemplo de resposta (outro tema)</div>
-                <div className="small">{phase.research.example}</div>
-              </div>
+              <details className="hintbox">
+                <summary>Ver exemplo de resposta</summary>
+                <div className="small muted" style={{ marginTop: 8 }}>
+                  {phase.research.example}
+                </div>
+              </details>
             )}
+
             {phase.research.sourceUrl && (
-              <a
-                href={
-                  phase.research.sourceUrl.startsWith('/') && room
-                    ? `${phase.research.sourceUrl}?room=${room}`
-                    : phase.research.sourceUrl
-                }
-                target="_blank"
-                rel="noreferrer"
-                style={{
-                  display: 'inline-block',
-                  textAlign: 'center',
-                  background: 'var(--accent)',
-                  color: '#05122c',
-                  fontWeight: 700,
-                  borderRadius: 12,
-                  padding: '12px 16px',
-                  textDecoration: 'none',
-                }}
-              >
-                📄 {phase.research.sourceLabel || 'Abrir a fonte'}
-              </a>
-            )}
-            {phase.research.excerpt && (
-              <div className="small muted" style={{ borderLeft: '3px solid var(--line)', paddingLeft: 10 }}>
-                {phase.research.excerpt}
+              <div className="row" style={{ gap: 12, alignItems: 'center' }}>
+                <a
+                  className="btn"
+                  href={
+                    phase.research.sourceUrl.startsWith('/') && room
+                      ? `${phase.research.sourceUrl}?room=${room}`
+                      : phase.research.sourceUrl
+                  }
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  📄 {phase.research.sourceLabel || 'Abrir a fonte'}
+                </a>
+                {phase.research.template && (
+                  <span className="mono small muted">{phase.research.template}</span>
+                )}
               </div>
             )}
-            {phase.research.template && <div className="chip">{phase.research.template}</div>}
+
             {phase.research.hint && <div className="small muted">{phase.research.hint}</div>}
           </div>
         )}
