@@ -311,6 +311,8 @@ function HostInner() {
           </div>
           <p style={{ margin: 0 }}>{phase.prompt}</p>
 
+          {phase.definition && <div className="quote">{phase.definition}</div>}
+
           {phase.kind === 'objetivos' && (
             <div className="col" style={{ gap: 8 }}>
               {phase.objectives?.map((o, i) => (
@@ -324,7 +326,6 @@ function HostInner() {
 
           {phase.kind === 'conceito' && (
             <div className="col" style={{ gap: 10 }}>
-              {phase.definition && <div className="quote">{phase.definition}</div>}
               {phase.concept?.map((s, i) => (
                 <div key={i} style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
                   <span className="pill on" style={{ flex: 'none' }}>{i + 1}</span>

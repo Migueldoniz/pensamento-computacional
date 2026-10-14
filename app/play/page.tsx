@@ -319,6 +319,8 @@ function PlayerInner() {
         <h2>{phase.title}</h2>
         <p>{phase.prompt}</p>
 
+        {phase.definition && <div className="quote">{phase.definition}</div>}
+
         {phase.kind === 'objetivos' && (
           <div className="col" style={{ gap: 6 }}>
             {phase.objectives?.map((o, i) => (
@@ -332,7 +334,6 @@ function PlayerInner() {
 
         {phase.kind === 'conceito' && (
           <div className="col" style={{ gap: 10 }}>
-            {phase.definition && <div className="quote">{phase.definition}</div>}
             {phase.concept?.map((s, i) => (
               <div key={i} style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
                 <span className="pill on" style={{ flex: 'none' }}>{i + 1}</span>
