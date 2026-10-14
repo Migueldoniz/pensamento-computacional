@@ -354,7 +354,7 @@ function PlayerInner() {
           )}
         </div>
         <h2>{phase.title}</h2>
-        <p>{phase.prompt}</p>
+        <p style={{ whiteSpace: 'pre-line' }}>{phase.prompt}</p>
 
         {phase.definition && <div className="quote">{phase.definition}</div>}
 

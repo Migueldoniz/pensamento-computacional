@@ -114,7 +114,7 @@ export const PHASES: Phase[] = [
     activity: 1,
     title: 'Você é o robô',
     prompt:
-      'Bem-vindo(a)! Você é o robô. Vai receber situações e precisará decidir — e nem toda decisão é fácil. Entre pela sua tela e escolha um personagem: é por ele que você joga.',
+      'Bem-vindo(a)! Você é o robô e vai receber situações onde precisará decidir.\nEntre pela sua tela e escolha um personagem: é por ele que você joga.',
     kind: 'info',
     robotThinking: 'Sistema iniciado. Aguardando a equipe entrar.',
     robotCorrect: '',
