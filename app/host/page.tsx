@@ -308,6 +308,17 @@ function HostInner() {
             </div>
           )}
 
+          {phase.kind === 'regras' && (
+            <div className="col" style={{ gap: 6 }}>
+              {phase.rules?.map((r, i) => (
+                <div key={i} className="row" style={{ gap: 8 }}>
+                  <span className="pill on">{i + 1}</span>
+                  <span>{r}</span>
+                </div>
+              ))}
+            </div>
+          )}
+
           {phase.kind === 'pesquisa' && phase.research && (
             <div className="bubble" style={{ borderColor: 'var(--warn)' }}>
               <div style={{ fontSize: 17 }}>{phase.research.prompt}</div>
@@ -321,7 +332,8 @@ function HostInner() {
             <div className="col" style={{ gap: 8 }}>
               {phase.options?.map((o) => {
                 const c = counts[o.id] || 0
-                const pct = totalVotes ? Math.round((c / totalVotes) * 100) : 0
+                const denom = phase.kind === 'multi' ? players : totalVotes
+                const pct = denom ? Math.round((c / denom) * 100) : 0
                 const isCorrect = revealed && (phase.correctIds || []).includes(o.id)
                 return (
                   <div key={o.id} className="col" style={{ gap: 4 }}>

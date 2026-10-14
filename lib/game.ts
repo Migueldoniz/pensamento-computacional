@@ -1,4 +1,4 @@
-export type PhaseKind = 'info' | 'objetivos' | 'conceito' | 'pesquisa' | 'single' | 'multi' | 'order'
+export type PhaseKind = 'info' | 'objetivos' | 'conceito' | 'pesquisa' | 'regras' | 'single' | 'multi' | 'order'
 
 export interface Option {
   id: string
@@ -55,6 +55,7 @@ export interface Phase {
   concept?: ConceptStep[] // kind 'conceito'
   sources?: string[] // referências mostradas na fase
   research?: Research // kind 'pesquisa'
+  rules?: string[] // kind 'regras'
   robotThinking: string
   robotCorrect: string
   robotWrong: string
@@ -120,6 +121,7 @@ export const PHASES: Phase[] = [
       'Você decide "dá para usar a sala agora?" sem perceber. O papel do pensamento computacional é transformar essa decisão humana numa decisão que a máquina consegue executar.',
     kind: 'conceito',
     concept: [
+      { label: 'Exemplo primeiro (fora da computação)', detail: 'Preparar uma apresentação: escolher tema, público e tempo (abstração); separar em mensagem, conteúdo, recursos e ensaio (decomposição).' },
       { label: 'Decisão humana', detail: 'Olhar a agenda e decidir "cabe?" usando o bom senso.' },
       { label: 'Abstrair', detail: 'Escolher só o que muda a decisão: data, início, fim e reservas existentes.' },
       { label: 'Formalizar a regra', detail: 'Há conflito quando os intervalos se sobrepõem (e o instante final não ocupa).' },
@@ -165,6 +167,24 @@ export const PHASES: Phase[] = [
     robotWrong: '',
   },
   {
+    id: 'regras',
+    act: 'REGRAS',
+    activity: 3,
+    title: 'As regras do caso',
+    prompt: 'Antes de decidir, combine as regras do laboratório:',
+    kind: 'regras',
+    rules: [
+      'Há um único laboratório.',
+      'Toda reserva começa e termina no mesmo dia.',
+      'O início deve anteceder o fim.',
+      'Reservas aceitas não podem se sobrepor.',
+      'Uma reserva pode começar exatamente quando outra termina.',
+    ],
+    robotThinking: 'Regras carregadas. Quando quiserem, decidam.',
+    robotCorrect: '',
+    robotWrong: '',
+  },
+  {
     id: 'sensores',
     act: 'SENSORES',
     activity: 3,
@@ -182,7 +202,7 @@ export const PHASES: Phase[] = [
     ],
     correctIds: ['data', 'inicio', 'fim', 'existentes'],
     explain:
-      'Abstrair é escolher o que importa para uma finalidade. Data + início + fim + reservas existentes alimentam a decisão. O nome identifica o responsável (mas não decide conflito) e o celular é irrelevante.',
+      'Abstrair é acertar o conjunto: se faltar um dado essencial, você não consegue decidir; se incluir demais, fica lento e se confunde. Data + início + fim + reservas existentes alimentam a decisão. O nome identifica o responsável (mas não decide conflito) e o celular é irrelevante.',
     robotThinking: 'Processando 6 tipos de dados…',
     robotCorrect: 'Sensores calibrados: só o essencial.',
     robotWrong: 'Fiquei com dados inúteis entupindo meu processamento.',
@@ -226,7 +246,7 @@ export const PHASES: Phase[] = [
     ],
     correctOrder: ['receber', 'obrigatorios', 'validar', 'selecionar', 'sobrepor', 'decidir'],
     explain:
-      'Primeiro receber e checar os dados; validar o intervalo; só então buscar reservas do mesmo dia e comparar sobreposição; por fim decidir. Ordem errada gera bug.',
+      'Esta é uma sequência de referência (uma ordem possível), não a única implementação. Primeiro receber e checar os dados; validar o intervalo; só então buscar reservas do mesmo dia e comparar sobreposição; por fim decidir.',
     robotThinking: 'Montando o fluxo de decisão…',
     robotCorrect: 'Fluxo na ordem certa. Nada de conflito.',
     robotWrong: 'Meu fluxo ficou embaralhado — vou errar feio.',

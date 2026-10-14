@@ -15,15 +15,15 @@ interface Score {
   combo: number
 }
 
-function loadScore(): Score {
+function loadScore(room: string): Score {
   try {
-    return JSON.parse(localStorage.getItem('oa_score') || '') as Score
+    return JSON.parse(localStorage.getItem(`oa_score:${room}`) || '') as Score
   } catch {
     return { score: 0, combo: 0 }
   }
 }
-function saveScore(s: Score) {
-  localStorage.setItem('oa_score', JSON.stringify(s))
+function saveScore(room: string, s: Score) {
+  localStorage.setItem(`oa_score:${room}`, JSON.stringify(s))
 }
 
 function fmtTime(s: number) {
@@ -71,8 +71,18 @@ function PlayerInner() {
       setCharId(savedName)
       setReady(true)
     }
-    setScore(loadScore())
   }, [])
+
+  // Pontuação e fases já pontuadas isoladas POR SALA.
+  useEffect(() => {
+    if (!room) return
+    setScore(loadScore(room))
+    try {
+      scored.current = new Set(JSON.parse(localStorage.getItem(`oa_scored:${room}`) || '[]'))
+    } catch {
+      scored.current = new Set()
+    }
+  }, [room])
 
   useEffect(() => {
     if (!room) return
@@ -115,13 +125,18 @@ function PlayerInner() {
     if (!revealed || !isInteractive(phase.kind)) return
     if (scored.current.has(phase.id)) return
     scored.current.add(phase.id)
+    try {
+      localStorage.setItem(`oa_scored:${room}`, JSON.stringify([...scored.current]))
+    } catch {
+      /* ignore */
+    }
     const good = isCorrect(phase, sent)
     const next: Score = {
       score: score.score + (good ? 10 : 0),
       combo: good ? score.combo + 1 : 0,
     }
     setScore(next)
-    saveScore(next)
+    saveScore(room, next)
     if (good) sfxCorrect()
     else sfxWrong()
     if (room && playerId) postScore(room, playerId, name, next.score, next.combo)
@@ -277,6 +292,17 @@ function PlayerInner() {
                   <b>{s.label}</b>
                   {s.detail && <div className="muted small">{s.detail}</div>}
                 </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {phase.kind === 'regras' && (
+          <div className="col" style={{ gap: 6 }}>
+            {phase.rules?.map((r, i) => (
+              <div key={i} className="row" style={{ gap: 8 }}>
+                <span className="pill on">{i + 1}</span>
+                <span>{r}</span>
               </div>
             ))}
           </div>
