@@ -16,8 +16,13 @@ export interface ConceptStep {
 }
 
 export interface Research {
+  intro?: string
   prompt: string
+  excerpt?: string
+  template?: string
   hint?: string
+  sourceLabel?: string
+  sourceUrl?: string
   minutes: number
 }
 
@@ -157,9 +162,15 @@ export const PHASES: Phase[] = [
     prompt: 'Pesquise na internet e traga 1 regra. Depois voltamos para o jogo.',
     kind: 'pesquisa',
     research: {
+      intro: 'Objetivo: encontrar, na fonte, uma característica do pensamento computacional.',
       prompt:
-        'Como um sistema de reservas (agenda, cinema, laboratório) decide se DOIS horários conflitam? Traga 1 regra.',
+        'Leia a SEÇÃO 2 do artigo e identifique UMA característica do pensamento computacional. Dê um exemplo DIFERENTE dos que já vimos.',
+      excerpt:
+        'Trecho-guia: “duas características do PC podem ser claramente identificadas: o uso de conhecimentos da Ciência da Computação e a não limitação ao ambiente dos computadores.” (Bombasar, Raabe & Santiago, 2017, seção 2)',
+      template: 'Característica: ____   ·   Exemplo: ____   ·   Fonte: seção 2',
       hint: 'Registre no chat do Meet (ou Mentimeter/Padlet).',
+      sourceLabel: 'Abrir a fonte — Bombasar, Raabe & Santiago (2017), seção 2',
+      sourceUrl: 'https://periodicos.univali.br/index.php/IJCThink/article/view/8928/6208',
       minutes: 3,
     },
     robotThinking: 'Enquanto vocês pesquisam, eu espero.',

@@ -309,9 +309,37 @@ function PlayerInner() {
         )}
 
         {phase.kind === 'pesquisa' && phase.research && (
-          <div className="bubble" style={{ borderColor: 'var(--warn)' }}>
-            <div style={{ fontSize: 17 }}>{phase.research.prompt}</div>
-            {phase.research.hint && <div className="small muted" style={{ marginTop: 6 }}>{phase.research.hint}</div>}
+          <div className="col" style={{ gap: 8 }}>
+            {phase.research.intro && <p style={{ margin: 0 }}>{phase.research.intro}</p>}
+            <div className="bubble" style={{ borderColor: 'var(--warn)' }}>
+              <div style={{ fontSize: 16 }}>{phase.research.prompt}</div>
+            </div>
+            {phase.research.sourceUrl && (
+              <a
+                href={phase.research.sourceUrl}
+                target="_blank"
+                rel="noreferrer"
+                style={{
+                  display: 'inline-block',
+                  textAlign: 'center',
+                  background: 'var(--accent)',
+                  color: '#05122c',
+                  fontWeight: 700,
+                  borderRadius: 12,
+                  padding: '12px 16px',
+                  textDecoration: 'none',
+                }}
+              >
+                📄 {phase.research.sourceLabel || 'Abrir a fonte'}
+              </a>
+            )}
+            {phase.research.excerpt && (
+              <div className="small muted" style={{ borderLeft: '3px solid var(--line)', paddingLeft: 10 }}>
+                {phase.research.excerpt}
+              </div>
+            )}
+            {phase.research.template && <div className="chip">{phase.research.template}</div>}
+            {phase.research.hint && <div className="small muted">{phase.research.hint}</div>}
           </div>
         )}
 
