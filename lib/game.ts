@@ -209,7 +209,6 @@ export const PHASES: Phase[] = [
       exampleNote:
         'Exemplo do próprio Wing (2006): “Which line do you stand in at the supermarket? That’s performance modeling”.',
       template: 'Decisão: ____   ·   Destacar: ____   ·   Ignorar: ____   ·   Passos: ____',
-      hint: 'Registre no chat do Meet (ou Mentimeter/Padlet).',
       sourceLabel: 'Abrir as fontes (Wing 2006 + Bombasar et al. 2017)',
       sourceUrl: '/fonte',
       minutes: 2,
