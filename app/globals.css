@@ -580,3 +580,9 @@ input[type="text"] {
   color: var(--accent);
   font-weight: 700;
 }
+mark {
+  background: rgba(255, 204, 77, 0.32);
+  color: inherit;
+  padding: 0 2px;
+  border-radius: 3px;
+}

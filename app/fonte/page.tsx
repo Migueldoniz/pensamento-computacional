@@ -20,13 +20,18 @@ export default function FontePage({ searchParams }: { searchParams: { room?: str
           <div className="source-tag">Fonte 1</div>
           <h3>Wing (2006) — abstração e decomposição</h3>
           <div className="quote">
-            “Computational thinking is using <strong>abstraction and decomposition</strong>… It is{' '}
-            <strong>choosing an appropriate representation</strong> for a problem or modeling the
-            relevant aspects of a problem to make it tractable.”
+            “Thinking like a computer scientist means more than being able to program a computer. It
+            requires thinking at multiple levels of abstraction.{' '}
+            <mark>Computational thinking is using abstraction and decomposition when attacking a large
+            complex task or designing a large complex system. It is separation of concerns. It is
+            choosing an appropriate representation for a problem or modeling the relevant aspects of
+            a problem to make it tractable.</mark>{' '}
+            … Most fundamentally it addresses the question: What is computable?”
           </div>
           <p className="small muted" style={{ margin: '0 0 12px' }}>
-            Em português: usar abstração e decomposição, escolhendo a representação adequada e
-            modelando os aspectos relevantes para tornar o problema tratável. Wing também pergunta:
+            Em português: pensar como cientista da computação é mais do que programar — é usar
+            <strong> abstração e decomposição</strong>, escolhendo a representação adequada e modelando
+            os aspectos relevantes para tornar o problema tratável. Wing também pergunta:
             <em> “o que é computável?”</em>.
           </p>
           <div className="row" style={{ gap: 10, alignItems: 'center' }}>
@@ -48,12 +53,15 @@ export default function FontePage({ searchParams }: { searchParams: { room?: str
           <div className="source-tag">Fonte 2</div>
           <h3>Bombasar, Raabe &amp; Santiago (2017) — seção 2</h3>
           <div className="quote">
-            Wing define PC como recorrer aos <em>conceitos fundamentais da Ciência da Computação</em>{' '}
-            para resolver problemas; a Royal Society (2012) fala em reconhecer <em>aspectos
-            computacionais no mundo que nos rodeia</em>. Wing dá exemplos do cotidiano: arrumar a
-            mala (<em>busca e cache</em>), carro vs. táxi (<em>algoritmo online</em>), reencontrar um
-            objeto perdido (<em>backtracking</em>) e <em>“qual fila do supermercado escolher?”</em>{' '}
-            (<em>performance modeling</em>).
+            “A Royal Society (2012) definiu o PC como ‘o processo de reconhecer os aspectos
+            computacionais no mundo que nos rodeia e aplicar ferramentas e técnicas da Ciência da
+            Computação…’.{' '}
+            <mark>Nas definições apresentadas por Wing (2006) e pela Royal Society (2012), duas
+            características do PC podem ser claramente identificadas: o uso de conhecimentos da Ciência
+            da Computação e a não limitação ao ambiente dos computadores.</mark>{' '}
+            Assim, o PC pode ser entendido como aplicar técnicas e ferramentas da Ciência da Computação
+            não só a problemas que envolvem computadores, mas a qualquer problema onde essas técnicas
+            possam ser aplicadas.”
           </div>
           <div className="row" style={{ gap: 10, alignItems: 'center' }}>
             <a className="btn" href="/ler?doc=bombasar" target="_blank" rel="noreferrer">
