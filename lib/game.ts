@@ -61,6 +61,8 @@ export interface Phase {
   timeline?: TimelineSpec
   objectives?: Objective[] // kind 'objetivos'
   concept?: ConceptStep[] // kind 'conceito'
+  definition?: string // conceito: definição destacada
+  strategies?: { name: string; detail?: string }[] // estratégias (ex.: de abstração)
   sources?: string[] // referências mostradas na fase
   research?: Research // kind 'pesquisa'
   rules?: string[] // kind 'regras'
@@ -142,6 +144,32 @@ export const PHASES: Phase[] = [
       'Wing (2006) — abstração e decomposição',
     ],
     robotThinking: 'Abstraindo a decisão humana…',
+    robotCorrect: '',
+    robotWrong: '',
+  },
+  {
+    id: 'abstracao',
+    act: 'ABSTRAÇÃO',
+    activity: 1,
+    title: 'O que é abstração — e como se faz',
+    prompt:
+      'A essência do pensamento computacional é a abstração. Então vamos dar nome às peças.',
+    kind: 'conceito',
+    definition:
+      'Abstrair é decidir quais detalhes destacar e quais ignorar, escolhendo uma representação que torne o problema tratável. E não existe “a” abstração certa em geral: ela depende do propósito.',
+    strategies: [
+      { name: 'Ignorar o irrelevante', detail: 'Esconda o que não muda a decisão — cor da camisa, nome do solicitante.' },
+      { name: 'Generalizar (achar o padrão)', detail: 'Uma abstração serve para muitos casos: “um objeto para muitos”.' },
+      { name: 'Parametrizar', detail: 'Deixe variáveis os valores que mudam: data, início, fim.' },
+      { name: 'Modelar', detail: 'Represente de forma tratável — intervalos de tempo, não “aula de física”.' },
+      { name: 'Encapsular (camadas)', detail: 'Use algo sem ver o de dentro: a pergunta “há conflito?”, a internet por camadas.' },
+      { name: 'Decompor', detail: 'Separe em partes com responsabilidades distintas.' },
+    ],
+    sources: [
+      'Wing (2006, 2008): abstrair é destacar/ignorar detalhes; padrões, generalização, parametrização e camadas.',
+      'Kramer (2007): abstração é remover o detalhe desnecessário e generalizar — e depende do propósito.',
+    ],
+    robotThinking: 'Nomeando as estratégias de abstração…',
     robotCorrect: '',
     robotWrong: '',
   },

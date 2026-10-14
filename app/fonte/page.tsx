@@ -85,6 +85,28 @@ export default function FontePage({ searchParams }: { searchParams: { room?: str
             </a>
           </div>
         </section>
+
+        <section className="source">
+          <div className="source-tag">Fonte 3</div>
+          <h3>Kramer (2007) — abstração = remover + generalizar</h3>
+          <div className="quote">
+            <mark>Abstrair é remover o detalhe desnecessário e generalizar</mark> — e o valor de uma
+            abstração <strong>depende do propósito</strong>: o nível, o benefício e o valor de uma
+            abstração dependem do problema que se quer resolver.
+          </div>
+          <p className="small muted" style={{ margin: '0 0 12px' }}>
+            Kramer, J. <em>Is abstraction the key to computing?</em> Communications of the ACM, v. 50,
+            n. 4, p. 36–42, 2007. DOI: 10.1145/1232743.1232745.
+          </p>
+          <a
+            className="btn"
+            href="https://dl.acm.org/doi/10.1145/1232743.1232745"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Ler Kramer (2007)
+          </a>
+        </section>
       </div>
 
       <p className="small muted" style={{ marginTop: 16 }}>

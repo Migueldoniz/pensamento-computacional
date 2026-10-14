@@ -323,7 +323,8 @@ function HostInner() {
           )}
 
           {phase.kind === 'conceito' && (
-            <div className="col" style={{ gap: 8 }}>
+            <div className="col" style={{ gap: 10 }}>
+              {phase.definition && <div className="quote">{phase.definition}</div>}
               {phase.concept?.map((s, i) => (
                 <div key={i} style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
                   <span className="pill on" style={{ flex: 'none' }}>{i + 1}</span>
@@ -333,6 +334,20 @@ function HostInner() {
                   </div>
                 </div>
               ))}
+              {phase.strategies && (
+                <div className="col" style={{ gap: 8, marginTop: 2 }}>
+                  <div className="act">Estratégias de abstração</div>
+                  {phase.strategies.map((s, i) => (
+                    <div key={i} style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
+                      <span className="pill on" style={{ flex: 'none' }}>{i + 1}</span>
+                      <div>
+                        <b>{s.name}</b>
+                        {s.detail && <div className="muted small">{s.detail}</div>}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           )}
 
