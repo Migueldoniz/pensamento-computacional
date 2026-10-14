@@ -222,7 +222,8 @@ export const PHASES: Phase[] = [
     act: 'REGRAS',
     activity: 3,
     title: 'As regras do caso',
-    prompt: 'Antes de decidir, combine as regras do laboratório:',
+    prompt:
+      'O robô é o agendador de um laboratório: ele recebe pedidos de reserva de horário e decide se aceita ou recusa. Estas são as regras do caso:',
     kind: 'regras',
     rules: [
       'Há um único laboratório.',
