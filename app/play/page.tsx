@@ -51,6 +51,7 @@ function PlayerInner() {
   const [multi, setMulti] = useState<string[]>([])
   const [seq, setSeq] = useState<string[]>([])
   const [score, setScore] = useState<Score>({ score: 0, combo: 0 })
+  const [wrong, setWrong] = useState<string[]>([])
 
   // Ficha da pesquisa (worksheet) — privada por aluno
   const [wcDecisao, setWcDecisao] = useState('')
@@ -90,6 +91,11 @@ function PlayerInner() {
       scored.current = new Set(JSON.parse(localStorage.getItem(`oa_scored:${room}`) || '[]'))
     } catch {
       scored.current = new Set()
+    }
+    try {
+      setWrong(JSON.parse(localStorage.getItem(`oa_wrong:${room}`) || '[]'))
+    } catch {
+      setWrong([])
     }
   }, [room])
 
@@ -147,7 +153,18 @@ function PlayerInner() {
     setScore(next)
     saveScore(room, next)
     if (good) sfxCorrect()
-    else sfxWrong()
+    else {
+      sfxWrong()
+      setWrong((w) => {
+        const nw = w.includes(phase.id) ? w : [...w, phase.id]
+        try {
+          localStorage.setItem(`oa_wrong:${room}`, JSON.stringify(nw))
+        } catch {
+          /* ignore */
+        }
+        return nw
+      })
+    }
     if (room && playerId) postScore(room, playerId, name, next.score, next.combo)
   }, [revealed, phase.id, phase.kind, sent, score.score, score.combo, room, playerId, name])
 
@@ -155,6 +172,19 @@ function PlayerInner() {
   useEffect(() => {
     if (!room || !playerId || wcLoaded.current) return
     wcLoaded.current = true
+    // Local primeiro (resiliente se o servidor falhar)
+    try {
+      const local = JSON.parse(localStorage.getItem(`oa_ws:${room}`) || 'null')
+      if (local) {
+        setWcDecisao(local.decisao || '')
+        setWcDestacar(local.destacar || '')
+        setWcIgnorar(local.ignorar || '')
+        setWcSteps(local.steps || [])
+        setWcSaved(true)
+      }
+    } catch {
+      /* ignore */
+    }
     ;(async () => {
       const w = await getWorksheet(room, playerId)
       if (w) {
@@ -208,12 +238,18 @@ function PlayerInner() {
   }
   async function saveWs() {
     if (!room || !playerId) return
-    await saveWorksheet(room, playerId, {
+    const ws = {
       decisao: wcDecisao.trim(),
       destacar: wcDestacar.trim(),
       ignorar: wcIgnorar.trim(),
       steps: wcSteps,
-    })
+    }
+    try {
+      localStorage.setItem(`oa_ws:${room}`, JSON.stringify(ws))
+    } catch {
+      /* ignore */
+    }
+    await saveWorksheet(room, playerId, ws)
     setWcSaved(true)
     sfxClick()
   }
@@ -625,6 +661,33 @@ function PlayerInner() {
             >
               {diff ? 'reenviar ordem' : 'enviar ordem'}
             </button>
+          </div>
+        )}
+
+        {phase.kind === 'premiacao' && (
+          <div className="col" style={{ gap: 12, alignItems: 'center' }}>
+            <CharAvatar c={char} size={120} />
+            <div style={{ fontSize: 22, fontWeight: 800 }}>
+              {myRank >= 0 ? `${myRank + 1}º lugar` : 'Parabéns!'}
+            </div>
+            <div className="bubble" style={{ textAlign: 'center' }}>
+              Parabéns, {name}! {myRank === 0 ? 'Você foi o 1º! 🏆' : 'Você jogou muito bem. 🎉'}
+            </div>
+            <div className="row" style={{ gap: 8 }}>
+              <span className="pill">{score.score} pts</span>
+              {myRank >= 0 && <span className="pill">{myRank + 1}º lugar</span>}
+            </div>
+            {wrong.length > 0 && (
+              <div className="col" style={{ gap: 6, width: '100%' }}>
+                <div className="act">Para revisitar</div>
+                {wrong.map((id) => (
+                  <div key={id} className="small muted">
+                    • {PHASES.find((p) => p.id === id)?.title || id}
+                  </div>
+                ))}
+              </div>
+            )}
+            <div className="small muted" style={{ textAlign: 'center' }}>{phase.prompt}</div>
           </div>
         )}
 

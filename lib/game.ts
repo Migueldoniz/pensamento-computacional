@@ -1,4 +1,4 @@
-export type PhaseKind = 'info' | 'objetivos' | 'conceito' | 'pesquisa' | 'regras' | 'debrief' | 'single' | 'multi' | 'order'
+export type PhaseKind = 'info' | 'objetivos' | 'conceito' | 'pesquisa' | 'regras' | 'debrief' | 'premiacao' | 'single' | 'multi' | 'order'
 
 export interface Option {
   id: string
@@ -513,14 +513,14 @@ export const PHASES: Phase[] = [
   },
   {
     id: 'outro',
-    act: 'FINAL',
+    act: 'ENCERRAMENTO',
     activity: 5,
-    title: 'Robô calibrado — mas e as regras?',
+    title: 'Fim da missão',
     prompt:
-      'Vocês acabaram de fazer, na prática, o centro do pensamento computacional: abstraíram uma decisão humana (data, início, fim, reservas), formalizaram uma regra de conflito, decomporam a decisão em passos e transferiram para dois laboratórios. Mas quem confirmou essas regras? Na Temporada 2, a carta “autenticar” volta: só a Coordenação aprova, e uma solicitação nasce pendente. A pergunta deixa de ser “como funciona?” e passa a ser “resolve o problema certo?”.',
-    kind: 'info',
-    sources: ['Computar é decidir (Japaridze, 2003)', 'CT por jogos (Bombasar et al., 2017)'],
-    robotThinking: 'Aguardando novos requisitos…',
+      'Aguardo vocês para a nossa próxima missão: quando as regras que nos deram não bastarem, vamos descobrir quem realmente decide.',
+    kind: 'premiacao',
+    sources: ['Wing (2006; 2008)', 'Kramer (2007)', 'Armoni (2013)'],
+    robotThinking: 'Missão cumprida.',
     robotCorrect: '',
     robotWrong: '',
   },

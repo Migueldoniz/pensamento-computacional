@@ -160,6 +160,10 @@ function HostInner() {
     .sort((a, b) => b.score - a.score || a.name.localeCompare(b.name))
     .slice(0, 5)
 
+  const rankingAll = Object.entries(scores)
+    .map(([id, v]) => ({ id, ...v }))
+    .sort((a, b) => b.score - a.score || a.name.localeCompare(b.name))
+
   const go = (delta: number) => {
     setIndex((i) => Math.min(PHASES.length - 1, Math.max(0, i + delta)))
     setRevealed(false)
@@ -491,6 +495,24 @@ function HostInner() {
           {revealed && phase.explain && (
             <div className="bubble" style={{ borderColor: 'var(--ok)', fontSize: 14, padding: '10px 12px' }}>
               <strong>Por quê:</strong> {phase.explain}
+            </div>
+          )}
+
+          {phase.kind === 'premiacao' && (
+            <div className="col" style={{ gap: 12 }}>
+              <div className="act">Ranking final</div>
+              <div className="col" style={{ gap: 6 }}>
+                {rankingAll.length === 0 && <span className="muted small">Sem pontuações ainda.</span>}
+                {rankingAll.map((r, i) => (
+                  <div key={r.id} className="lb-row">
+                    <span className="lb-pos">{['🥇', '🥈', '🥉'][i] || `${i + 1}º`}</span>
+                    <CharAvatar c={characterByName(r.name)} size={24} />
+                    <span className="lb-name">{r.name}</span>
+                    <span className="lb-score">{r.score}</span>
+                  </div>
+                ))}
+              </div>
+              <div className="bubble" style={{ borderColor: 'var(--accent)' }}>{phase.prompt}</div>
             </div>
           )}
 
