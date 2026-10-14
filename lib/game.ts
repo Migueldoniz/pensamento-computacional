@@ -1,4 +1,4 @@
-export type PhaseKind = 'info' | 'objetivos' | 'conceito' | 'pesquisa' | 'regras' | 'single' | 'multi' | 'order'
+export type PhaseKind = 'info' | 'objetivos' | 'conceito' | 'pesquisa' | 'regras' | 'debrief' | 'single' | 'multi' | 'order'
 
 export interface Option {
   id: string
@@ -64,6 +64,9 @@ export interface Phase {
   definition?: string // conceito: definição destacada
   strategies?: { name: string; detail?: string }[] // estratégias (ex.: de abstração)
   note?: string // observação final da fase
+  pillars?: { name: string; detail?: string }[] // kind 'debrief'
+  quote?: string // kind 'debrief'
+  question?: string // kind 'debrief' (reflexão)
   sources?: string[] // referências mostradas na fase
   research?: Research // kind 'pesquisa'
   rules?: string[] // kind 'regras'
@@ -286,11 +289,11 @@ export const PHASES: Phase[] = [
   },
   {
     id: 'plano',
-    act: 'PLANO',
+    act: 'ALGORITMO',
     activity: 4,
-    title: 'Monte o plano de decisão',
+    title: 'Projeto de algoritmo: monte o plano',
     prompt:
-      'Coloque as etapas na ordem correta para decidir se uma reserva entra. Toque na ordem que você acha certa e envie.',
+      'Projetar um algoritmo é ordenar as etapas que resolvem o problema. Coloque-as na ordem correta para decidir se uma reserva entra e envie.',
     kind: 'order',
     options: [
       { id: 'selecionar', label: 'Selecionar reservas da mesma data' },
@@ -482,6 +485,29 @@ export const PHASES: Phase[] = [
     robotThinking: 'Detectei um recurso novo…',
     robotCorrect: 'Atualizado: agora comparo data + laboratório.',
     robotWrong: 'Confusão: tratei salas diferentes como se fossem a mesma.',
+  },
+  {
+    id: 'debrief',
+    act: 'DEBRIEF',
+    activity: 5,
+    title: 'O que vocês acabaram de fazer',
+    prompt:
+      'Mais do que “usar um app”: vocês exercitaram os pilares do pensamento computacional.',
+    kind: 'debrief',
+    pillars: [
+      { name: 'Abstração', detail: 'Escolher o que representar (os dados) para um propósito.' },
+      { name: 'Decomposição', detail: 'Separar responsabilidades — validar não é comparar.' },
+      { name: 'Reconhecimento de padrões', detail: 'Generalizar: a mesma regra serve para sala, fila, agenda.' },
+      { name: 'Projeto de algoritmo', detail: 'Ordenar as etapas que resolvem o problema.' },
+      { name: 'Avaliação', detail: 'Julgar a decisão — e onde a abstração falha (a borda).' },
+    ],
+    quote: 'Computação é a automação das nossas abstrações. (Wing, 2006)',
+    question:
+      'Qual suposição você fez hoje e precisou revisar? Que estratégia de abstração ajudou?',
+    sources: ['Wing (2006; 2008) — abstração, camadas e automação'],
+    robotThinking: 'Consolidando o que aprendemos…',
+    robotCorrect: '',
+    robotWrong: '',
   },
   {
     id: 'outro',

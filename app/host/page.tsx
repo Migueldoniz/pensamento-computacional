@@ -352,6 +352,28 @@ function HostInner() {
             </div>
           )}
 
+          {phase.kind === 'debrief' && (
+            <div className="col" style={{ gap: 10 }}>
+              <div className="col" style={{ gap: 8 }}>
+                {phase.pillars?.map((p, i) => (
+                  <div key={i} style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
+                    <span className="pill on" style={{ flex: 'none' }}>{i + 1}</span>
+                    <div>
+                      <b>{p.name}</b>
+                      {p.detail && <div className="muted small">{p.detail}</div>}
+                    </div>
+                  </div>
+                ))}
+              </div>
+              {phase.quote && <div className="quote">{phase.quote}</div>}
+              {phase.question && (
+                <div className="bubble" style={{ borderColor: 'var(--accent)' }}>
+                  <strong>Para pensar:</strong> {phase.question}
+                </div>
+              )}
+            </div>
+          )}
+
           {phase.kind === 'regras' && (
             <div className="col" style={{ gap: 6 }}>
               {phase.rules?.map((r, i) => (
