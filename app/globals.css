@@ -1,14 +1,14 @@
 :root {
-  --bg: #0b1020;
-  --panel: #151c33;
-  --panel-2: #1e2745;
-  --line: #2b365a;
-  --text: #e8ecff;
-  --muted: #9aa6cf;
-  --accent: #4f8cff;
-  --ok: #2ecc71;
-  --bad: #ff5c6c;
-  --warn: #ffcc4d;
+  --bg: #f5f6f8;
+  --panel: #ffffff;
+  --panel-2: #f1f3f6;
+  --line: #e5e8ee;
+  --text: #1b2430;
+  --muted: #6b7686;
+  --accent: #2563eb;
+  --ok: #16a34a;
+  --bad: #dc2626;
+  --warn: #d97706;
 }
 
 * {
@@ -46,6 +46,7 @@ a {
   border: 1px solid var(--line);
   border-radius: 16px;
   padding: 20px;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04), 0 1px 3px rgba(16, 24, 40, 0.06);
 }
 
 .row {
@@ -132,23 +133,23 @@ button.opt {
 
 button.opt.sel {
   border-color: var(--accent);
-  background: #24345f;
+  background: #e8f0ff;
 }
 
 button.opt.correct {
   border-color: var(--ok);
-  background: #16351f;
+  background: #e7f7ec;
 }
 
 button.opt.wrong {
   border-color: var(--bad);
-  background: #3a1a20;
+  background: #fdecec;
 }
 
 button.primary {
   background: var(--accent);
   border-color: var(--accent);
-  color: #05122c;
+  color: #ffffff;
   font-weight: 700;
 }
 
@@ -286,7 +287,7 @@ input[type="text"] {
   top: 0;
   bottom: 0;
   width: 1px;
-  background: rgba(255, 255, 255, .06);
+  background: rgba(0, 0, 0, .07);
 }
 
 .tl-block {
@@ -299,19 +300,20 @@ input[type="text"] {
   justify-content: center;
   font-size: 11px;
   font-weight: 700;
-  color: #05122c;
+  color: #1b2430;
   overflow: hidden;
   padding: 0 6px;
   white-space: nowrap;
 }
 
 .tl-block.existing {
-  background: #7f8fb8;
-  color: #0b1020;
+  background: #cbd5e1;
+  color: #1b2430;
 }
 
 .tl-block.request {
   background: var(--warn);
+  color: #fff;
 }
 
 .tl-block.invalid {
@@ -333,7 +335,7 @@ input[type="text"] {
 
 .chip b {
   background: var(--accent);
-  color: #05122c;
+  color: #ffffff;
   border-radius: 6px;
   width: 20px;
   height: 20px;
@@ -509,14 +511,14 @@ input[type="text"] {
 }
 
 .char-img {
-  background: #0b1020;
+  background: #eef1f5;
 }
 
 /* ---------- Utilidades ---------- */
 .btn {
   display: inline-block;
   background: var(--accent);
-  color: #05122c;
+  color: #ffffff;
   font-weight: 700;
   border-radius: 12px;
   padding: 10px 16px;
