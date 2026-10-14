@@ -4,7 +4,9 @@ export const metadata = {
   title: 'Fonte de pesquisa — Operação Agenda',
 }
 
-export default function FontePage() {
+export default function FontePage({ searchParams }: { searchParams: { room?: string } }) {
+  const room = (searchParams?.room || '').toUpperCase()
+  const back = room ? `/play?room=${room}` : '/play'
   return (
     <div className="wrap" style={{ maxWidth: 820, margin: '0 auto' }}>
       <div className="act">Operação Agenda · fonte de pesquisa</div>
@@ -73,7 +75,7 @@ export default function FontePage() {
         completo está nos links oficiais.
       </p>
 
-      <Link href="/play" className="small">← voltar</Link>
+      <Link href={back} className="small">← voltar à sala{room ? ` ${room}` : ''}</Link>
     </div>
   )
 }

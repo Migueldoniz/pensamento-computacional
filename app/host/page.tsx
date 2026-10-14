@@ -327,7 +327,11 @@ function HostInner() {
               </div>
               {phase.research.sourceUrl && (
                 <a
-                  href={phase.research.sourceUrl}
+                  href={
+                    phase.research.sourceUrl.startsWith('/') && room
+                      ? `${phase.research.sourceUrl}?room=${room}`
+                      : phase.research.sourceUrl
+                  }
                   target="_blank"
                   rel="noreferrer"
                   style={{
