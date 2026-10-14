@@ -118,15 +118,15 @@ export const PHASES: Phase[] = [
     activity: 1,
     title: 'O centro da aula: abstrair a decisão humana',
     prompt:
-      'Você decide "dá para usar a sala agora?" sem perceber. O papel do pensamento computacional é transformar essa decisão humana numa decisão que a máquina consegue executar.',
+      'Algumas decisões os humanos tomam de bate-pronto, mas a máquina quase não consegue. Por quê?',
     kind: 'conceito',
     concept: [
-      { label: 'Exemplo primeiro (fora da computação)', detail: 'Preparar uma apresentação: escolher tema, público e tempo (abstração); separar em mensagem, conteúdo, recursos e ensaio (decomposição).' },
-      { label: 'Decisão humana', detail: 'Olhar a agenda e decidir "cabe?" usando o bom senso.' },
-      { label: 'Abstrair', detail: 'Escolher só o que muda a decisão: data, início, fim e reservas existentes.' },
-      { label: 'Formalizar a regra', detail: 'Há conflito quando os intervalos se sobrepõem (e o instante final não ocupa).' },
+      { label: 'Decisão humana "de bate-pronto"', detail: '"Essa mensagem é um elogio ou uma zombaria?" — você decide na hora, pelo tom e pelo contexto.' },
+      { label: 'Por que a máquina trava', detail: 'Não há dado claro nem regra clara. O que representar: o texto? o tom? o histórico? Só decidir o que representar já é difícil.' },
+      { label: 'Abstrair = escolher o que representar', detail: 'Sem uma boa abstração (dados + regras), não existe decisão computacional. É aí que entra o pensamento computacional.' },
+      { label: 'Contraste: uma decisão que abstrai bem', detail: '"Cabe uma reserva das 15h às 16h?" → dados: data, início, fim, reservas; regra: sobreposição. Fácil de formalizar — e de decompor.' },
       { label: 'Decompor', detail: 'receber → validar → selecionar → comparar → decidir.' },
-      { label: 'Decisão computacional', detail: 'A máquina decide caso a caso: computar é decidir.' },
+      { label: 'O que fica', detail: 'O difícil não é programar — é achar a abstração certa. Computar é decidir.' },
     ],
     sources: [
       'Japaridze (2003) — computação como jogo máquina × ambiente',
