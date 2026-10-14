@@ -46,6 +46,14 @@ export default function FontePage({ searchParams }: { searchParams: { room?: str
             >
               PDF direto (baixa)
             </a>
+            <a
+              className="small"
+              href="https://www.cs.cmu.edu/~wing/publications/Wing08a.pdf"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Wing (2008) — PDF
+            </a>
           </div>
         </section>
 
@@ -105,6 +113,23 @@ export default function FontePage({ searchParams }: { searchParams: { room?: str
             rel="noreferrer"
           >
             Ler Kramer (2007)
+          </a>
+        </section>
+
+        <section className="source">
+          <div className="source-tag">Fonte 4</div>
+          <h3>Armoni (2013) — como ensinar abstração a iniciantes</h3>
+          <div className="quote">
+            <mark>Ensinar abstração é ensinar a omitir e justificar:</mark> o aluno escolhe o que
+            manter e o que descartar, explica por quê e <strong>revê a representação</strong> quando o
+            objetivo muda.
+          </div>
+          <p className="small muted" style={{ margin: '0 0 12px' }}>
+            ARMONI, Michal. <em>On teaching abstraction in computer science to novices.</em> Journal
+            of Computers in Mathematics and Science Teaching, v. 32, n. 3, p. 265–284, 2013.
+          </p>
+          <a className="btn" href="https://eric.ed.gov/?id=EJ1006186" target="_blank" rel="noreferrer">
+            Ler Armoni (2013)
           </a>
         </section>
       </div>

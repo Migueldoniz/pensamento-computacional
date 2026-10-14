@@ -63,6 +63,7 @@ export interface Phase {
   concept?: ConceptStep[] // kind 'conceito'
   definition?: string // conceito: definição destacada
   strategies?: { name: string; detail?: string }[] // estratégias (ex.: de abstração)
+  note?: string // observação final da fase
   sources?: string[] // referências mostradas na fase
   research?: Research // kind 'pesquisa'
   rules?: string[] // kind 'regras'
@@ -152,22 +153,23 @@ export const PHASES: Phase[] = [
     act: 'ABSTRAÇÃO',
     activity: 1,
     title: 'O que é abstração — e como se faz',
-    prompt:
-      'A essência do pensamento computacional é a abstração. Então vamos dar nome às peças.',
+    prompt: 'A essência do pensamento computacional é a abstração. Vamos dar nome às peças.',
     kind: 'conceito',
     definition:
-      'Abstrair é decidir quais detalhes destacar e quais ignorar, escolhendo uma representação que torne o problema tratável. E não existe “a” abstração certa em geral: ela depende do propósito.',
+      'Abstração é construir uma representação adequada a um PROPÓSITO: destacar o que é relevante e deixar de fora o que não importa naquele contexto. Não é só “simplificar” — a representação precisa continuar dando conta do problema.',
     strategies: [
-      { name: 'Ignorar o irrelevante', detail: 'Esconda o que não muda a decisão — cor da camisa, nome do solicitante.' },
-      { name: 'Generalizar (achar o padrão)', detail: 'Uma abstração serve para muitos casos: “um objeto para muitos”.' },
-      { name: 'Parametrizar', detail: 'Deixe variáveis os valores que mudam: data, início, fim.' },
-      { name: 'Modelar', detail: 'Represente de forma tratável — intervalos de tempo, não “aula de física”.' },
-      { name: 'Encapsular (camadas)', detail: 'Use algo sem ver o de dentro: a pergunta “há conflito?”, a internet por camadas.' },
-      { name: 'Decompor', detail: 'Separe em partes com responsabilidades distintas.' },
+      { name: 'Selecionar propriedades (filtro de detalhes)', detail: 'Deixar de fora o que não muda a decisão → Abstração de Dados: (sala, início, fim, solicitante).' },
+      { name: 'Generalizar (achar o padrão)', detail: 'Uma representação que serve para muitos casos — em vez de uma solução por caso.' },
+      { name: 'Separar interface de implementação', detail: 'Usar “há conflito?” sabendo o que faz e devolve — sem ver como funciona por dentro (abstração procedural).' },
+      { name: 'Relacionar camadas', detail: 'Especificação → algoritmo → implementação: o que cada nível deixa explícito e o que esconde.' },
+      { name: 'Cuidado: limites de borda', detail: 'Onde a abstração perde informação — ex.: o instante 15h e o tempo de troca de turma.' },
     ],
+    note:
+      'No jogo de hoje: SENSORES = Abstração de Dados · CÉREBRO = Abstração Procedural + Decomposição. No fim, veremos onde a abstração perde informação.',
     sources: [
-      'Wing (2006, 2008): abstrair é destacar/ignorar detalhes; padrões, generalização, parametrização e camadas.',
-      'Kramer (2007): abstração é remover o detalhe desnecessário e generalizar — e depende do propósito.',
+      'Wing (2006; 2008): decidir o que destacar/ignorar; camadas e relações entre elas.',
+      'Kramer (2007): seleção de detalhes + generalização — e a abstração depende do propósito.',
+      'Armoni (2013): como ensinar abstração a iniciantes (omitir + justificar + revisar).',
     ],
     robotThinking: 'Nomeando as estratégias de abstração…',
     robotCorrect: '',

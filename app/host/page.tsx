@@ -348,6 +348,7 @@ function HostInner() {
                   ))}
                 </div>
               )}
+              {phase.note && <div className="small muted">{phase.note}</div>}
             </div>
           )}
 
