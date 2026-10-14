@@ -29,14 +29,19 @@ export default function FontePage({ searchParams }: { searchParams: { room?: str
             modelando os aspectos relevantes para tornar o problema tratável. Wing também pergunta:
             <em> “o que é computável?”</em>.
           </p>
-          <a
-            className="btn"
-            href="http://cs.cmu.edu/~wing/publications/Wing06.pdf"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Ler Wing (2006) — PDF
-          </a>
+          <div className="row" style={{ gap: 10, alignItems: 'center' }}>
+            <a className="btn" href="/ler?doc=wing" target="_blank" rel="noreferrer">
+              Ler no leitor (PDF)
+            </a>
+            <a
+              className="small"
+              href="https://www.cs.cmu.edu/~wing/publications/Wing06.pdf"
+              target="_blank"
+              rel="noreferrer"
+            >
+              PDF direto (baixa)
+            </a>
+          </div>
         </section>
 
         <section className="source">
@@ -50,9 +55,12 @@ export default function FontePage({ searchParams }: { searchParams: { room?: str
             objeto perdido (<em>backtracking</em>) e <em>“qual fila do supermercado escolher?”</em>{' '}
             (<em>performance modeling</em>).
           </div>
-          <div className="row" style={{ gap: 10 }}>
+          <div className="row" style={{ gap: 10, alignItems: 'center' }}>
+            <a className="btn" href="/ler?doc=bombasar" target="_blank" rel="noreferrer">
+              Ler no leitor (PDF)
+            </a>
             <a
-              className="btn"
+              className="small"
               href="https://periodicos.univali.br/index.php/IJCThink/article/view/8928"
               target="_blank"
               rel="noreferrer"
@@ -65,7 +73,7 @@ export default function FontePage({ searchParams }: { searchParams: { room?: str
               target="_blank"
               rel="noreferrer"
             >
-              PDF completo (baixa o arquivo)
+              PDF direto (baixa)
             </a>
           </div>
         </section>
