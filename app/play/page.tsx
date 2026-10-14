@@ -268,6 +268,20 @@ function PlayerInner() {
           </div>
         )}
 
+        {phase.kind === 'conceito' && (
+          <div className="col" style={{ gap: 8 }}>
+            {phase.concept?.map((s, i) => (
+              <div key={i} style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
+                <span className="pill on" style={{ flex: 'none' }}>{i + 1}</span>
+                <div>
+                  <b>{s.label}</b>
+                  {s.detail && <div className="muted small">{s.detail}</div>}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
         {phase.kind === 'pesquisa' && phase.research && (
           <div className="bubble" style={{ borderColor: 'var(--warn)' }}>
             <div style={{ fontSize: 17 }}>{phase.research.prompt}</div>
@@ -389,6 +403,12 @@ function PlayerInner() {
         {revealed && phase.explain && (
           <div className="bubble" style={{ borderColor: 'var(--ok)' }}>
             <strong>Por quê:</strong> {phase.explain}
+          </div>
+        )}
+
+        {phase.sources && (
+          <div className="small muted" style={{ marginTop: 4 }}>
+            <strong>Fontes:</strong> {phase.sources.join(' · ')}
           </div>
         )}
       </div>

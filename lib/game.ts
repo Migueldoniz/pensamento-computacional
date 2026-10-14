@@ -1,4 +1,4 @@
-export type PhaseKind = 'info' | 'objetivos' | 'pesquisa' | 'single' | 'multi' | 'order'
+export type PhaseKind = 'info' | 'objetivos' | 'conceito' | 'pesquisa' | 'single' | 'multi' | 'order'
 
 export interface Option {
   id: string
@@ -8,6 +8,11 @@ export interface Option {
 export interface Objective {
   text: string
   cell: string
+}
+
+export interface ConceptStep {
+  label: string
+  detail?: string
 }
 
 export interface Research {
@@ -47,6 +52,8 @@ export interface Phase {
   explain?: string
   timeline?: TimelineSpec
   objectives?: Objective[] // kind 'objetivos'
+  concept?: ConceptStep[] // kind 'conceito'
+  sources?: string[] // referências mostradas na fase
   research?: Research // kind 'pesquisa'
   robotThinking: string
   robotCorrect: string
@@ -55,7 +62,7 @@ export interface Phase {
 
 /** Nome de cada uma das 5 atividades (3 min cada). */
 export const ACTIVITIES: Record<number, string> = {
-  1: 'Objetivos',
+  1: 'Fundamentos',
   2: 'Pesquisa',
   3: 'Jogo',
   4: 'Simulação',
@@ -101,6 +108,30 @@ export const PHASES: Phase[] = [
       { text: 'Transferir o plano para um cenário novo (dois laboratórios).', cell: 'A1' },
     ],
     robotThinking: 'Objetivos carregados. Pronto para jogar.',
+    robotCorrect: '',
+    robotWrong: '',
+  },
+  {
+    id: 'conceito',
+    act: 'CONCEITO',
+    activity: 1,
+    title: 'O centro da aula: abstrair a decisão humana',
+    prompt:
+      'Você decide "dá para usar a sala agora?" sem perceber. O papel do pensamento computacional é transformar essa decisão humana numa decisão que a máquina consegue executar.',
+    kind: 'conceito',
+    concept: [
+      { label: 'Decisão humana', detail: 'Olhar a agenda e decidir "cabe?" usando o bom senso.' },
+      { label: 'Abstrair', detail: 'Escolher só o que muda a decisão: data, início, fim e reservas existentes.' },
+      { label: 'Formalizar a regra', detail: 'Há conflito quando os intervalos se sobrepõem (e o instante final não ocupa).' },
+      { label: 'Decompor', detail: 'receber → validar → selecionar → comparar → decidir.' },
+      { label: 'Decisão computacional', detail: 'A máquina decide caso a caso: computar é decidir.' },
+    ],
+    sources: [
+      'Japaridze (2003) — computação como jogo máquina × ambiente',
+      'Bombasar, Raabe & Santiago (2017) — ensinar pensamento computacional com um jogo',
+      'Wing (2006) — abstração e decomposição',
+    ],
+    robotThinking: 'Abstraindo a decisão humana…',
     robotCorrect: '',
     robotWrong: '',
   },
@@ -382,8 +413,9 @@ export const PHASES: Phase[] = [
     activity: 5,
     title: 'Robô calibrado — mas e as regras?',
     prompt:
-      'Você representou os dados, dividiu a decisão, pesquisou, montou o plano e escalou para dois laboratórios. Mas quem confirmou essas regras? Na Temporada 2, a carta “autenticar” volta: só a Coordenação aprova, e uma solicitação nasce pendente. A pergunta deixa de ser “como funciona?” e passa a ser “resolve o problema certo?”.',
+      'Vocês acabaram de fazer, na prática, o centro do pensamento computacional: abstraíram uma decisão humana (data, início, fim, reservas), formalizaram uma regra de conflito, decomporam a decisão em passos e transferiram para dois laboratórios. Mas quem confirmou essas regras? Na Temporada 2, a carta “autenticar” volta: só a Coordenação aprova, e uma solicitação nasce pendente. A pergunta deixa de ser “como funciona?” e passa a ser “resolve o problema certo?”.',
     kind: 'info',
+    sources: ['Computar é decidir (Japaridze, 2003)', 'CT por jogos (Bombasar et al., 2017)'],
     robotThinking: 'Aguardando novos requisitos…',
     robotCorrect: '',
     robotWrong: '',
