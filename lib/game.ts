@@ -174,7 +174,7 @@ export const PHASES: Phase[] = [
         'Em que etapas você decide, na ordem?',
       ],
       example:
-        'Decisão: encaixar mais uma reunião na agenda  ·  Destacar: horários (início/fim) das reuniões + duração da nova  ·  Ignorar: assunto da reunião, quem convocou  ·  Passos: ver os horários → comparar sobreposição → decidir.',
+        'Decisão: qual fila do supermercado escolher  ·  Destacar: nº de pessoas na fila, itens de cada pessoa, caixas abertos  ·  Ignorar: cor da roupa, o que estão comprando  ·  Passos: contar as pessoas → estimar os itens → comparar as filas → escolher.  (Wing, 2006: "Which line do you stand in at the supermarket? That’s performance modeling".)',
       template: 'Decisão: ____   ·   Destacar: ____   ·   Ignorar: ____   ·   Passos: ____',
       hint: 'Registre no chat do Meet (ou Mentimeter/Padlet).',
       sourceLabel: 'Abrir as fontes (Wing 2006 + Bombasar et al. 2017)',

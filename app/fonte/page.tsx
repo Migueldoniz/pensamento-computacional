@@ -48,7 +48,8 @@ export default function FontePage({ searchParams }: { searchParams: { room?: str
             para resolver problemas; a Royal Society (2012) fala em reconhecer <em>aspectos
             computacionais no mundo que nos rodeia</em>. Wing dá exemplos do cotidiano: arrumar a mala
             (<em>busca e cache</em>), carro vs. táxi (<em>algoritmo online</em>), reencontrar um objeto
-            perdido (<em>backtracking</em>).
+            perdido (<em>backtracking</em>) e <em>“qual fila do supermercado escolher?”</em>{' '}
+            (<em>performance modeling</em> para sistemas multi-servidor).
           </div>
           <div className="row">
             <a href="https://periodicos.univali.br/index.php/IJCThink/article/view/8928" target="_blank" rel="noreferrer">
