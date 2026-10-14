@@ -162,14 +162,12 @@ export const PHASES: Phase[] = [
     prompt: 'Pesquise na internet e traga 1 regra. Depois voltamos para o jogo.',
     kind: 'pesquisa',
     research: {
-      intro: 'Objetivo: encontrar, na fonte, uma característica do pensamento computacional.',
+      intro: 'Transforme uma decisão humana numa decisão computacional — usando a ideia de abstração da fonte.',
       prompt:
-        'Leia a SEÇÃO 2 do artigo e identifique UMA característica do pensamento computacional. Dê um exemplo DIFERENTE dos que já vimos.',
-      excerpt:
-        'Trecho-guia: “duas características do PC podem ser claramente identificadas: o uso de conhecimentos da Ciência da Computação e a não limitação ao ambiente dos computadores.” (Bombasar, Raabe & Santiago, 2017, seção 2)',
-      template: 'Característica: ____   ·   Exemplo: ____   ·   Fonte: seção 2',
+        'Wing (2006) diz que pensamento computacional é usar ABSTRAÇÃO e DECOMPOSIÇÃO: escolher a representação adequada e modelar os aspectos relevantes. Escolha UMA decisão do seu dia (fora do computador) e mostre: quais dados você destacaria, quais ignoraria e em que passos dividiria a decisão.',
+      template: 'Decisão: ____   ·   Destacar: ____   ·   Ignorar: ____   ·   Passos: ____',
       hint: 'Registre no chat do Meet (ou Mentimeter/Padlet).',
-      sourceLabel: 'Abrir a fonte (resumo + trecho da seção 2)',
+      sourceLabel: 'Abrir as fontes (Wing 2006 + Bombasar et al. 2017)',
       sourceUrl: '/fonte',
       minutes: 3,
     },
