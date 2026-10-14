@@ -1,8 +1,19 @@
-export type PhaseKind = 'info' | 'single' | 'multi' | 'order'
+export type PhaseKind = 'info' | 'objetivos' | 'pesquisa' | 'single' | 'multi' | 'order'
 
 export interface Option {
   id: string
   label: string
+}
+
+export interface Objective {
+  text: string
+  cell: string
+}
+
+export interface Research {
+  prompt: string
+  hint?: string
+  minutes: number
 }
 
 export interface TlBlock {
@@ -26,6 +37,7 @@ export interface TimelineSpec {
 export interface Phase {
   id: string
   act: string
+  activity: number // 1..5
   title: string
   prompt: string
   kind: PhaseKind
@@ -34,9 +46,24 @@ export interface Phase {
   correctOrder?: string[] // order
   explain?: string
   timeline?: TimelineSpec
+  objectives?: Objective[] // kind 'objetivos'
+  research?: Research // kind 'pesquisa'
   robotThinking: string
   robotCorrect: string
   robotWrong: string
+}
+
+/** Nome de cada uma das 5 atividades (3 min cada). */
+export const ACTIVITIES: Record<number, string> = {
+  1: 'Objetivos',
+  2: 'Pesquisa',
+  3: 'Jogo',
+  4: 'Simulação',
+  5: 'Transferência',
+}
+
+export function isInteractive(kind: PhaseKind) {
+  return kind === 'single' || kind === 'multi' || kind === 'order'
 }
 
 /** Codifica a escolha do jogador numa string (guardada no store). */
@@ -59,19 +86,57 @@ export function isCorrect(phase: Phase | undefined, choice: string | null): bool
 
 export const PHASES: Phase[] = [
   {
+    id: 'objetivos',
+    act: 'OBJETIVOS',
+    activity: 1,
+    title: 'Objetivos da disciplina',
+    prompt:
+      'Computar é decidir: um programa é uma máquina que decide contra o que o ambiente manda. Base da aula (Taxonomia de Bloom Revisada):',
+    kind: 'objetivos',
+    objectives: [
+      { text: 'Entender o que é uma decisão computável (decidir caso a caso).', cell: 'B2' },
+      { text: 'Analisar quais dados bastam para decidir um conflito (abstração).', cell: 'B4' },
+      { text: 'Decompor a decisão e distinguir o que conflita.', cell: 'B4' },
+      { text: 'Planejar as verificações para aceitar ou rejeitar uma reserva.', cell: 'C6' },
+      { text: 'Transferir o plano para um cenário novo (dois laboratórios).', cell: 'A1' },
+    ],
+    robotThinking: 'Objetivos carregados. Pronto para jogar.',
+    robotCorrect: '',
+    robotWrong: '',
+  },
+  {
     id: 'boot',
     act: 'BOOT',
+    activity: 1,
     title: 'Você é o robô',
     prompt:
-      'Você é o robô de agendamento do laboratório da escola. Missão: aceitar ou recusar pedidos — sem nunca deixar duas aulas na mesma sala. A plateia te programa; no fim, você vira uma máquina afinada.',
+      'Você é o robô de agendamento do laboratório. Missão: aceitar ou recusar pedidos — sem nunca deixar duas aulas na mesma sala. Entre pela sua tela e escolha um personagem.',
     kind: 'info',
-    robotThinking: 'Sistema iniciado. Aguardando instruções da equipe.',
+    robotThinking: 'Sistema iniciado. Aguardando a equipe entrar.',
+    robotCorrect: '',
+    robotWrong: '',
+  },
+  {
+    id: 'pesquisa',
+    act: 'PESQUISA',
+    activity: 2,
+    title: 'Pesquisa (3 minutos)',
+    prompt: 'Pesquise na internet e traga 1 regra. Depois voltamos para o jogo.',
+    kind: 'pesquisa',
+    research: {
+      prompt:
+        'Como um sistema de reservas (agenda, cinema, laboratório) decide se DOIS horários conflitam? Traga 1 regra.',
+      hint: 'Registre no chat do Meet (ou Mentimeter/Padlet).',
+      minutes: 3,
+    },
+    robotThinking: 'Enquanto vocês pesquisam, eu espero.',
     robotCorrect: '',
     robotWrong: '',
   },
   {
     id: 'sensores',
     act: 'SENSORES',
+    activity: 3,
     title: 'Quais dados você enxerga?',
     prompt:
       'Seu robô recebe uma pilha de dados. Selecione TODOS os que você precisa para decidir conflito de horário.',
@@ -94,6 +159,7 @@ export const PHASES: Phase[] = [
   {
     id: 'cerebro',
     act: 'CÉREBRO',
+    activity: 3,
     title: 'O que NÃO é sua responsabilidade?',
     prompt:
       'Para decidir conflito, você segue alguns passos. Um destes NÃO é sua responsabilidade AGORA. Qual?',
@@ -114,6 +180,7 @@ export const PHASES: Phase[] = [
   {
     id: 'plano',
     act: 'PLANO',
+    activity: 4,
     title: 'Monte o plano de decisão',
     prompt:
       'Coloque as etapas na ordem correta para decidir se uma reserva entra. Toque na ordem que você acha certa e envie.',
@@ -136,6 +203,7 @@ export const PHASES: Phase[] = [
   {
     id: 'd1',
     act: 'DECISÃO 1/5',
+    activity: 4,
     title: 'Pedido: 14h30 – 15h30',
     prompt:
       'Já existe aula aprovada das 14h às 15h. Chegou um pedido das 14h30 às 15h30. Aceitar ou recusar?',
@@ -166,6 +234,7 @@ export const PHASES: Phase[] = [
   {
     id: 'd2',
     act: 'DECISÃO 2/5',
+    activity: 4,
     title: 'Pedido: 15h – 16h  (fronteira)',
     prompt:
       'A aula existente termina às 15h. Chegou um pedido começando exatamente às 15h. Aceitar ou recusar?',
@@ -197,6 +266,7 @@ export const PHASES: Phase[] = [
   {
     id: 'd3',
     act: 'DECISÃO 3/5',
+    activity: 4,
     title: 'Pedido: 16h – 15h',
     prompt: 'Chegou um pedido das 16h às 15h. Aceitar ou recusar?',
     kind: 'single',
@@ -214,6 +284,7 @@ export const PHASES: Phase[] = [
   {
     id: 'd4',
     act: 'DECISÃO 4/5',
+    activity: 5,
     title: 'Pedido: 15h – 15h30  (encaixe entre duas)',
     prompt:
       'Existem DUAS aulas aprovadas: 14h–15h e 15h30–16h30, na mesma sala. Chegou um pedido das 15h às 15h30. Aceitar ou recusar?',
@@ -246,6 +317,7 @@ export const PHASES: Phase[] = [
   {
     id: 'd5',
     act: 'DECISÃO 5/5',
+    activity: 5,
     title: 'Pedido: 15h15 – 15h45  (invade a segunda)',
     prompt:
       'Mesma situação: aprovadas 14h–15h e 15h30–16h30, na mesma sala. Agora o pedido é das 15h15 às 15h45. Aceitar ou recusar?',
@@ -278,6 +350,7 @@ export const PHASES: Phase[] = [
   {
     id: 'boss',
     act: 'CHEFÃO',
+    activity: 5,
     title: 'Agora há DOIS laboratórios',
     prompt:
       'A escola abriu o laboratório B. Reservas no mesmo horário podem existir se forem em salas diferentes. O que muda em você, robô?',
@@ -306,9 +379,10 @@ export const PHASES: Phase[] = [
   {
     id: 'outro',
     act: 'FINAL',
+    activity: 5,
     title: 'Robô calibrado — mas e as regras?',
     prompt:
-      'Você representou os dados, dividiu a decisão, montou o plano e escalou para dois laboratórios. Mas quem confirmou essas regras? Na Temporada 2, a carta “autenticar” volta: só a Coordenação aprova, e uma solicitação nasce pendente. A pergunta deixa de ser “como funciona?” e passa a ser “resolve o problema certo?”.',
+      'Você representou os dados, dividiu a decisão, pesquisou, montou o plano e escalou para dois laboratórios. Mas quem confirmou essas regras? Na Temporada 2, a carta “autenticar” volta: só a Coordenação aprova, e uma solicitação nasce pendente. A pergunta deixa de ser “como funciona?” e passa a ser “resolve o problema certo?”.',
     kind: 'info',
     robotThinking: 'Aguardando novos requisitos…',
     robotCorrect: '',

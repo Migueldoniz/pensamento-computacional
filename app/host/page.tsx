@@ -3,7 +3,7 @@
 import { Suspense, useEffect, useRef, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { QRCodeSVG } from 'qrcode.react'
-import { PHASES, optionCounts, correctSoFar } from '@/lib/game'
+import { PHASES, optionCounts, correctSoFar, ACTIVITIES, isInteractive } from '@/lib/game'
 import { getSnapshot, recordRoom, setProgress, PlayerScore } from '@/lib/client'
 import { Robot, type Mood } from '@/components/Robot'
 import { Timeline } from '@/components/Timeline'
@@ -11,6 +11,10 @@ import { useCountdown } from '@/lib/useCountdown'
 import { initSound, isMuted, setMuted, sfxCorrect, sfxWrong, sfxStart, sfxTick, sfxClick } from '@/lib/sound'
 import { CharAvatar } from '@/components/CharAvatar'
 import { characterByName } from '@/lib/characters'
+
+function fmtTime(s: number) {
+  return s >= 60 ? `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}` : String(s)
+}
 
 function HostInner() {
   const params = useSearchParams()
@@ -97,7 +101,6 @@ function HostInner() {
 
   const countdown = useCountdown(deadline, offset)
 
-  // Som nos últimos 3 segundos.
   const prevSec = useRef<number | null>(null)
   useEffect(() => {
     if (countdown == null) {
@@ -111,16 +114,16 @@ function HostInner() {
   }, [countdown])
 
   const phase = PHASES[index]
+  const interactive = isInteractive(phase.kind)
   const phaseVotes = votes[phase.id] || {}
   const counts = optionCounts(phaseVotes, phase)
   const totalVotes = Object.values(counts).reduce((a, b) => a + b, 0)
   const players = Object.keys(phaseVotes).length
   const hits = correctSoFar(phaseVotes, phase)
 
-  // Som ao revelar.
   const prevRevealed = useRef(false)
   useEffect(() => {
-    if (revealed && !prevRevealed.current && phase.kind !== 'info') {
+    if (revealed && !prevRevealed.current && interactive) {
       if (hits >= Math.max(1, players / 2)) sfxCorrect()
       else sfxWrong()
     }
@@ -131,7 +134,7 @@ function HostInner() {
   const labelOf = (id: string) => phase.options?.find((o) => o.id === id)?.label ?? id
 
   const majorityOk = hits >= Math.max(1, players / 2)
-  const mood: Mood = phase.kind === 'info' ? 'idle' : revealed ? (majorityOk ? 'correct' : 'wrong') : 'thinking'
+  const mood: Mood = !interactive ? 'idle' : revealed ? (majorityOk ? 'correct' : 'wrong') : 'thinking'
   const line = revealed
     ? majorityOk
       ? phase.robotCorrect || 'Decisão correta.'
@@ -163,7 +166,7 @@ function HostInner() {
       sfxClick()
       setTimeout(() => setCopied(false), 1600)
     } catch {
-      /* clipboard bloqueado: o link fica visível para copiar à mão */
+      /* clipboard bloqueado */
     }
   }
 
@@ -185,7 +188,8 @@ function HostInner() {
       <div className="row spread" style={{ marginBottom: 10 }}>
         <div className="row" style={{ gap: 10 }}>
           <h1 style={{ margin: 0, fontSize: 22 }}>Você é o Robô</h1>
-          <span className="act">apresentador · sala {room || '…'}</span>
+          <span className="pill on">Atividade {phase.activity}/5 · {ACTIVITIES[phase.activity]}</span>
+          <span className="act">sala {room || '…'}</span>
         </div>
         <div className="row" style={{ gap: 8 }}>
           <span className="pill">{players} responderam</span>
@@ -234,26 +238,37 @@ function HostInner() {
 
           {countdown != null && (
             <div className={timerClass} style={{ padding: '2px 14px' }}>
-              <span style={{ fontSize: 26 }}>{countdown}</span>
-              <small>s</small>
+              <span style={{ fontSize: 26 }}>{fmtTime(countdown)}</span>
+              <small>restantes</small>
             </div>
           )}
 
           <div className="row" style={{ justifyContent: 'center', gap: 8 }}>
             <button onClick={() => go(-1)} disabled={index === 0}>◀</button>
             <button onClick={() => go(1)} disabled={index === PHASES.length - 1}>▶</button>
-            {phase.kind !== 'info' && (
+            {interactive && (
               <button className="primary" onClick={() => { sfxClick(); setRevealed((r) => !r) }}>
                 {revealed ? 'esconder' : 'revelar'}
               </button>
             )}
           </div>
 
-          {phase.kind !== 'info' && (
+          {interactive && (
             <div className="row" style={{ justifyContent: 'center', gap: 6 }}>
               <button onClick={() => startTimer(15)}>⏱15s</button>
               <button onClick={() => startTimer(20)}>20s</button>
               <button onClick={() => startTimer(30)}>30s</button>
+              <button className="ghost" onClick={() => setDeadline(null)} disabled={deadline == null}>
+                limpar
+              </button>
+            </div>
+          )}
+
+          {phase.kind === 'pesquisa' && (
+            <div className="row" style={{ justifyContent: 'center', gap: 6 }}>
+              <button className="primary" onClick={() => startTimer((phase.research?.minutes || 3) * 60)}>
+                ▶ iniciar {phase.research?.minutes || 3} min
+              </button>
               <button className="ghost" onClick={() => setDeadline(null)} disabled={deadline == null}>
                 limpar
               </button>
@@ -267,6 +282,24 @@ function HostInner() {
             <h2 style={{ margin: 0, fontSize: 20 }}>{phase.title}</h2>
           </div>
           <p style={{ margin: 0 }}>{phase.prompt}</p>
+
+          {phase.kind === 'objetivos' && (
+            <div className="col" style={{ gap: 8 }}>
+              {phase.objectives?.map((o, i) => (
+                <div key={i} className="row spread" style={{ alignItems: 'center' }}>
+                  <span>{o.text}</span>
+                  <span className="pill on">{o.cell}</span>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {phase.kind === 'pesquisa' && phase.research && (
+            <div className="bubble" style={{ borderColor: 'var(--warn)' }}>
+              <div style={{ fontSize: 17 }}>{phase.research.prompt}</div>
+              {phase.research.hint && <div className="small muted" style={{ marginTop: 6 }}>{phase.research.hint}</div>}
+            </div>
+          )}
 
           {phase.timeline && <Timeline spec={phase.timeline} />}
 
@@ -305,13 +338,9 @@ function HostInner() {
                 </div>
               )}
             </div>
-          ) : (
-            <p className="muted" style={{ margin: 0 }}>
-              {index === 0 ? 'Leia o desafio em voz alta e conduza.' : 'Fechamento: conecte com a próxima aula.'}
-            </p>
-          )}
+          ) : null}
 
-          {revealed && phase.kind !== 'info' && (
+          {revealed && interactive && (
             <div className="pill on">{hits}/{players} acertaram</div>
           )}
 
@@ -319,6 +348,12 @@ function HostInner() {
             <div className="bubble" style={{ borderColor: 'var(--ok)', fontSize: 14, padding: '10px 12px' }}>
               <strong>Por quê:</strong> {phase.explain}
             </div>
+          )}
+
+          {phase.kind === 'info' && !phase.explain && (
+            <p className="muted" style={{ margin: 0 }}>
+              {phase.id === 'boot' ? 'Leia a missão e aguarde a turma entrar.' : 'Fechamento: conecte com a próxima aula.'}
+            </p>
           )}
 
           {ranking.length > 0 && (

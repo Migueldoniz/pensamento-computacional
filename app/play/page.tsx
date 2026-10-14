@@ -2,7 +2,7 @@
 
 import { Suspense, useEffect, useRef, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
-import { PHASES, encodeChoice, isCorrect } from '@/lib/game'
+import { PHASES, encodeChoice, isCorrect, ACTIVITIES, isInteractive } from '@/lib/game'
 import { getSnapshot, sendVote, postScore, claimCharacter, releaseCharacter, PlayerScore } from '@/lib/client'
 import { Timeline } from '@/components/Timeline'
 import { CHARACTERS, characterById } from '@/lib/characters'
@@ -24,6 +24,10 @@ function loadScore(): Score {
 }
 function saveScore(s: Score) {
   localStorage.setItem('oa_score', JSON.stringify(s))
+}
+
+function fmtTime(s: number) {
+  return s >= 60 ? `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}` : String(s)
 }
 
 function PlayerInner() {
@@ -108,7 +112,7 @@ function PlayerInner() {
   const locked = revealed || (countdown !== null && countdown <= 0)
 
   useEffect(() => {
-    if (!revealed || phase.kind === 'info') return
+    if (!revealed || !isInteractive(phase.kind)) return
     if (scored.current.has(phase.id)) return
     scored.current.add(phase.id)
     const good = isCorrect(phase, sent)
@@ -239,16 +243,37 @@ function PlayerInner() {
 
       <div className="card col">
         <div className="row spread">
-          <div className="act">{phase.act}</div>
+          <div className="row" style={{ gap: 8 }}>
+            <span className="act">{phase.act}</span>
+            <span className="pill on">Atividade {phase.activity}/5 · {ACTIVITIES[phase.activity]}</span>
+          </div>
           {countdown != null && (
             <div className={timerClass}>
-              <span>{countdown}</span>
+              <span>{fmtTime(countdown)}</span>
               <small>s</small>
             </div>
           )}
         </div>
         <h2>{phase.title}</h2>
         <p>{phase.prompt}</p>
+
+        {phase.kind === 'objetivos' && (
+          <div className="col" style={{ gap: 6 }}>
+            {phase.objectives?.map((o, i) => (
+              <div key={i} className="row spread">
+                <span>{o.text}</span>
+                <span className="pill on">{o.cell}</span>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {phase.kind === 'pesquisa' && phase.research && (
+          <div className="bubble" style={{ borderColor: 'var(--warn)' }}>
+            <div style={{ fontSize: 17 }}>{phase.research.prompt}</div>
+            {phase.research.hint && <div className="small muted" style={{ marginTop: 6 }}>{phase.research.hint}</div>}
+          </div>
+        )}
 
         {phase.timeline && <Timeline spec={phase.timeline} />}
 
@@ -352,12 +377,11 @@ function PlayerInner() {
         )}
 
         {phase.kind === 'info' && <p className="muted">Aguarde o apresentador.</p>}
-
         {countdown === 0 && !revealed && <p className="pill off">⏱ tempo esgotado</p>}
         {diff && !revealed && countdown !== 0 && (
           <p className="muted small">Resposta enviada. Olhe a tela do apresentador.</p>
         )}
-        {revealed && phase.kind !== 'info' && (
+        {revealed && isInteractive(phase.kind) && (
           <p className={isCorrect(phase, sent) ? 'pill on' : 'pill off'}>
             {isCorrect(phase, sent) ? 'Você acertou! +10' : 'Não foi dessa vez.'}
           </p>
