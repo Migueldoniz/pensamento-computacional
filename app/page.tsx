@@ -12,7 +12,12 @@ export default function Home() {
   const create = async () => {
     setBusy(true)
     const r = await recordRoom()
-    router.push(`/host?room=${r.code}&token=${r.token}`)
+    try {
+      localStorage.setItem(`oa_host:${r.code}`, r.token)
+    } catch {
+      /* ignore */
+    }
+    router.push(`/host?room=${r.code}`)
   }
 
   const join = () => {

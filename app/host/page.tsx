@@ -20,10 +20,10 @@ function HostInner() {
   const params = useSearchParams()
   const router = useRouter()
   const codeParam = (params.get('room') || '').toUpperCase()
-  const tokenParam = params.get('token') || ''
 
   const [room, setRoom] = useState(codeParam)
-  const [token, setToken] = useState(tokenParam)
+  const [token, setToken] = useState('')
+  const [checked, setChecked] = useState(false)
   const [index, setIndex] = useState(0)
   const [revealed, setRevealed] = useState(false)
   const [votes, setVotes] = useState<Record<string, Record<string, string>>>({})
@@ -44,19 +44,31 @@ function HostInner() {
   useEffect(() => {
     if (codeParam) {
       setRoom(codeParam)
-      setToken(tokenParam)
+      let tok = ''
+      try {
+        tok = localStorage.getItem(`oa_host:${codeParam}`) || ''
+      } catch {
+        /* ignore */
+      }
+      setToken(tok)
+      setChecked(true)
       return
     }
     let alive = true
     ;(async () => {
       const r = await recordRoom()
       if (!alive) return
-      router.replace(`/host?room=${r.code}&token=${r.token}`)
+      try {
+        localStorage.setItem(`oa_host:${r.code}`, r.token)
+      } catch {
+        /* ignore */
+      }
+      router.replace(`/host?room=${r.code}`)
     })()
     return () => {
       alive = false
     }
-  }, [codeParam, tokenParam, router])
+  }, [codeParam, router])
 
   const initialized = useRef(false)
   useEffect(() => {
@@ -168,6 +180,22 @@ function HostInner() {
     } catch {
       /* clipboard bloqueado */
     }
+  }
+
+  if (!checked) {
+    return <div className="wrap">carregando…</div>
+  }
+
+  if (room && !token) {
+    return (
+      <div className="wrap">
+        <h2>Sessão de apresentador não encontrada</h2>
+        <p className="muted">
+          Por segurança, o controle da sala fica apenas no navegador que a criou. Crie uma nova
+          sala na <a href="/">página inicial</a>.
+        </p>
+      </div>
+    )
   }
 
   if (notFound) {
