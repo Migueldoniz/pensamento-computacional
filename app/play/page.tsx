@@ -311,13 +311,15 @@ function PlayerInner() {
         {phase.kind === 'objetivos' && (
           <div className="col" style={{ gap: 8 }}>
             {flow ? (
-              <div className="row" style={{ gap: 6 }}>
+              <div className="row" style={{ gap: 8, justifyContent: 'center' }}>
                 {flow.map((f, i) => (
-                  <div key={i} className="row" style={{ gap: 6, alignItems: 'center' }}>
-                    <div className="obj-tile">
-                      {f.icon && <ObjectiveIcon name={f.icon} size={38} />}
-                      <b>{f.label}</b>
-                      {f.sub && <div className="small muted">{f.sub}</div>}
+                  <div key={i} className="row" style={{ gap: 8, alignItems: 'center' }}>
+                    <div className="hex-obj">
+                      <div className="hex-obj-bg" />
+                      <div className="hex-obj-inner">
+                        {f.icon && <ObjectiveIcon name={f.icon} size={32} />}
+                        <b>{f.label}</b>
+                      </div>
                     </div>
                     {i < flow.length - 1 && <span className="ccc-arrow">→</span>}
                   </div>
