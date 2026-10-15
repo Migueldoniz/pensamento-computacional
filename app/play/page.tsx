@@ -46,6 +46,7 @@ function PlayerInner() {
   const [revealed, setRevealed] = useState(false)
   const [showFilter, setShowFilter] = useState(false)
   const [showAlgo, setShowAlgo] = useState(false)
+  const [sourcesOpened, setSourcesOpened] = useState(false)
   const [notFound, setNotFound] = useState(false)
   const [deadline, setDeadline] = useState<number | null>(null)
   const [offset, setOffset] = useState(0)
@@ -67,6 +68,25 @@ function PlayerInner() {
     setShowFilter(false)
     setShowAlgo(false)
   }, [index])
+
+  // o aluno só responde a pesquisa depois de abrir as fontes (guardado por sala)
+  useEffect(() => {
+    if (!room) return
+    try {
+      setSourcesOpened(localStorage.getItem(`oa_sources:${room}`) === '1')
+    } catch {
+      /* ignore */
+    }
+  }, [room])
+
+  function openSources() {
+    setSourcesOpened(true)
+    try {
+      localStorage.setItem(`oa_sources:${room}`, '1')
+    } catch {
+      /* ignore */
+    }
+  }
 
   const prevIndex = useRef(-1)
   const prevRevealed = useRef(false)
@@ -515,6 +535,51 @@ function PlayerInner() {
               <Rich text={phase.research.prompt} />
             </p>
 
+            {phase.research.sourceUrl && (
+              <div className="col" style={{ gap: 8 }}>
+                <a
+                  className="btn"
+                  href={
+                    phase.research.sourceUrl.startsWith('/') && room
+                      ? `${phase.research.sourceUrl}?room=${room}`
+                      : phase.research.sourceUrl
+                  }
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={openSources}
+                >
+                  📄 {phase.research.sourceLabel || 'Abrir a fonte'}
+                </a>
+                {phase.research.template && (
+                  <span className="mono small muted">{phase.research.template}</span>
+                )}
+              </div>
+            )}
+
+            <div className="col" style={{ gap: 8 }}>
+              <label className="small muted">
+                Sua resposta (breve)
+                <input
+                  type="text"
+                  value={respText}
+                  onChange={(e) => setRespText(e.target.value)}
+                  placeholder={sourcesOpened ? 'ex.: escolher o que representar' : '🔒 abra as fontes primeiro'}
+                  disabled={!sourcesOpened}
+                />
+              </label>
+              <button
+                className="primary"
+                disabled={!sourcesOpened || !respText.trim()}
+                onClick={sendResposta}
+              >
+                {respSent ? 'enviar de novo' : 'enviar resposta'}
+              </button>
+              {!sourcesOpened && (
+                <span className="small muted">🔒 Abra as fontes para liberar a resposta.</span>
+              )}
+              {respSent && <span className="pill on">enviada ✓</span>}
+            </div>
+
             {phase.research.scaffold && (
               <div className="col" style={{ gap: 6 }}>
                 <div className="act">Passo a passo</div>
@@ -525,22 +590,6 @@ function PlayerInner() {
                 </ol>
               </div>
             )}
-
-            <div className="col" style={{ gap: 8 }}>
-              <label className="small muted">
-                Sua resposta (1 frase)
-                <input
-                  type="text"
-                  value={respText}
-                  onChange={(e) => setRespText(e.target.value)}
-                  placeholder="ex.: abstrair é escolher o que representar"
-                />
-              </label>
-              <button className="primary" disabled={!respText.trim()} onClick={sendResposta}>
-                {respSent ? 'enviar de novo' : 'enviar resposta'}
-              </button>
-              {respSent && <span className="pill on">enviada ✓</span>}
-            </div>
 
             {phase.research.example && (
               <div className="model">
@@ -557,26 +606,6 @@ function PlayerInner() {
                   <div className="small muted" style={{ marginTop: 8 }}>
                     {phase.research.exampleNote}
                   </div>
-                )}
-              </div>
-            )}
-
-            {phase.research.sourceUrl && (
-              <div className="row" style={{ gap: 12, alignItems: 'center' }}>
-                <a
-                  className="btn"
-                  href={
-                    phase.research.sourceUrl.startsWith('/') && room
-                      ? `${phase.research.sourceUrl}?room=${room}`
-                      : phase.research.sourceUrl
-                  }
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  📄 {phase.research.sourceLabel || 'Abrir a fonte'}
-                </a>
-                {phase.research.template && (
-                  <span className="mono small muted">{phase.research.template}</span>
                 )}
               </div>
             )}

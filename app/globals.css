@@ -230,6 +230,11 @@ input[type="text"] {
   width: 100%;
 }
 
+input[type="text"]:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
 /* ---------- Linha do tempo ---------- */
 .tl {
   width: 100%;
