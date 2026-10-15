@@ -191,7 +191,7 @@ export const PHASES: Phase[] = [
     research: {
       intro: 'Pesquise nas fontes e depois resuma com as suas palavras.',
       prompt: 'Após a leitura das fontes a seguir, responda brevemente **o que é abstração**.',
-      sourceLabel: 'Abrir as fontes (Wing 2006 + Bombasar et al. 2017)',
+      sourceLabel: 'Abrir as fontes e responder',
       sourceUrl: '/fonte',
       minutes: 2,
     },

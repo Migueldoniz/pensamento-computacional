@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { RespostaBox } from '@/components/RespostaBox'
 
 export const metadata = {
   title: 'Etapa de pesquisa — Fontes',
@@ -11,9 +12,6 @@ export default function FontePage({ searchParams }: { searchParams: { room?: str
     <div className="wrap" style={{ maxWidth: 760, margin: '0 auto' }}>
       <div className="act">Etapa de pesquisa</div>
       <h1 style={{ marginBottom: 4 }}>Fontes de pesquisa</h1>
-      <p className="muted" style={{ marginTop: 0 }}>
-        Após a leitura das fontes a seguir, responda brevemente <strong>o que é abstração</strong>.
-      </p>
 
       <div className="col" style={{ gap: 18, marginTop: 8 }}>
         <section className="source">
@@ -134,7 +132,10 @@ export default function FontePage({ searchParams }: { searchParams: { room?: str
         </section>
       </div>
 
-      <Link href={back} className="small">← voltar à sala{room ? ` ${room}` : ''}</Link>
+      <div className="col" style={{ gap: 14, marginTop: 18 }}>
+        <RespostaBox room={room} />
+        <Link href={back} className="small">← voltar à sala{room ? ` ${room}` : ''}</Link>
+      </div>
     </div>
   )
 }

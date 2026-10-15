@@ -46,7 +46,6 @@ function PlayerInner() {
   const [revealed, setRevealed] = useState(false)
   const [showFilter, setShowFilter] = useState(false)
   const [showAlgo, setShowAlgo] = useState(false)
-  const [sourcesOpened, setSourcesOpened] = useState(false)
   const [notFound, setNotFound] = useState(false)
   const [deadline, setDeadline] = useState<number | null>(null)
   const [offset, setOffset] = useState(0)
@@ -68,25 +67,6 @@ function PlayerInner() {
     setShowFilter(false)
     setShowAlgo(false)
   }, [index])
-
-  // o aluno só responde a pesquisa depois de abrir as fontes (guardado por sala)
-  useEffect(() => {
-    if (!room) return
-    try {
-      setSourcesOpened(localStorage.getItem(`oa_sources:${room}`) === '1')
-    } catch {
-      /* ignore */
-    }
-  }, [room])
-
-  function openSources() {
-    setSourcesOpened(true)
-    try {
-      localStorage.setItem(`oa_sources:${room}`, '1')
-    } catch {
-      /* ignore */
-    }
-  }
 
   const prevIndex = useRef(-1)
   const prevRevealed = useRef(false)
@@ -546,7 +526,6 @@ function PlayerInner() {
                   }
                   target="_blank"
                   rel="noreferrer"
-                  onClick={openSources}
                 >
                   📄 {phase.research.sourceLabel || 'Abrir a fonte'}
                 </a>
@@ -563,20 +542,12 @@ function PlayerInner() {
                   type="text"
                   value={respText}
                   onChange={(e) => setRespText(e.target.value)}
-                  placeholder={sourcesOpened ? 'ex.: escolher o que representar' : '🔒 abra as fontes primeiro'}
-                  disabled={!sourcesOpened}
+                  placeholder="ex.: escolher o que representar"
                 />
               </label>
-              <button
-                className="primary"
-                disabled={!sourcesOpened || !respText.trim()}
-                onClick={sendResposta}
-              >
+              <button className="primary" disabled={!respText.trim()} onClick={sendResposta}>
                 {respSent ? 'enviar de novo' : 'enviar resposta'}
               </button>
-              {!sourcesOpened && (
-                <span className="small muted">🔒 Abra as fontes para liberar a resposta.</span>
-              )}
               {respSent && <span className="pill on">enviada ✓</span>}
             </div>
 
