@@ -3,7 +3,7 @@
 import { Suspense, useEffect, useRef, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { PHASES, encodeChoice, isCorrect, ACTIVITIES, isInteractive } from '@/lib/game'
-import { getSnapshot, sendVote, postScore, claimCharacter, releaseCharacter, saveResposta, PlayerScore } from '@/lib/client'
+import { getSnapshot, sendVote, postScore, claimCharacter, releaseCharacter, PlayerScore } from '@/lib/client'
 import { Timeline } from '@/components/Timeline'
 import { CHARACTERS, characterById } from '@/lib/characters'
 import { CharAvatar } from '@/components/CharAvatar'
@@ -57,10 +57,6 @@ function PlayerInner() {
   const [seq, setSeq] = useState<string[]>([])
   const [score, setScore] = useState<Score>({ score: 0, combo: 0 })
   const [wrong, setWrong] = useState<string[]>([])
-
-  // Resposta da pesquisa
-  const [respText, setRespText] = useState('')
-  const [respSent, setRespSent] = useState(false)
 
   // revelações do slide CONCEITO voltam ao início ao trocar de fase
   useEffect(() => {
@@ -204,13 +200,6 @@ function PlayerInner() {
     setReady(true)
     sfxClick()
     if (room && playerId) postScore(room, playerId, characterById(id)?.name || 'Anônimo', score.score, score.combo)
-  }
-
-  async function sendResposta() {
-    if (!room || !playerId || !respText.trim()) return
-    await saveResposta(room, playerId, name, respText.trim())
-    setRespSent(true)
-    sfxClick()
   }
 
   if (!room) {
@@ -534,22 +523,6 @@ function PlayerInner() {
                 )}
               </div>
             )}
-
-            <div className="col" style={{ gap: 8 }}>
-              <label className="small muted">
-                Sua resposta (breve)
-                <input
-                  type="text"
-                  value={respText}
-                  onChange={(e) => setRespText(e.target.value)}
-                  placeholder="ex.: escolher o que representar"
-                />
-              </label>
-              <button className="primary" disabled={!respText.trim()} onClick={sendResposta}>
-                {respSent ? 'enviar de novo' : 'enviar resposta'}
-              </button>
-              {respSent && <span className="pill on">enviada ✓</span>}
-            </div>
 
             {phase.research.scaffold && (
               <div className="col" style={{ gap: 6 }}>
