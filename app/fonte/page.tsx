@@ -1,7 +1,7 @@
 import Link from 'next/link'
 
 export const metadata = {
-  title: 'Fontes de pesquisa — Operação Agenda',
+  title: 'Etapa de pesquisa — Fontes',
 }
 
 export default function FontePage({ searchParams }: { searchParams: { room?: string } }) {

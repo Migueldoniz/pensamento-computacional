@@ -194,7 +194,8 @@ export const PHASES: Phase[] = [
     act: 'ABSTRAÇÃO',
     activity: 2,
     title: 'Um mapa não mostra tudo',
-    prompt: 'Para achar um caminho, o mapa mostra ruas e conexões — não cada árvore nem fachada.',
+    prompt:
+      'Se o mapa trouxesse cada árvore, casa, cor do asfalto e rachadura, seria do tamanho da cidade — e inútil. Ele funciona porque filtra ~99% dos detalhes.',
     kind: 'conceito',
     art: 'map',
     definition:
