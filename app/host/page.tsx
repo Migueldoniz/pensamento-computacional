@@ -535,7 +535,9 @@ function HostInner() {
 
           {phase.kind === 'pesquisa' && phase.research && (
             <div className="col" style={{ gap: 14 }}>
-              <p style={{ margin: 0, fontSize: 18, lineHeight: 1.5 }}>{phase.research.prompt}</p>
+              <p style={{ margin: 0, fontSize: 18, lineHeight: 1.5 }}>
+                <Rich text={phase.research.prompt} />
+              </p>
 
               {respostas.length > 0 && (
                 <div className="cards">

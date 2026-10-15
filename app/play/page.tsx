@@ -511,7 +511,9 @@ function PlayerInner() {
 
         {phase.kind === 'pesquisa' && phase.research && (
           <div className="col" style={{ gap: 14 }}>
-            <p style={{ margin: 0, fontSize: 17, lineHeight: 1.5 }}>{phase.research.prompt}</p>
+            <p style={{ margin: 0, fontSize: 17, lineHeight: 1.5 }}>
+              <Rich text={phase.research.prompt} />
+            </p>
 
             {phase.research.scaffold && (
               <div className="col" style={{ gap: 6 }}>

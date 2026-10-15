@@ -12,7 +12,7 @@ export default function FontePage({ searchParams }: { searchParams: { room?: str
       <div className="act">Etapa de pesquisa</div>
       <h1 style={{ marginBottom: 4 }}>Fontes de pesquisa</h1>
       <p className="muted" style={{ marginTop: 0 }}>
-        Com base na pesquisa: o que é abstração? Resuma em 1 frase.
+        Após a leitura das fontes a seguir, responda brevemente <strong>o que é abstração</strong>
       </p>
 
       <div className="col" style={{ gap: 18, marginTop: 8 }}>
