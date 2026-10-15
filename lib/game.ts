@@ -137,7 +137,7 @@ export const PHASES: Phase[] = [
     id: 'objetivos',
     act: 'OBJETIVOS',
     activity: 1,
-    title: 'Objetivos da aula',
+    title: 'Introdução ao Pensamento Computacional',
     prompt: '',
     kind: 'objetivos',
     flow: [
