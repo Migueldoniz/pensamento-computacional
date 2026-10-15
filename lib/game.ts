@@ -70,6 +70,7 @@ export interface Phase {
     rightText: string
     rightNote?: string
   } // kind 'conceito' (diagrama de contraste)
+  analogies?: { icon: string; title: string; detail: string }[] // kind 'conceito'
   concept?: ConceptStep[] // kind 'conceito'
   definition?: string // conceito: definição destacada
   strategies?: { name: string; detail?: string }[] // estratégias (ex.: de abstração)
@@ -200,6 +201,11 @@ export const PHASES: Phase[] = [
     kind: 'conceito',
     definition:
       'Abstrair é escolher a representação adequada a um PROPÓSITO: destacar o relevante e ignorar o resto.',
+    analogies: [
+      { icon: '🗺️', title: 'Mapa do metrô', detail: 'representa a cidade só com estações e linhas — o que basta para você se locomover.' },
+      { icon: '🧍', title: 'Boneco de palito', detail: 'poucos traços, e você reconhece a pessoa — só o essencial para identificá-la.' },
+      { icon: '🚌', title: 'Quadro de horários', detail: 'só horários e destinos, para planejar a viagem — não os passageiros nem a cor do ônibus.' },
+    ],
     strategies: [
       { name: 'Filtro de detalhes', detail: 'Deixar de fora o que não muda a decisão → Abstração de Dados: (sala, início, fim, solicitante).' },
       { name: 'Generalizar', detail: 'Uma representação que serve para muitos casos — em vez de uma solução por caso.' },

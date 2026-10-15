@@ -361,6 +361,20 @@ function PlayerInner() {
                 </div>
               </div>
             ))}
+            {phase.analogies && (
+              <div className="col" style={{ gap: 8 }}>
+                <div className="act">Analogias</div>
+                {phase.analogies.map((a, i) => (
+                  <div key={i} className="row" style={{ gap: 10, alignItems: 'flex-start' }}>
+                    <span style={{ fontSize: 20 }}>{a.icon}</span>
+                    <div>
+                      <b>{a.title}</b>
+                      <div className="muted small">{a.detail}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
             {phase.strategies && (
               <div className="col" style={{ gap: 8 }}>
                 <div className="act">Estratégias</div>
