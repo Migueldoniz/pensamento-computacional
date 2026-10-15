@@ -9,7 +9,7 @@ import { CHARACTERS, characterById } from '@/lib/characters'
 import { CharAvatar } from '@/components/CharAvatar'
 import { Rich } from '@/components/Rich'
 import { SandwichArt, MapArt } from '@/components/Art'
-import { ObjectiveIcon } from '@/components/ObjectiveIcon'
+import { ObjectivesPolygon } from '@/components/ObjectivesPolygon'
 import { useCountdown } from '@/lib/useCountdown'
 import { initSound, isMuted, setMuted, sfxCorrect, sfxWrong, sfxTick, sfxClick, sfxWin } from '@/lib/sound'
 
@@ -311,19 +311,8 @@ function PlayerInner() {
         {phase.kind === 'objetivos' && (
           <div className="col" style={{ gap: 8 }}>
             {flow ? (
-              <div className="row" style={{ gap: 8, justifyContent: 'center' }}>
-                {flow.map((f, i) => (
-                  <div key={i} className="row" style={{ gap: 8, alignItems: 'center' }}>
-                    <div className="hex-obj">
-                      <div className="hex-obj-bg" />
-                      <div className="hex-obj-inner">
-                        {f.icon && <ObjectiveIcon name={f.icon} size={32} />}
-                        <b>{f.label}</b>
-                      </div>
-                    </div>
-                    {i < flow.length - 1 && <span className="ccc-arrow">→</span>}
-                  </div>
-                ))}
+              <div className="row" style={{ justifyContent: 'center' }}>
+                <ObjectivesPolygon items={flow} size={340} />
               </div>
             ) : phase.objectivesText ? (
               <p style={{ margin: 0, fontSize: 17, lineHeight: 1.6 }}>

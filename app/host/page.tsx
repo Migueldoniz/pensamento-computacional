@@ -12,7 +12,7 @@ import { initSound, isMuted, setMuted, sfxCorrect, sfxWrong, sfxStart, sfxTick, 
 import { CharAvatar } from '@/components/CharAvatar'
 import { Rich } from '@/components/Rich'
 import { SandwichArt, MapArt } from '@/components/Art'
-import { ObjectiveIcon } from '@/components/ObjectiveIcon'
+import { ObjectivesPolygon } from '@/components/ObjectivesPolygon'
 import { characterByName } from '@/lib/characters'
 
 function fmtTime(s: number) {
@@ -335,19 +335,8 @@ function HostInner() {
           {phase.kind === 'objetivos' && (
             <div className="col" style={{ gap: 10 }}>
               {flow ? (
-                <div className="row" style={{ gap: 10, justifyContent: 'center' }}>
-                  {flow.map((f, i) => (
-                    <div key={i} className="row" style={{ gap: 10, alignItems: 'center' }}>
-                      <div className="hex-obj">
-                        <div className="hex-obj-bg" />
-                        <div className="hex-obj-inner">
-                          {f.icon && <ObjectiveIcon name={f.icon} size={36} />}
-                          <b>{f.label}</b>
-                        </div>
-                      </div>
-                      {i < flow.length - 1 && <span className="ccc-arrow">→</span>}
-                    </div>
-                  ))}
+                <div className="row" style={{ justifyContent: 'center' }}>
+                  <ObjectivesPolygon items={flow} size={430} />
                 </div>
               ) : phase.objectivesText ? (
                 <p style={{ margin: 0, fontSize: 18, lineHeight: 1.6 }}>

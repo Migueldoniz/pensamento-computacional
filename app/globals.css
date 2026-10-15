@@ -673,31 +673,27 @@ mark {
   align-items: center;
   gap: 6px;
 }
-.hex-obj {
+.poly-wrap {
   position: relative;
-  width: 118px;
-  height: 134px;
-  flex: none;
 }
-.hex-obj-bg,
-.hex-obj-inner {
+.poly-svg {
   position: absolute;
-  clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
-}
-.hex-obj-bg {
   inset: 0;
-  background: var(--accent);
 }
-.hex-obj-inner {
-  inset: 3px;
+.poly-node {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 116px;
+  padding: 10px 8px;
+  border: 2px solid var(--accent);
+  border-radius: 14px;
   background: var(--panel-2);
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 6px;
+  gap: 4px;
   text-align: center;
 }
-.hex-obj-inner b {
+.poly-node b {
   font-size: 14px;
 }
