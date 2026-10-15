@@ -661,18 +661,6 @@ mark {
   font-size: 20px;
   line-height: 1.9;
 }
-.obj-tile {
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  padding: 12px 10px;
-  background: var(--panel-2);
-  text-align: center;
-  min-width: 116px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-}
 .poly-wrap {
   position: relative;
 }
@@ -684,7 +672,7 @@ mark {
   position: absolute;
   transform: translate(-50%, -50%);
   width: 116px;
-  padding: 10px 8px;
+  padding: 8px 6px;
   border: 2px solid var(--accent);
   border-radius: 14px;
   background: var(--panel-2);
@@ -696,4 +684,21 @@ mark {
 }
 .poly-node b {
   font-size: 14px;
+  line-height: 1.15;
+}
+
+/* Mapa: horizontal em telas largas, empilhado no mobile */
+.art-wide {
+  display: block;
+}
+.art-tall {
+  display: none;
+}
+@media (max-width: 640px) {
+  .art-wide {
+    display: none;
+  }
+  .art-tall {
+    display: block;
+  }
 }

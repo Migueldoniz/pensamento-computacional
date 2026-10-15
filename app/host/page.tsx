@@ -11,7 +11,7 @@ import { useCountdown } from '@/lib/useCountdown'
 import { initSound, isMuted, setMuted, sfxCorrect, sfxWrong, sfxStart, sfxTick, sfxClick } from '@/lib/sound'
 import { CharAvatar } from '@/components/CharAvatar'
 import { Rich } from '@/components/Rich'
-import { SandwichArt, MapArt } from '@/components/Art'
+import { SandwichArt, MapDiagram } from '@/components/Art'
 import { ObjectivesPolygon } from '@/components/ObjectivesPolygon'
 import { characterByName } from '@/lib/characters'
 
@@ -356,7 +356,7 @@ function HostInner() {
           {phase.kind === 'conceito' && (
             <div className="col" style={{ gap: 16 }}>
               {phase.art === 'sandwich' && <SandwichArt />}
-              {phase.art === 'map' && <MapArt />}
+              {phase.art === 'map' && <MapDiagram />}
               {phase.contrast && (
                 <div className="col" style={{ gap: 12 }}>
                   <div className="idea">

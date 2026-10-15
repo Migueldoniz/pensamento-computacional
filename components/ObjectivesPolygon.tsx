@@ -1,42 +1,68 @@
 'use client'
 
+import { useEffect, useRef, useState } from 'react'
 import { ObjectiveIcon } from './ObjectiveIcon'
 
 type Item = { icon?: string; label: string }
+
+const clamp = (v: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, v))
 
 /**
  * Fluxograma em (poli)gono: os itens ficam nos vértices de um polígono regular
  * — com 5 itens, um **pentágono** — ligados por setas em sequência (ciclo).
  * Os itens são cartões (não hexágonos); o formato do conjunto é que é poligonal.
+ *
+ * O tamanho se adapta à largura do contêiner (responsivo/mobile).
  */
 export function ObjectivesPolygon({
   items,
-  size = 420,
+  size = 430,
   radius = 0.37,
 }: {
   items: Item[]
   size?: number
   radius?: number
 }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const [avail, setAvail] = useState(size)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const parent = el.parentElement
+    const measure = () => setAvail(parent ? parent.clientWidth : size)
+    measure()
+    const ro = new ResizeObserver(measure)
+    if (parent) ro.observe(parent)
+    window.addEventListener('resize', measure)
+    return () => {
+      ro.disconnect()
+      window.removeEventListener('resize', measure)
+    }
+  }, [size])
+
   const n = items.length
   if (n === 0) return null
-  const accent = '#4f8cff'
-  const cx = size / 2
-  const cy = size / 2
-  const R = size * radius
 
-  // vértices do polígono, começando no topo e seguindo horário
+  const s = clamp(Math.min(size, avail || size), 210, size)
+  const accent = '#4f8cff'
+  const cx = s / 2
+  const cy = s / 2
+  const R = s * radius
+  const cardW = clamp(s * 0.27, 78, 116)
+  const iconSize = clamp(s * 0.07, 20, 30)
+  const fontPx = clamp(s * 0.033, 11, 14)
+  // recuo das setas: grande o bastante para não entrar nos cartões
+  const gap = Math.max(s * 0.145, cardW * 0.5)
+
   const pos = items.map((_, i) => {
     const a = ((-90 + (i * 360) / n) * Math.PI) / 180
     return { x: cx + R * Math.cos(a), y: cy + R * Math.sin(a) }
   })
 
-  // recuo das setas para não entrarem nos cartões
-  const gap = 60
-
   return (
-    <div className="poly-wrap" style={{ width: size, height: size }}>
-      <svg className="poly-svg" width={size} height={size} viewBox={`0 0 ${size} ${size}`} aria-hidden>
+    <div ref={ref} className="poly-wrap" style={{ width: s, height: s, maxWidth: '100%' }}>
+      <svg className="poly-svg" width={s} height={s} viewBox={`0 0 ${s} ${s}`} aria-hidden>
         <defs>
           <marker id="poly-arrow" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
             <path d="M0,0 L9,4.5 L0,9 Z" fill={accent} />
@@ -66,9 +92,13 @@ export function ObjectivesPolygon({
       </svg>
 
       {items.map((it, i) => (
-        <div key={i} className="poly-node" style={{ left: pos[i].x, top: pos[i].y }}>
-          {it.icon && <ObjectiveIcon name={it.icon} size={30} />}
-          <b>{it.label}</b>
+        <div
+          key={i}
+          className="poly-node"
+          style={{ left: pos[i].x, top: pos[i].y, width: cardW, fontSize: fontPx }}
+        >
+          {it.icon && <ObjectiveIcon name={it.icon} size={iconSize} />}
+          <b style={{ fontSize: fontPx }}>{it.label}</b>
         </div>
       ))}
     </div>
