@@ -522,9 +522,9 @@ function PlayerInner() {
         {phase.kind === 'regras' && (
           <div className="col" style={{ gap: 6 }}>
             {phase.rules?.map((r, i) => (
-              <div key={i} className="row" style={{ gap: 8 }}>
+              <div key={i} className="rule-row">
                 <span className="pill on">{i + 1}</span>
-                <span>{r}</span>
+                <span className="rule-text">{r}</span>
               </div>
             ))}
           </div>

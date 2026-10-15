@@ -702,6 +702,20 @@ mark {
   line-height: 1.15;
 }
 
+/* Item numerado (regras, listas): número fixo e o texto quebra na própria coluna */
+.rule-row {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+.rule-row > .pill {
+  flex: none;
+}
+.rule-row > .rule-text {
+  flex: 1;
+  min-width: 0;
+}
+
 /* Fluxograma de etapas (ABSTRAÇÃO) */
 .abst-flow {
   display: flex;
