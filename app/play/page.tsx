@@ -513,8 +513,6 @@ function PlayerInner() {
                       ? `${phase.research.sourceUrl}?room=${room}`
                       : phase.research.sourceUrl
                   }
-                  target="_blank"
-                  rel="noreferrer"
                 >
                   📄 {phase.research.sourceLabel || 'Abrir a fonte'}
                 </a>
