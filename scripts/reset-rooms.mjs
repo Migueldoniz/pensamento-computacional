@@ -42,6 +42,14 @@ try {
 // --- 2) Upstash / Vercel KV ---
 if (!url || !token) {
   console.log('·  Upstash não configurado (nada a apagar no KV).')
+  console.log(
+    '   Para apagar as salas do Upstash, rode passando as credenciais:\n' +
+      '     PowerShell:\n' +
+      '       $env:UPSTASH_REDIS_REST_URL="https://....upstash.io"\n' +
+      '       $env:UPSTASH_REDIS_REST_TOKEN="...."\n' +
+      '       npm run reset\n' +
+      '   (as credenciais estão no painel do Upstash ou nas env vars da Vercel)',
+  )
   process.exit(0)
 }
 

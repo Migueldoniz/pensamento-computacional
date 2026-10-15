@@ -108,3 +108,14 @@ export async function saveResposta(
     body: JSON.stringify({ code, playerId, name, text }),
   })
 }
+
+/** Zera os dados da sala (apresentador). */
+export async function resetRoom(code: string, token: string): Promise<boolean> {
+  const r = await fetch('/api/reset', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ code, token }),
+  })
+  const j = await r.json().catch(() => ({}))
+  return Boolean(j?.ok)
+}

@@ -244,3 +244,45 @@ export async function setResposta(
   await kvSet(keyOf(code), room)
   return true
 }
+
+/** Zera todos os dados da sala (mantém o código e o token). */
+export async function resetRoom(code: string, token: string): Promise<boolean> {
+  const room = await getRoom(code)
+  if (!room || room.token !== token) return false
+  room.index = 0
+  room.revealed = false
+  room.votes = {}
+  room.scores = {}
+  room.characters = {}
+  room.respostas = {}
+  room.deadline = null
+  room.updatedAt = Date.now()
+  await kvSet(keyOf(code), room)
+  return true
+}
+
+/** Apaga TODAS as salas (chaves `oa:room:*`). Só funciona com Upstash. */
+export async function wipeAllRooms(): Promise<number> {
+  const u = upstash()
+  if (!u) return 0
+  let cursor = '0'
+  let removed = 0
+  do {
+    const res = await fetch(
+      `${u.url}/scan/${cursor}?match=${encodeURIComponent('oa:room:*')}&count=100`,
+      { headers: { Authorization: `Bearer ${u.token}` }, cache: 'no-store' },
+    )
+    if (!res.ok) return removed
+    const json = await res.json()
+    cursor = String(json?.result?.[0] ?? '0')
+    const keys: string[] = json?.result?.[1] ?? []
+    for (const k of keys) {
+      await fetch(`${u.url}/del/${encodeURIComponent(k)}`, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${u.token}` },
+      })
+      removed++
+    }
+  } while (cursor !== '0')
+  return removed
+}

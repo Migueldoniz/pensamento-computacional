@@ -46,13 +46,33 @@ UPSTASH_REDIS_REST_TOKEN=...
 
 ## Limpar as salas (apagar tudo)
 
+### No host (durante a aula) — botão 🗑
+No cabeçalho do `/host` há um botão **🗑** que **zera a sala atual**: personagens escolhidos, votos, pontos e respostas. Pedir confirmação antes. É o jeito mais prático de garantir uma apresentação limpa: crie a sala → clique em 🗑 → só então compartilhe o link.
+
+> Como cada sala é uma chave independente (`oa:room:CÓDIGO`) e "Criar sala" sempre sorteia um código novo, **uma sala nova já nasce limpa** — o 🗑 serve para reusar a mesma sala.
+
+### No terminal — `npm run reset`
 ```bash
 npm run reset
 ```
 
 - **Local:** apaga `./.data/rooms.json`. *Pare o `npm run dev` antes* — o processo mantém as salas em memória e reescreve o arquivo na próxima gravação.
-- **Upstash / Vercel KV:** apaga todas as chaves `oa:room:*` via REST (usa as variáveis de `.env.local`).
-- Cada sala é uma chave independente (`oa:room:CÓDIGO`), então **não há mistura entre salas** — e **criar sala** sempre sorteia um código novo.
+- **Upstash / Vercel KV:** apaga todas as chaves `oa:room:*`. Sem `.env.local`, passe as credenciais na hora:
+
+```powershell
+$env:UPSTASH_REDIS_REST_URL="https://....upstash.io"
+$env:UPSTASH_REDIS_REST_TOKEN="...."
+npm run reset
+```
+
+### Pelo navegador — `/api/admin/wipe`
+Defina a env var `ADMIN_KEY` no projeto e abra:
+
+```
+https://SEU-APP.vercel.app/api/admin/wipe?key=SEU_ADMIN_KEY
+```
+
+Resposta: `{ ok: true, mode: "upstash", removed: N }`. Sem `ADMIN_KEY` configurada, a rota responde **501** (desligada).
 
 ## As fases (Aula 1)
 | Fase | Conceito |

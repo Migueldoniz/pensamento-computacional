@@ -4,7 +4,7 @@ import { Suspense, useEffect, useRef, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { QRCodeSVG } from 'qrcode.react'
 import { PHASES, optionCounts, correctSoFar, isInteractive } from '@/lib/game'
-import { getSnapshot, recordRoom, setProgress, PlayerScore } from '@/lib/client'
+import { getSnapshot, recordRoom, setProgress, resetRoom, PlayerScore } from '@/lib/client'
 import { Robot, type Mood } from '@/components/Robot'
 import { Timeline } from '@/components/Timeline'
 import { useCountdown } from '@/lib/useCountdown'
@@ -51,6 +51,7 @@ function HostInner() {
   const [copied, setCopied] = useState(false)
   const [respostas, setRespostas] = useState<{ playerId: string; name: string; text: string }[]>([])
   const [totalPlayers, setTotalPlayers] = useState(0)
+  const [clearing, setClearing] = useState(false)
 
   useEffect(() => {
     initSound()
@@ -253,6 +254,28 @@ function HostInner() {
 
   const timerClass = countdown == null ? '' : countdown <= 3 ? 'timer warn' : 'timer'
 
+  async function clearRoom() {
+    if (!room || !token) return
+    const ok = window.confirm(
+      `Apagar TODOS os dados da sala ${room}?\n\nPersonagens escolhidos, votos, pontos e respostas serão zerados.`,
+    )
+    if (!ok) return
+    setClearing(true)
+    const done = await resetRoom(room, token)
+    setClearing(false)
+    if (!done) {
+      window.alert('Não deu para limpar a sala (token inválido ou sala inexistente).')
+      return
+    }
+    setIndex(0)
+    setRevealed(false)
+    setVotes({})
+    setScores({})
+    setRespostas([])
+    setTotalPlayers(0)
+    setDeadline(null)
+  }
+
   return (
     <div className="wrap host-wrap">
       <div className="row spread" style={{ marginBottom: 10 }}>
@@ -261,7 +284,10 @@ function HostInner() {
           <span className="act">sala {room || '…'}</span>
         </div>
         <div className="row" style={{ gap: 8 }}>
-          {phase.activity >= 3 && <span className="pill">{players} responderam</span>}
+          {phase.activity >= 3 && <span className="pill">{players} votaram</span>}
+          <button className="ghost" title="apagar os dados desta sala" onClick={clearRoom} disabled={clearing}>
+            {clearing ? '…' : '🗑'}
+          </button>
           <button
             className="ghost"
             onClick={() => {
