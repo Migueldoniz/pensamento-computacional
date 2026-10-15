@@ -173,8 +173,6 @@ export const PHASES: Phase[] = [
       'Coloque o recheio entre elas.',
       'Se houver restrição alimentar, escolha um ingrediente permitido.',
     ],
-    bullets: ['Decompor', 'Reconhecer padrões', 'Abstrair', 'Elaborar um algoritmo'],
-    note: 'A restrição alimentar muda o preparo; a cor do prato não. O que entra na representação depende do objetivo.',
     sources: [
       'Wing (2006): pensar computacionalmente é mais do que programar.',
       'Exemplo didático autoral (analogia do sanduíche).',

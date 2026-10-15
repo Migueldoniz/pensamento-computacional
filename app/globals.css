@@ -695,6 +695,10 @@ mark {
   display: none;
 }
 @media (max-width: 640px) {
+  .ccc-arrow {
+    transform: rotate(90deg);
+    margin: 0 auto;
+  }
   .art-wide {
     display: none;
   }
