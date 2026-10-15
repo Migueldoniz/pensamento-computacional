@@ -21,7 +21,7 @@ export function RespostaBox({ room }: { room: string }) {
 
   useEffect(() => {
     try {
-      const charId = localStorage.getItem('oa_name') || ''
+      const charId = room ? localStorage.getItem(`oa_char:${room}`) || '' : ''
       setName(characterById(charId)?.name || 'Anônimo')
       // garante uma identidade mesmo se o aluno abrir esta página direto
       let id = localStorage.getItem('oa_player') || ''

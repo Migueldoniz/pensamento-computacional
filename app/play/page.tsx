@@ -79,12 +79,35 @@ function PlayerInner() {
       localStorage.setItem('oa_player', id)
     }
     setPlayerId(id)
-    const savedName = localStorage.getItem('oa_name') || ''
-    if (savedName) {
-      setCharId(savedName)
-      setReady(true)
+    try {
+      // chave antiga (global): não é mais usada — apaga para não confundir
+      localStorage.removeItem('oa_name')
+    } catch {
+      /* ignore */
     }
-  }, [])
+    // o personagem é guardado POR SALA: em sala nova o aluno escolhe de novo
+    const savedChar = room ? localStorage.getItem(`oa_char:${room}`) || '' : ''
+    if (savedChar) {
+      setCharId(savedChar)
+      setReady(true)
+    } else {
+      setCharId('')
+      setReady(false)
+    }
+  }, [room])
+
+  // "epoch" da sala: se o apresentador limpar a sala, o aluno volta a escolher
+  const epochRef = useRef<number | null>(null)
+  const roomEpochRef = useRef(0)
+  const readyRef = useRef(false)
+  useEffect(() => {
+    readyRef.current = ready
+  }, [ready])
+  useEffect(() => {
+    if (!room) return
+    const raw = localStorage.getItem(`oa_epoch:${room}`)
+    epochRef.current = raw == null ? null : Number(raw)
+  }, [room])
 
   // Pontuação e fases já pontuadas isoladas POR SALA.
   useEffect(() => {
@@ -117,6 +140,15 @@ function PlayerInner() {
         setSent(null)
         setMulti([])
         setSeq([])
+      }
+      // sala limpa pelo apresentador → pede para escolher o personagem de novo
+      const ep = s.epoch ?? 0
+      roomEpochRef.current = ep
+      if (readyRef.current && epochRef.current != null && ep !== epochRef.current) {
+        epochRef.current = null
+        setReady(false)
+        setCharId('')
+        return
       }
       setIndex(s.index)
       setRevealed(s.revealed)
@@ -196,7 +228,13 @@ function PlayerInner() {
     if (!res.ok) {
       return
     }
-    localStorage.setItem('oa_name', id)
+    try {
+      localStorage.setItem(`oa_char:${room}`, id)
+      localStorage.setItem(`oa_epoch:${room}`, String(roomEpochRef.current))
+      epochRef.current = roomEpochRef.current
+    } catch {
+      /* ignore */
+    }
     setCharId(id)
     setReady(true)
     sfxClick()

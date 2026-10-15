@@ -22,6 +22,7 @@ export interface RoomState {
   respostas: Record<string, Resposta> // playerId -> resposta da pesquisa (pública)
   deadline: number | null // epoch ms do fim do cronômetro da rodada
   token: string
+  epoch?: number // sobe a cada "limpar sala" (força nova escolha de personagem)
   updatedAt: number
 }
 
@@ -138,6 +139,7 @@ export async function createRoom(code: string, token: string): Promise<RoomState
     respostas: {},
     deadline: null,
     token,
+    epoch: 0,
     updatedAt: Date.now(),
   }
   await kvSet(keyOf(code), state)
@@ -256,6 +258,7 @@ export async function resetRoom(code: string, token: string): Promise<boolean> {
   room.characters = {}
   room.respostas = {}
   room.deadline = null
+  room.epoch = (room.epoch || 0) + 1
   room.updatedAt = Date.now()
   await kvSet(keyOf(code), room)
   return true

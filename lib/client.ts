@@ -11,6 +11,7 @@ export interface RoomSnapshot {
   scores: Record<string, PlayerScore>
   characters: Record<string, string> // charId -> playerId
   players: number // total de participantes na sala
+  epoch: number // muda quando o apresentador limpa a sala
   respostas: { playerId: string; name: string; text: string }[]
   deadline: number | null
   serverNow: number
