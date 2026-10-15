@@ -3,7 +3,7 @@
 import { Suspense, useEffect, useRef, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { QRCodeSVG } from 'qrcode.react'
-import { PHASES, optionCounts, correctSoFar, ACTIVITIES, isInteractive } from '@/lib/game'
+import { PHASES, optionCounts, correctSoFar, isInteractive } from '@/lib/game'
 import { getSnapshot, recordRoom, setProgress, PlayerScore } from '@/lib/client'
 import { Robot, type Mood } from '@/components/Robot'
 import { Timeline } from '@/components/Timeline'
@@ -258,7 +258,6 @@ function HostInner() {
       <div className="row spread" style={{ marginBottom: 10 }}>
         <div className="row" style={{ gap: 10 }}>
           <h1 style={{ margin: 0, fontSize: 22 }}>Você é o Robô</h1>
-          <span className="pill on">Atividade {phase.activity}/5 · {ACTIVITIES[phase.activity]}</span>
           <span className="act">sala {room || '…'}</span>
         </div>
         <div className="row" style={{ gap: 8 }}>

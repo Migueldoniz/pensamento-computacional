@@ -2,7 +2,7 @@
 
 import { Suspense, useEffect, useRef, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
-import { PHASES, encodeChoice, isCorrect, ACTIVITIES, isInteractive } from '@/lib/game'
+import { PHASES, encodeChoice, isCorrect, isInteractive } from '@/lib/game'
 import { getSnapshot, sendVote, postScore, claimCharacter, releaseCharacter, PlayerScore } from '@/lib/client'
 import { Timeline } from '@/components/Timeline'
 import { CHARACTERS, characterById } from '@/lib/characters'
@@ -292,7 +292,6 @@ function PlayerInner() {
         <div className="row spread">
           <div className="row" style={{ gap: 8 }}>
             <span className="act">{phase.act}</span>
-            <span className="pill on">Atividade {phase.activity}/5 · {ACTIVITIES[phase.activity]}</span>
           </div>
           {countdown != null && (
             <div className={timerClass}>
