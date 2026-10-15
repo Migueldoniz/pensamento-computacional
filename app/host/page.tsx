@@ -11,6 +11,7 @@ import { useCountdown } from '@/lib/useCountdown'
 import { initSound, isMuted, setMuted, sfxCorrect, sfxWrong, sfxStart, sfxTick, sfxClick } from '@/lib/sound'
 import { CharAvatar } from '@/components/CharAvatar'
 import { Rich } from '@/components/Rich'
+import { SandwichArt, MapArt } from '@/components/Art'
 import { characterByName } from '@/lib/characters'
 
 function fmtTime(s: number) {
@@ -361,6 +362,8 @@ function HostInner() {
 
           {phase.kind === 'conceito' && (
             <div className="col" style={{ gap: 16 }}>
+              {phase.art === 'sandwich' && <SandwichArt />}
+              {phase.art === 'map' && <MapArt />}
               {phase.contrast && (
                 <div className="col" style={{ gap: 12 }}>
                   <div className="idea">
@@ -385,6 +388,23 @@ function HostInner() {
                   </div>
                 </div>
               ))}
+              {phase.bullets && (
+                <div className="row" style={{ gap: 8 }}>
+                  {phase.bullets.map((b, i) => (
+                    <span key={i} className="chip">{b}</span>
+                  ))}
+                </div>
+              )}
+              {phase.questions && (
+                <div className="col" style={{ gap: 6 }}>
+                  <div className="act">Perguntas-guia</div>
+                  <ol className="big-list">
+                    {phase.questions.map((q, i) => (
+                      <li key={i}>{q}</li>
+                    ))}
+                  </ol>
+                </div>
+              )}
               {phase.analogies && (
                 <div className="col" style={{ gap: 8 }}>
                   <div className="act">Analogias</div>

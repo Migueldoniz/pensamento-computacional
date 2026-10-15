@@ -71,6 +71,9 @@ export interface Phase {
     rightNote?: string
   } // kind 'conceito' (diagrama de contraste)
   analogies?: { icon: string; title: string; detail: string }[] // kind 'conceito'
+  art?: 'sandwich' | 'map' // kind 'conceito' (ilustração)
+  bullets?: string[] // kind 'conceito' (etiquetas curtas)
+  questions?: string[] // kind 'conceito' (perguntas orientadoras)
   concept?: ConceptStep[] // kind 'conceito'
   definition?: string // conceito: definição destacada
   strategies?: { name: string; detail?: string }[] // estratégias (ex.: de abstração)
@@ -154,21 +157,15 @@ export const PHASES: Phase[] = [
     id: 'conceito',
     act: 'CONCEITO',
     activity: 1,
-    title: 'Abstrair a decisão humana',
-    prompt: 'Uma decisão humana “de bate-pronto”… e uma decisão que a máquina consegue executar.',
+    title: 'Da intenção às instruções',
+    prompt: '“Prepare um sanduíche” expressa um objetivo — mas deixa decisões em aberto.',
     kind: 'conceito',
-    contrast: {
-      leftTitle: 'Humano (ruidoso)',
-      leftText: '“Que ótimo, mais uma reunião!”',
-      leftNote: 'depende de tom, contexto e histórico',
-      rightTitle: 'Computacional (abstrato)',
-      rightText: '(solicitante, sala, início, fim)',
-      rightNote: 'dados + regras explícitas',
-    },
-    definition: 'O difícil não é programar — é escolher o que representar.',
+    art: 'sandwich',
+    bullets: ['Decompor', 'Reconhecer padrões', 'Abstrair', 'Elaborar um algoritmo'],
+    questions: ['Qual é o objetivo?', 'Quais informações precisamos considerar?', 'Como organizar uma solução?'],
     sources: [
-      'Wing (2006; 2008): decidir o que destacar/ignorar.',
-      'Exemplo didático autoral (contraste ruidoso → abstrato).',
+      'Wing (2006): pensar computacionalmente é mais do que programar.',
+      'Exemplo didático autoral (analogia do sanduíche).',
     ],
     robotThinking: 'Abstraindo a decisão humana…',
     robotCorrect: '',
@@ -196,16 +193,13 @@ export const PHASES: Phase[] = [
     id: 'abstracao',
     act: 'ABSTRAÇÃO',
     activity: 2,
-    title: 'O que é abstração — e como se faz',
-    prompt: 'A essência do pensamento computacional é a abstração. Vamos dar nome às peças.',
+    title: 'Um mapa não mostra tudo',
+    prompt: 'Para achar um caminho, o mapa mostra ruas e conexões — não cada árvore nem fachada.',
     kind: 'conceito',
+    art: 'map',
     definition:
       'Abstrair é escolher a representação adequada a um PROPÓSITO: destacar o relevante e ignorar o resto.',
-    analogies: [
-      { icon: '🗺️', title: 'Mapa do metrô', detail: 'representa a cidade só com estações e linhas — o que basta para você se locomover.' },
-      { icon: '🧍', title: 'Boneco de palito', detail: 'poucos traços, e você reconhece a pessoa — só o essencial para identificá-la.' },
-      { icon: '🚌', title: 'Quadro de horários', detail: 'só horários e destinos, para planejar a viagem — não os passageiros nem a cor do ônibus.' },
-    ],
+    note: 'Se o objetivo muda (ex.: trajeto acessível), a representação muda (rampas e escadas entram).',
     strategies: [
       { name: 'Filtro de detalhes', detail: 'Deixar de fora o que não muda a decisão → Abstração de Dados: (sala, início, fim, solicitante).' },
       { name: 'Generalizar', detail: 'Uma representação que serve para muitos casos — em vez de uma solução por caso.' },
