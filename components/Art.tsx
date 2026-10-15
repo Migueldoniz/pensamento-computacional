@@ -6,26 +6,53 @@
  */
 
 /** Analogia 1 — "Da intenção às instruções": o sanduíche. */
-export function SandwichArt({ size = 240 }: { size?: number }) {
+export function SandwichArt({ size = 260 }: { size?: number }) {
   return (
     <svg
-      viewBox="0 0 240 150"
+      viewBox="0 0 240 164"
       role="img"
       aria-label="Sanduíche"
       style={{ display: 'block', width: '100%', maxWidth: size, height: 'auto', margin: '0 auto' }}
     >
-      <ellipse cx="120" cy="132" rx="95" ry="12" fill="#1e242e" />
-      <rect x="40" y="100" width="160" height="24" rx="12" fill="#d9a066" />
-      <rect x="44" y="90" width="152" height="10" rx="4" fill="#7ec850" />
-      <rect x="44" y="84" width="152" height="8" rx="4" fill="#e05a3d" />
-      <rect x="52" y="76" width="136" height="10" rx="5" fill="#f2c14e" />
-      <path d="M40 78 Q40 44 120 44 Q200 44 200 78 Z" fill="#e0b074" />
-      <circle cx="90" cy="58" r="3" fill="#c98f4f" />
-      <circle cx="120" cy="52" r="3" fill="#c98f4f" />
-      <circle cx="150" cy="58" r="3" fill="#c98f4f" />
-      <text x="120" y="20" textAnchor="middle" fontSize="15" fontWeight="700" fill="#9aa4b2">
-        “Prepare um sanduíche”
-      </text>
+      {/* prato */}
+      <ellipse cx="120" cy="150" rx="100" ry="10" fill="#1e242e" />
+
+      {/* pão de baixo */}
+      <rect x="44" y="126" width="152" height="20" rx="10" fill="#d9a066" />
+
+      {/* carne */}
+      <rect x="50" y="116" width="140" height="12" rx="6" fill="#8a5a3b" />
+
+      {/* queijo derretido */}
+      <rect x="54" y="108" width="132" height="9" rx="3" fill="#f2c14e" />
+      <g fill="none" stroke="#f2c14e" strokeWidth="5" strokeLinecap="round">
+        <path d="M64 117 q6 9 12 0" />
+        <path d="M96 117 q6 9 12 0" />
+        <path d="M128 117 q6 9 12 0" />
+        <path d="M160 117 q6 9 12 0" />
+      </g>
+
+      {/* tomate */}
+      <rect x="56" y="100" width="128" height="8" rx="4" fill="#e05a3d" />
+
+      {/* alface ondulada */}
+      <path
+        d="M56 100 q12 -12 24 0 q12 -12 24 0 q12 -12 24 0 q12 -12 24 0 q12 -12 24 0"
+        fill="none"
+        stroke="#7ec850"
+        strokeWidth="7"
+        strokeLinecap="round"
+      />
+
+      {/* pão de cima */}
+      <path d="M44 96 Q44 48 120 48 Q196 48 196 96 Z" fill="#e0b074" />
+
+      {/* gergelim */}
+      <circle cx="86" cy="66" r="3" fill="#c98f4f" />
+      <circle cx="118" cy="58" r="3" fill="#c98f4f" />
+      <circle cx="150" cy="66" r="3" fill="#c98f4f" />
+      <circle cx="102" cy="80" r="2.6" fill="#c98f4f" />
+      <circle cx="138" cy="80" r="2.6" fill="#c98f4f" />
     </svg>
   )
 }

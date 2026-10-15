@@ -74,6 +74,8 @@ export interface Phase {
   art?: 'sandwich' | 'map' // kind 'conceito' (ilustração)
   bullets?: string[] // kind 'conceito' (etiquetas curtas)
   questions?: string[] // kind 'conceito' (perguntas orientadoras)
+  filter?: { ok: boolean; text: string }[] // kind 'conceito' (o que importa × o que não importa)
+  algorithm?: string[] // kind 'conceito' (instruções resultantes)
   concept?: ConceptStep[] // kind 'conceito'
   definition?: string // conceito: definição destacada
   strategies?: { name: string; detail?: string }[] // estratégias (ex.: de abstração)
@@ -158,11 +160,21 @@ export const PHASES: Phase[] = [
     act: 'CONCEITO',
     activity: 1,
     title: 'Da intenção às instruções',
-    prompt: '“Prepare um sanduíche” expressa um objetivo — mas deixa decisões em aberto.',
+    prompt: '“Prepare um sanduíche” expressa um objetivo — mas ainda deixa decisões em aberto.',
     kind: 'conceito',
     art: 'sandwich',
+    filter: [
+      { ok: true, text: 'quantidade de pão' },
+      { ok: true, text: 'restrição alimentar' },
+      { ok: false, text: 'cor do prato' },
+    ],
+    algorithm: [
+      'Separe duas fatias de pão.',
+      'Coloque o recheio entre elas.',
+      'Se houver restrição alimentar, escolha um ingrediente permitido.',
+    ],
     bullets: ['Decompor', 'Reconhecer padrões', 'Abstrair', 'Elaborar um algoritmo'],
-    questions: ['Qual é o objetivo?', 'Quais informações precisamos considerar?', 'Como organizar uma solução?'],
+    note: 'A restrição alimentar muda o preparo; a cor do prato não. O que entra na representação depende do objetivo.',
     sources: [
       'Wing (2006): pensar computacionalmente é mais do que programar.',
       'Exemplo didático autoral (analogia do sanduíche).',

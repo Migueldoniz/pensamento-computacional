@@ -357,6 +357,38 @@ function HostInner() {
             <div className="col" style={{ gap: 16 }}>
               {phase.art === 'sandwich' && <SandwichArt />}
               {phase.art === 'map' && <MapDiagram />}
+              {(phase.filter || phase.algorithm) && (
+                <div className="row" style={{ gap: 10, alignItems: 'stretch' }}>
+                  <div className="ccc">
+                    <div className="ccc-tag">1 · Intenção</div>
+                    <div className="ccc-big">“Prepare um sanduíche”</div>
+                    <div className="small muted">define o objetivo, não o como</div>
+                  </div>
+                  <span className="ccc-arrow">→</span>
+                  <div className="ccc">
+                    <div className="ccc-tag">2 · O que importa?</div>
+                    <div className="col" style={{ gap: 6 }}>
+                      {phase.filter?.map((f, i) => (
+                        <div key={i} className="row" style={{ gap: 8, flexWrap: 'nowrap' }}>
+                          <span style={{ color: f.ok ? 'var(--ok)' : 'var(--bad)', fontWeight: 800 }}>
+                            {f.ok ? '✓' : '✗'}
+                          </span>
+                          <span>{f.text}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <span className="ccc-arrow">→</span>
+                  <div className="ccc">
+                    <div className="ccc-tag">3 · Instruções</div>
+                    <ol className="steps">
+                      {phase.algorithm?.map((a, i) => (
+                        <li key={i}>{a}</li>
+                      ))}
+                    </ol>
+                  </div>
+                </div>
+              )}
               {phase.contrast && (
                 <div className="col" style={{ gap: 12 }}>
                   <div className="idea">
