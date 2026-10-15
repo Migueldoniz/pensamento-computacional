@@ -633,3 +633,31 @@ mark {
   font-size: 28px;
   color: var(--muted);
 }
+.idea {
+  border-left: 4px solid var(--accent);
+  padding-left: 14px;
+}
+.idea-tag {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  font-weight: 700;
+}
+.idea-big {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.35;
+  margin-top: 4px;
+}
+.idea-arrow {
+  font-size: 22px;
+  color: var(--muted);
+  text-align: center;
+}
+.big-list {
+  margin: 0;
+  padding-left: 26px;
+  font-size: 20px;
+  line-height: 1.9;
+}

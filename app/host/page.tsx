@@ -360,18 +360,18 @@ function HostInner() {
           )}
 
           {phase.kind === 'conceito' && (
-            <div className="col" style={{ gap: 10 }}>
+            <div className="col" style={{ gap: 16 }}>
               {phase.contrast && (
-                <div className="row" style={{ gap: 12, alignItems: 'stretch' }}>
-                  <div className="ccc">
-                    <div className="ccc-tag">{phase.contrast.leftTitle}</div>
-                    <div className="ccc-big">{phase.contrast.leftText}</div>
+                <div className="col" style={{ gap: 12 }}>
+                  <div className="idea">
+                    <div className="idea-tag">{phase.contrast.leftTitle}</div>
+                    <div className="idea-big">{phase.contrast.leftText}</div>
                     {phase.contrast.leftNote && <div className="small muted">{phase.contrast.leftNote}</div>}
                   </div>
-                  <div className="ccc-arrow">→</div>
-                  <div className="ccc">
-                    <div className="ccc-tag">{phase.contrast.rightTitle}</div>
-                    <div className="ccc-big mono">{phase.contrast.rightText}</div>
+                  <div className="idea-arrow">↓</div>
+                  <div className="idea">
+                    <div className="idea-tag">{phase.contrast.rightTitle}</div>
+                    <div className="idea-big mono">{phase.contrast.rightText}</div>
                     {phase.contrast.rightNote && <div className="small muted">{phase.contrast.rightNote}</div>}
                   </div>
                 </div>
@@ -387,12 +387,12 @@ function HostInner() {
               ))}
               {phase.strategies && (
                 <div className="col" style={{ gap: 8 }}>
-                  <div className="act">Estratégias de abstração</div>
-                  <div className="row" style={{ gap: 8 }}>
+                  <div className="act">Estratégias</div>
+                  <ol className="big-list">
                     {phase.strategies.map((s, i) => (
-                      <span key={i} className="chip">{i + 1}. {s.name}</span>
+                      <li key={i}>{s.name}</li>
                     ))}
-                  </div>
+                  </ol>
                 </div>
               )}
               {phase.note && <div className="small muted">{phase.note}</div>}
