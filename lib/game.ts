@@ -448,39 +448,6 @@ export const PHASES: Phase[] = [
     robotWrong: 'Recusei um encaixe perfeito!',
   },
   {
-    id: 'd5',
-    act: 'DECISÃO 5/5',
-    activity: 5,
-    title: 'Pedido: 15h15 – 15h45',
-    prompt:
-      'Mesma situação: aprovadas 14h–15h e 15h30–16h30, na mesma sala. Agora o pedido é das 15h15 às 15h45. Aceitar ou recusar?',
-    kind: 'single',
-    options: [
-      { id: 'aceitar', label: 'Aceitar' },
-      { id: 'recusar', label: 'Recusar' },
-    ],
-    correctIds: ['recusar'],
-    timeline: {
-      day: 'hoje',
-      window: [13, 17],
-      lanes: [
-        {
-          name: 'Laboratório',
-          blocks: [
-            { start: 14, end: 15, label: '14–15', kind: 'existing' },
-            { start: 15.5, end: 16.5, label: '15h30–16h30', kind: 'existing' },
-            { start: 15.25, end: 15.75, label: 'pedido', kind: 'request' },
-          ],
-        },
-      ],
-    },
-    explain:
-      'O pedido NÃO toca a primeira reserva (começa depois das 15h), mas invade a segunda (15h30–16h30). Basta UM conflito — e ele pode estar em qualquer reserva, não só na primeira.',
-    robotThinking: 'Comparando com a segunda reserva…',
-    robotCorrect: 'Recusei: conflitei com a segunda reserva, não com a primeira.',
-    robotWrong: 'Escapou! Eu só comparei com a primeira reserva.',
-  },
-  {
     id: 'boss',
     act: 'CHEFÃO',
     activity: 5,
