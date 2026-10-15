@@ -335,7 +335,7 @@ export const PHASES: Phase[] = [
   },
   {
     id: 'd1',
-    act: 'DECISÃO 1/5',
+    act: 'DECISÃO 1/4',
     activity: 4,
     title: 'Pedido: 14h30 – 15h30',
     prompt:
@@ -366,7 +366,7 @@ export const PHASES: Phase[] = [
   },
   {
     id: 'd2',
-    act: 'DECISÃO 2/5',
+    act: 'DECISÃO 2/4',
     activity: 4,
     title: 'Pedido: 15h – 16h  (fronteira)',
     prompt:
@@ -398,7 +398,7 @@ export const PHASES: Phase[] = [
   },
   {
     id: 'd3',
-    act: 'DECISÃO 3/5',
+    act: 'DECISÃO 3/4',
     activity: 4,
     title: 'Pedido: 16h – 15h',
     prompt: 'Chegou um pedido das 16h às 15h. Aceitar ou recusar?',
@@ -416,7 +416,7 @@ export const PHASES: Phase[] = [
   },
   {
     id: 'd4',
-    act: 'DECISÃO 4/5',
+    act: 'DECISÃO 4/4',
     activity: 5,
     title: 'Pedido: 15h – 15h30  (encaixe entre duas)',
     prompt:
