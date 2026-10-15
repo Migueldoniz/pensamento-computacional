@@ -239,7 +239,7 @@ export const PHASES: Phase[] = [
     sources: [
       'Kramer (2007): abstrair é remover o detalhe desnecessário e generalizar; o valor depende do propósito.',
       'Wing (2006): escolher uma representação adequada — formular o problema e a solução de modo executável.',
-      'Armoni (2013): ensinar abstração explicitando as escolhas, em vez de esperar que o aluno a perceba sozinho.',
+      'Armoni (2013): explicitar os níveis de abstração em uso e as passagens entre eles (problema → algoritmo → programa → execução).',
     ],
     robotThinking: 'Nomeando as estratégias de abstração…',
     robotCorrect: '',

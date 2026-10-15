@@ -10,6 +10,7 @@ export interface RoomSnapshot {
   votes: Record<string, Record<string, string>>
   scores: Record<string, PlayerScore>
   characters: Record<string, string> // charId -> playerId
+  players: number // total de participantes na sala
   respostas: { playerId: string; name: string; text: string }[]
   deadline: number | null
   serverNow: number

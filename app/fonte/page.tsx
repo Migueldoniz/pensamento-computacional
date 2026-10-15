@@ -116,19 +116,28 @@ export default function FontePage({ searchParams }: { searchParams: { room?: str
 
         <section className="source">
           <div className="source-tag">Fonte 4</div>
-          <h3>Armoni (2013) — como ensinar abstração a iniciantes</h3>
+          <h3>Armoni (2013) — ensinar abstração por níveis</h3>
           <div className="quote">
-            Abstração é um conceito <mark>central na computação e difícil de ensinar a iniciantes</mark>.
-            O artigo <strong>propõe um quadro geral</strong> para ensiná-la em cursos introdutórios, com{' '}
-            <strong>regras concretas</strong> que ajudam o professor a <strong>explicitar o processo</strong> —
-            em vez de esperar que o aluno desenvolva a habilidade apenas resolvendo exercícios.
+            Armoni propõe ensinar abstração <mark>explicitando os níveis em que se está trabalhando</mark>,
+            a partir da hierarquia PGK (Perrenet, Groote &amp; Kaasenbrood):{' '}
+            <strong>problema → algoritmo → programa → execução</strong>. Nesse quadro, o aluno deve
+            saber <em>em que nível está</em>, <strong>transitar entre os níveis</strong> e{' '}
+            <strong>escolher o nível adequado</strong> à tarefa (e, dentro de um nível, acrescentar ou
+            remover detalhe). A autora renomeia o nível “objeto” para{' '}
+            <strong>nível do algoritmo</strong>:
+            <div className="small muted" style={{ marginTop: 6 }}>
+              “the object level grasps what is commonly and popularly referred to as an ‘algorithm’ —
+              a solution which is not presented in a specific programming language.” (ARMONI, 2013, p.
+              273)
+            </div>
           </div>
           <p className="small muted" style={{ margin: '0 0 12px' }}>
             ARMONI, Michal. <em>On teaching abstraction in computer science to novices.</em> Journal
             of Computers in Mathematics and Science Teaching, v. 32, n. 3, p. 265–284, 2013.
             <br />
             <strong>Nota:</strong> é uma <em>proposta</em> de quadro didático baseada na literatura —
-            não um estudo empírico (a própria autora declara isso no resumo).
+            não um estudo empírico (a própria autora declara isso no resumo) e ela mesma observa que
+            ainda não há instrumentos validados para avaliar a habilidade de abstrair.
           </p>
           <a className="btn" href="https://eric.ed.gov/?id=EJ1006186" target="_blank" rel="noreferrer">
             Ler Armoni (2013)

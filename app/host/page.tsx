@@ -50,6 +50,7 @@ function HostInner() {
   const [muted, setMutedState] = useState(false)
   const [copied, setCopied] = useState(false)
   const [respostas, setRespostas] = useState<{ playerId: string; name: string; text: string }[]>([])
+  const [totalPlayers, setTotalPlayers] = useState(0)
 
   useEffect(() => {
     initSound()
@@ -103,6 +104,7 @@ function HostInner() {
       setVotes(s.votes)
       setScores(s.scores || {})
       setRespostas(s.respostas || [])
+      setTotalPlayers(s.players || 0)
       setDeadline(s.deadline ?? null)
       initialized.current = true
     })()
@@ -119,6 +121,7 @@ function HostInner() {
       setVotes(s.votes)
       setScores(s.scores || {})
       setRespostas(s.respostas || [])
+      setTotalPlayers(s.players || 0)
       setOffset(s.serverNow - Date.now())
     }, 1200)
     return () => clearInterval(t)
@@ -539,6 +542,19 @@ function HostInner() {
               <p style={{ margin: 0, fontSize: 18, lineHeight: 1.5 }}>
                 <Rich text={phase.research.prompt} />
               </p>
+
+              <div className="row" style={{ gap: 10, alignItems: 'center' }}>
+                <span className="pill on">
+                  ✍️ {respostas.length} de {totalPlayers} responderam
+                </span>
+                <div className="bar" style={{ flex: 1, maxWidth: 260 }}>
+                  <span
+                    style={{
+                      width: `${totalPlayers > 0 ? Math.min(100, (respostas.length / totalPlayers) * 100) : 0}%`,
+                    }}
+                  />
+                </div>
+              </div>
 
               {respostas.length > 0 && (
                 <div className="cards">

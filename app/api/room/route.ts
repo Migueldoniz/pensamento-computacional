@@ -22,6 +22,8 @@ export async function GET(req: Request) {
     revealed: room.revealed,
     votes: room.votes,
     scores: room.scores || {},
+    characters: room.characters || {},
+    players: Object.keys(room.characters || {}).length,
     respostas: Object.entries(room.respostas || {}).map(([playerId, r]) => ({
       playerId,
       name: r.name,
