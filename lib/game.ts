@@ -270,7 +270,7 @@ export const PHASES: Phase[] = [
     activity: 3,
     title: 'Quais dados você enxerga?',
     prompt:
-      'Você acaba de receber um formulário com vários dados. Selecione TODOS os que você precisa para decidir conflito de horário.',
+      'Você acaba de receber um formulário com diversos dados de uma reserva. Selecione TODOS os dados que são necessários para decidir se ela conflita com alguma já existente.',
     kind: 'multi',
     options: [
       { id: 'data', label: 'Data da reserva' },
