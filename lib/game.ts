@@ -316,7 +316,8 @@ export const PHASES: Phase[] = [
     prompt:
       'Coloque as etapas na ordem correta para decidir se uma reserva entra e envie.',
     definition:
-      'Algoritmo é uma sequência finita de passos que transforma uma ENTRADA numa SAÍDA esperada (Wing, 2008: “um algoritmo é uma abstração de um procedimento passo a passo”). Aqui: entrada = os dados da reserva; saída = “aceitar” ou “recusar”. Ordenar bem os passos é, literalmente, montar o algoritmo.',
+      'Algoritmo: uma sequência FINITA de passos que transforma uma ENTRADA numa SAÍDA. Aqui: entrada = dados da reserva; saída = aceitar ou recusar.',
+    sources: ['Wing (2008): “um algoritmo é uma abstração de um procedimento passo a passo”.'],
     kind: 'order',
     options: [
       { id: 'selecionar', label: 'Consultar outras reservas na mesma data' },
