@@ -21,10 +21,15 @@ export function RespostaBox({ room }: { room: string }) {
 
   useEffect(() => {
     try {
-      const id = localStorage.getItem('oa_player') || ''
       const charId = localStorage.getItem('oa_name') || ''
-      setPlayerId(id)
       setName(characterById(charId)?.name || 'Anônimo')
+      // garante uma identidade mesmo se o aluno abrir esta página direto
+      let id = localStorage.getItem('oa_player') || ''
+      if (!id) {
+        id = Math.random().toString(36).slice(2, 9)
+        localStorage.setItem('oa_player', id)
+      }
+      setPlayerId(id)
     } catch {
       /* ignore */
     }

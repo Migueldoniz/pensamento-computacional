@@ -270,7 +270,7 @@ export const PHASES: Phase[] = [
     activity: 3,
     title: 'Quais dados você enxerga?',
     prompt:
-      'Seu robô recebe uma pilha de dados. Selecione TODOS os que você precisa para decidir conflito de horário.',
+      'Você acaba de receber um formulário com vários dados. Selecione TODOS os que você precisa para decidir conflito de horário.',
     kind: 'multi',
     options: [
       { id: 'data', label: 'Data da reserva' },
@@ -369,7 +369,7 @@ export const PHASES: Phase[] = [
     id: 'd2',
     act: 'DECISÃO 2/4',
     activity: 4,
-    title: 'Pedido: 15h – 16h  (fronteira)',
+    title: 'Pedido: 15h - 16h',
     prompt:
       'A aula existente termina às 15h. Chegou um pedido começando exatamente às 15h. Aceitar ou recusar?',
     kind: 'single',

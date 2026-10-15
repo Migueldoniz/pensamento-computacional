@@ -98,7 +98,9 @@ export function ObjectivesPolygon({
           style={{ left: pos[i].x, top: pos[i].y, width: cardW, fontSize: fontPx }}
         >
           {it.icon && <ObjectiveIcon name={it.icon} size={iconSize} />}
-          <b style={{ fontSize: fontPx }}>{it.label}</b>
+          <b style={{ fontSize: fontPx }}>
+            {i + 1}. {it.label}
+          </b>
         </div>
       ))}
     </div>
