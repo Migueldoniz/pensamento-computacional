@@ -319,12 +319,12 @@ export const PHASES: Phase[] = [
       'Algoritmo é uma sequência finita de passos que transforma uma ENTRADA numa SAÍDA esperada (Wing, 2008: “um algoritmo é uma abstração de um procedimento passo a passo”). Aqui: entrada = os dados da reserva; saída = “aceitar” ou “recusar”. Ordenar bem os passos é, literalmente, montar o algoritmo.',
     kind: 'order',
     options: [
-      { id: 'selecionar', label: 'Consultar reservas na mesma data' },
-      { id: 'receber', label: 'Receber data, início e fim' },
-      { id: 'sobrepor', label: 'Verificar sobreposição com as selecionadas' },
+      { id: 'selecionar', label: 'Consultar outras reservas na mesma data' },
+      { id: 'receber', label: 'Receber dados iniciais (data, início e fim)' },
+      { id: 'sobrepor', label: 'Verificar se existe sobreposição com alguma reserva já feita na data' },
       { id: 'validar', label: 'Verificar se o início antecede o fim' },
       { id: 'decidir', label: 'Rejeitar se houver conflito; senão aceitar' },
-      { id: 'obrigatorios', label: 'Verificar se tudo foi preenchido corretamente' },
+      { id: 'obrigatorios', label: 'Verificar se os dados foram preenchidos corretamente' },
     ],
     correctOrder: ['receber', 'obrigatorios', 'validar', 'selecionar', 'sobrepor', 'decidir'],
     explain:
