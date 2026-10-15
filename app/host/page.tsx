@@ -254,7 +254,7 @@ function HostInner() {
   const timerClass = countdown == null ? '' : countdown <= 3 ? 'timer warn' : 'timer'
 
   return (
-    <div className="wrap">
+    <div className="wrap host-wrap">
       <div className="row spread" style={{ marginBottom: 10 }}>
         <div className="row" style={{ gap: 10 }}>
           <h1 style={{ margin: 0, fontSize: 22 }}>Você é o Robô</h1>

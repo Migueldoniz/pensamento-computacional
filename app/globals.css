@@ -214,6 +214,17 @@ button.ghost {
   gap: 14px;
 }
 
+/* Telas grandes (≥1440px): painéis principais mais altos e layout em 80vw */
+@media (min-width: 1440px) {
+  .host-wrap {
+    width: 80vw;
+    max-width: none;
+  }
+  .host-wrap .grid2 > .card {
+    min-height: 80vh;
+  }
+}
+
 @media (max-width: 860px) {
   .grid2 {
     grid-template-columns: 1fr;
