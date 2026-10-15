@@ -204,42 +204,42 @@ export const PHASES: Phase[] = [
     id: 'abstracao',
     act: 'ABSTRAÇÃO',
     activity: 2,
-    title: 'Um mapa não mostra tudo',
-    prompt: 'Objetivo do mundo real: encontrar um caminho na cidade.',
+    title: 'Abstração — da situação à representação',
+    prompt: 'Objetivo: descobrir se existe um caminho entre a escola e o hospital.',
     kind: 'conceito',
     definition:
-      'Abstrair é escolher a representação adequada a um PROPÓSITO: destacar o relevante e ignorar o resto.',
+      'Abstrair é construir uma representação que preserve o necessário para resolver um problema.',
     journey: [
       {
-        name: 'Mundo real',
+        name: 'Situação',
         detail:
-          'Tudo: árvores, casas, cor do asfalto, rachaduras na calçada. Na escala 1:1 seria do tamanho da cidade — e inútil.',
+          'A cidade inteira: ruas, prédios, árvores, fachadas e cruzamentos. Tudo ao mesmo tempo — e nada disso responde à pergunta.',
       },
       {
-        name: 'Filtro de detalhes',
+        name: 'Escolhas',
         detail:
-          'Deixar de fora o que não muda a decisão. Sobram ruas, curvas e conexões — a Abstração de Dados: (sala, início, fim).',
+          'Preservamos os locais de interesse, os cruzamentos e suas conexões. Deixamos de fora as cores, as fachadas e as árvores — e sabemos dizer por quê.',
       },
       {
-        name: 'Generalizar',
+        name: 'Representação',
         detail:
-          'Uma representação que serve para muitos casos — qualquer cidade, qualquer trajeto — em vez de uma solução por caso.',
+          'Locais viram pontos; passagens possíveis viram conexões. (Escola · Praça · Hospital · Mercado)',
       },
       {
-        name: 'Interface ≠ implementação',
+        name: 'Operação',
         detail:
-          'Você usa o mapa pelo que ele FAZ (ir de A a B), sem saber como foi levantado. É a “caixa-preta”.',
+          'Sobre essa representação já podemos agir: partindo da escola, percorremos as conexões e verificamos se dá para chegar ao hospital. É o que torna o exemplo computacional.',
       },
       {
-        name: 'Camadas',
+        name: 'Limite',
         detail:
-          'Especificação → algoritmo → implementação: cada nível deixa algo explícito e esconde o resto.',
+          'Muda a pergunta: “qual o caminho mais rápido?”. Só pontos e conexões não bastam — faltam os tempos. A representação anterior não estava errada: ela atendia a outra pergunta.',
       },
-      {
-        name: 'Limites de borda',
-        detail:
-          'Onde a abstração perde informação: o mapa não mostra escadas nem rampas — não serve para todo trajeto.',
-      },
+    ],
+    sources: [
+      'Kramer (2007): abstrair é remover o detalhe desnecessário e generalizar; o valor depende do propósito.',
+      'Wing (2006): escolher uma representação adequada — formular o problema e a solução de modo executável.',
+      'Armoni (2013): ensinar abstração explicitando as escolhas, em vez de esperar que o aluno a perceba sozinho.',
     ],
     robotThinking: 'Nomeando as estratégias de abstração…',
     robotCorrect: '',

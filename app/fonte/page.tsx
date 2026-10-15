@@ -118,13 +118,17 @@ export default function FontePage({ searchParams }: { searchParams: { room?: str
           <div className="source-tag">Fonte 4</div>
           <h3>Armoni (2013) — como ensinar abstração a iniciantes</h3>
           <div className="quote">
-            <mark>Ensinar abstração é ensinar a omitir e justificar:</mark> o aluno escolhe o que
-            manter e o que descartar, explica por quê e <strong>revê a representação</strong> quando o
-            objetivo muda.
+            Abstração é um conceito <mark>central na computação e difícil de ensinar a iniciantes</mark>.
+            O artigo <strong>propõe um quadro geral</strong> para ensiná-la em cursos introdutórios, com{' '}
+            <strong>regras concretas</strong> que ajudam o professor a <strong>explicitar o processo</strong> —
+            em vez de esperar que o aluno desenvolva a habilidade apenas resolvendo exercícios.
           </div>
           <p className="small muted" style={{ margin: '0 0 12px' }}>
             ARMONI, Michal. <em>On teaching abstraction in computer science to novices.</em> Journal
             of Computers in Mathematics and Science Teaching, v. 32, n. 3, p. 265–284, 2013.
+            <br />
+            <strong>Nota:</strong> é uma <em>proposta</em> de quadro didático baseada na literatura —
+            não um estudo empírico (a própria autora declara isso no resumo).
           </p>
           <a className="btn" href="https://eric.ed.gov/?id=EJ1006186" target="_blank" rel="noreferrer">
             Ler Armoni (2013)

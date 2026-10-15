@@ -712,20 +712,8 @@ button.step-chip.on {
   color: var(--muted);
 }
 
-/* Mapa: horizontal em telas largas, empilhado no mobile */
-.art-wide {
-  display: block;
-}
-.art-tall {
-  display: none;
-}
+/* Mapa: empilhado no mobile */
 @media (max-width: 640px) {
-  .art-wide {
-    display: none;
-  }
-  .art-tall {
-    display: block;
-  }
   /* fluxo intenção → o que importa → como organizar: empilha e as setas
      ficam na vertical, cada uma na sua linha entre os quadros */
   .abst-flow {
