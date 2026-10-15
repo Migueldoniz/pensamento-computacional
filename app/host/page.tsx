@@ -12,6 +12,7 @@ import { initSound, isMuted, setMuted, sfxCorrect, sfxWrong, sfxStart, sfxTick, 
 import { CharAvatar } from '@/components/CharAvatar'
 import { Rich } from '@/components/Rich'
 import { SandwichArt, MapArt } from '@/components/Art'
+import { ObjectiveIcon } from '@/components/ObjectiveIcon'
 import { characterByName } from '@/lib/characters'
 
 function fmtTime(s: number) {
@@ -336,12 +337,13 @@ function HostInner() {
               {flow ? (
                 <div className="row" style={{ gap: 8 }}>
                   {flow.map((f, i) => (
-                    <div key={i} className="row" style={{ gap: 8 }}>
-                      <div className="flow-box">
+                    <div key={i} className="row" style={{ gap: 8, alignItems: 'center' }}>
+                      <div className="obj-tile">
+                        {f.icon && <ObjectiveIcon name={f.icon} />}
                         <b>{f.label}</b>
                         {f.sub && <div className="small muted">{f.sub}</div>}
                       </div>
-                      {i < flow.length - 1 && <span style={{ color: 'var(--muted)' }}>→</span>}
+                      {i < flow.length - 1 && <span className="ccc-arrow">→</span>}
                     </div>
                   ))}
                 </div>

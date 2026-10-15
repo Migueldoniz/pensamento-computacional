@@ -9,6 +9,7 @@ import { CHARACTERS, characterById } from '@/lib/characters'
 import { CharAvatar } from '@/components/CharAvatar'
 import { Rich } from '@/components/Rich'
 import { SandwichArt, MapArt } from '@/components/Art'
+import { ObjectiveIcon } from '@/components/ObjectiveIcon'
 import { useCountdown } from '@/lib/useCountdown'
 import { initSound, isMuted, setMuted, sfxCorrect, sfxWrong, sfxTick, sfxClick, sfxWin } from '@/lib/sound'
 
@@ -312,12 +313,13 @@ function PlayerInner() {
             {flow ? (
               <div className="row" style={{ gap: 6 }}>
                 {flow.map((f, i) => (
-                  <div key={i} className="row" style={{ gap: 6 }}>
-                    <div className="flow-box">
+                  <div key={i} className="row" style={{ gap: 6, alignItems: 'center' }}>
+                    <div className="obj-tile">
+                      {f.icon && <ObjectiveIcon name={f.icon} size={38} />}
                       <b>{f.label}</b>
                       {f.sub && <div className="small muted">{f.sub}</div>}
                     </div>
-                    {i < flow.length - 1 && <span style={{ color: 'var(--muted)' }}>→</span>}
+                    {i < flow.length - 1 && <span className="ccc-arrow">→</span>}
                   </div>
                 ))}
               </div>

@@ -61,7 +61,7 @@ export interface Phase {
   timeline?: TimelineSpec
   objectives?: Objective[] // kind 'objetivos'
   objectivesText?: string // kind 'objetivos' (texto único, com **negrito**)
-  flow?: { label: string; sub?: string }[] // kind 'objetivos' (fluxograma)
+  flow?: { icon?: string; label: string; sub?: string }[] // kind 'objetivos' (fluxograma)
   contrast?: {
     leftTitle: string
     leftText: string
@@ -141,11 +141,11 @@ export const PHASES: Phase[] = [
     prompt: 'Computar é decidir: um programa é uma máquina que decide contra o que o ambiente manda.',
     kind: 'objetivos',
     flow: [
-      { label: 'Entender', sub: 'o que é decidir' },
-      { label: 'Analisar', sub: 'o que importa' },
-      { label: 'Decompor', sub: 'em partes' },
-      { label: 'Planejar', sub: 'a solução' },
-      { label: 'Transferir', sub: 'para outro caso' },
+      { icon: 'understand', label: 'Entender', sub: 'o que é decidir' },
+      { icon: 'analyze', label: 'Analisar', sub: 'o que importa' },
+      { icon: 'decompose', label: 'Decompor', sub: 'em partes' },
+      { icon: 'plan', label: 'Planejar', sub: 'a solução' },
+      { icon: 'transfer', label: 'Transferir', sub: 'para outro caso' },
     ],
     objectivesText:
       'Ao final desta aula, você vai **entender** o que é decidir, **analisar** o que realmente importa, **decompor** o problema em partes, **planejar** a solução passo a passo e **transferir** o que aprendeu para uma situação nova.',
