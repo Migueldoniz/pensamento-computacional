@@ -8,7 +8,8 @@ import { Timeline } from '@/components/Timeline'
 import { CHARACTERS, characterById } from '@/lib/characters'
 import { CharAvatar } from '@/components/CharAvatar'
 import { Rich } from '@/components/Rich'
-import { SandwichArt, MapDiagram } from '@/components/Art'
+import { SandwichArt } from '@/components/Art'
+import { AbstractionFlow } from '@/components/AbstractionFlow'
 import { ObjectivesPolygon } from '@/components/ObjectivesPolygon'
 import { useCountdown } from '@/lib/useCountdown'
 import { initSound, isMuted, setMuted, sfxCorrect, sfxWrong, sfxTick, sfxClick, sfxWin } from '@/lib/sound'
@@ -329,7 +330,7 @@ function PlayerInner() {
         {phase.kind === 'conceito' && (
           <div className="col" style={{ gap: 16 }}>
             {phase.art === 'sandwich' && <SandwichArt />}
-            {phase.art === 'map' && <MapDiagram />}
+            {phase.journey && <AbstractionFlow steps={phase.journey} />}
             {(phase.filter || phase.algorithm) && (
               <div className="col" style={{ gap: 12 }}>
                 <div className="row ccc-flow" style={{ gap: 10, alignItems: 'stretch' }}>

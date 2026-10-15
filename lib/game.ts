@@ -79,6 +79,7 @@ export interface Phase {
   concept?: ConceptStep[] // kind 'conceito'
   definition?: string // conceito: definição destacada
   strategies?: { name: string; detail?: string }[] // estratégias (ex.: de abstração)
+  journey?: { name: string; detail?: string }[] // kind 'conceito' (passo a passo com visão visual)
   note?: string // observação final da fase
   pillars?: { name: string; detail?: string }[] // kind 'debrief'
   quote?: string // kind 'debrief'
@@ -204,19 +205,41 @@ export const PHASES: Phase[] = [
     act: 'ABSTRAÇÃO',
     activity: 2,
     title: 'Um mapa não mostra tudo',
-    prompt:
-      'Se o mapa trouxesse cada árvore, casa, cor do asfalto e rachadura, seria do tamanho da cidade — e inútil. Ele funciona porque filtra ~99% dos detalhes.',
+    prompt: 'Objetivo do mundo real: encontrar um caminho na cidade.',
     kind: 'conceito',
-    art: 'map',
     definition:
       'Abstrair é escolher a representação adequada a um PROPÓSITO: destacar o relevante e ignorar o resto.',
-    note: 'Se o objetivo muda (ex.: trajeto acessível), a representação muda (rampas e escadas entram).',
-    strategies: [
-      { name: 'Filtro de detalhes', detail: 'Deixar de fora o que não muda a decisão → Abstração de Dados: (sala, início, fim, solicitante).' },
-      { name: 'Generalizar', detail: 'Uma representação que serve para muitos casos — em vez de uma solução por caso.' },
-      { name: 'Interface ≠ implementação', detail: 'Você usa uma operação pelo que ela FAZ, não por COMO faz. Ex.: “dados dois horários, há conflito?” responde sim/não — e você não precisa saber a conta por dentro. É a “caixa-preta” (abstração procedural).' },
-      { name: 'Camadas', detail: 'Especificação → algoritmo → implementação: o que cada nível deixa explícito e o que esconde.' },
-      { name: 'Limites de borda', detail: 'Onde a abstração perde informação — ex.: o instante 15h e o tempo de troca de turma.' },
+    journey: [
+      {
+        name: 'Mundo real',
+        detail:
+          'Tudo: árvores, casas, cor do asfalto, rachaduras na calçada. Na escala 1:1 seria do tamanho da cidade — e inútil.',
+      },
+      {
+        name: 'Filtro de detalhes',
+        detail:
+          'Deixar de fora o que não muda a decisão. Sobram ruas, curvas e conexões — a Abstração de Dados: (sala, início, fim).',
+      },
+      {
+        name: 'Generalizar',
+        detail:
+          'Uma representação que serve para muitos casos — qualquer cidade, qualquer trajeto — em vez de uma solução por caso.',
+      },
+      {
+        name: 'Interface ≠ implementação',
+        detail:
+          'Você usa o mapa pelo que ele FAZ (ir de A a B), sem saber como foi levantado. É a “caixa-preta”.',
+      },
+      {
+        name: 'Camadas',
+        detail:
+          'Especificação → algoritmo → implementação: cada nível deixa algo explícito e esconde o resto.',
+      },
+      {
+        name: 'Limites de borda',
+        detail:
+          'Onde a abstração perde informação: o mapa não mostra escadas nem rampas — não serve para todo trajeto.',
+      },
     ],
     robotThinking: 'Nomeando as estratégias de abstração…',
     robotCorrect: '',

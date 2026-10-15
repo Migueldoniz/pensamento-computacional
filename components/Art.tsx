@@ -249,6 +249,157 @@ export function MapArtTall({ size = 360 }: { size?: number }) {
   )
 }
 
+/**
+ * Mapa da fase ABSTRAÇÃO em etapas: cada `step` mostra um estágio do caminho
+ * "mundo real → abstração", para o fluxo passo a passo.
+ *  0 = mundo real (1:1, inútil) · 1 = filtro de detalhes · 2 = generalizar
+ *  3 = interface ≠ implementação · 4 = camadas · 5 = limites de borda
+ */
+export function MapStage({ step, size = 460 }: { step: number; size?: number }) {
+  const { accent, muted, line, panel, warn, green } = MAP_COLORS
+  const clean = step >= 1
+  const street = clean ? accent : '#6b6f7a'
+  return (
+    <svg
+      viewBox="0 0 420 250"
+      role="img"
+      aria-label={`Mapa — etapa ${step}`}
+      style={{ display: 'block', width: '100%', maxWidth: size, height: 'auto', margin: '0 auto' }}
+    >
+      <rect x="6" y="26" width="408" height="210" rx="12" fill={panel} stroke={clean ? accent : line} />
+      <text x="210" y="18" textAnchor="middle" fontSize="14" fontWeight="700" fill={clean ? accent : muted}>
+        {clean ? 'Mapa (abstração)' : 'Mundo real · 1:1'}
+      </text>
+
+      {/* ---- ruído do mundo real (só na etapa 0) ---- */}
+      {step === 0 && (
+        <g>
+          <g fill="#3a4252">
+            <rect x="34" y="58" width="30" height="22" rx="2" />
+            <polygon points="34,58 49,45 64,58" />
+            <rect x="306" y="50" width="34" height="24" rx="2" />
+            <polygon points="306,50 323,36 340,50" />
+            <rect x="46" y="150" width="26" height="20" rx="2" />
+            <polygon points="46,150 59,138 72,150" />
+            <rect x="300" y="140" width="30" height="22" rx="2" />
+            <polygon points="300,140 315,128 330,140" />
+          </g>
+          <g>
+            <circle cx="120" cy="66" r="9" fill={green} />
+            <rect x="118" y="74" width="4" height="8" fill="#5b4a2f" />
+            <circle cx="230" cy="52" r="8" fill={green} />
+            <rect x="228" y="59" width="4" height="7" fill="#5b4a2f" />
+            <circle cx="150" cy="196" r="8" fill={green} />
+            <rect x="148" y="203" width="4" height="7" fill="#5b4a2f" />
+            <circle cx="272" cy="204" r="7" fill={green} />
+            <rect x="270" y="210" width="4" height="6" fill="#5b4a2f" />
+          </g>
+          <line x1="64" y1="188" x2="352" y2="168" stroke="#c9a24d" strokeWidth="2" opacity="0.7" />
+          <g stroke={warn} strokeWidth="1.4" fill="none" strokeLinecap="round">
+            <path d="M186 216 l7 -6 l-5 -6 l8 -5" />
+            <path d="M292 216 l6 -5 l-4 -7 l7 -4" />
+          </g>
+          <rect x="118" y="214" width="184" height="16" rx="8" fill={warn} opacity="0.18" />
+          <text x="210" y="226" textAnchor="middle" fontSize="10.5" fontWeight="700" fill={warn}>
+            1:1 — do tamanho da cidade · inútil
+          </text>
+        </g>
+      )}
+
+      {/* ---- ruas / curvas ---- */}
+      <g fill="none" stroke={street} strokeWidth="5" strokeLinecap="round">
+        <path d="M64 196 C 96 150 140 150 196 96" />
+        <path d="M196 96 C 240 130 300 150 352 176" />
+        <path d="M64 196 L 352 176" />
+      </g>
+      <circle cx="64" cy="196" r="7" fill="#0b1020" stroke={street} strokeWidth="4" />
+      <circle cx="196" cy="96" r="7" fill="#0b1020" stroke={street} strokeWidth="4" />
+      <circle cx="352" cy="176" r="7" fill="#0b1020" stroke={street} strokeWidth="4" />
+
+      {clean && (
+        <>
+          <text x="88" y="230" fontSize="10" fill={muted}>
+            800 m
+          </text>
+          <text x="296" y="122" fontSize="10" fill={muted}>
+            2 km
+          </text>
+        </>
+      )}
+
+      {/* ---- 1: filtro de detalhes (o que saiu) ---- */}
+      {step === 1 && (
+        <g opacity="0.55">
+          <rect x="34" y="58" width="30" height="22" rx="2" fill={line} />
+          <circle cx="120" cy="66" r="9" fill={line} />
+          <rect x="300" y="140" width="30" height="22" rx="2" fill={line} />
+          <g stroke={warn} strokeWidth="2.4" strokeLinecap="round">
+            <line x1="30" y1="54" x2="68" y2="84" />
+            <line x1="68" y1="54" x2="30" y2="84" />
+            <line x1="110" y1="56" x2="130" y2="76" />
+            <line x1="130" y1="56" x2="110" y2="76" />
+            <line x1="296" y1="136" x2="334" y2="166" />
+            <line x1="334" y1="136" x2="296" y2="166" />
+          </g>
+        </g>
+      )}
+
+      {/* ---- 2: generalizar (serve para muitos casos) ---- */}
+      {step === 2 && (
+        <g opacity="0.4">
+          <rect x="24" y="46" width="372" height="176" rx="12" fill="none" stroke={muted} strokeDasharray="7 6" />
+          <rect x="14" y="38" width="392" height="184" rx="12" fill="none" stroke={muted} strokeDasharray="7 6" />
+          <text x="210" y="246" textAnchor="middle" fontSize="10" fill={muted}>
+            a mesma representação serve para qualquer cidade
+          </text>
+        </g>
+      )}
+
+      {/* ---- 3: interface ≠ implementação (caixa-preta) ---- */}
+      {step === 3 && (
+        <g>
+          <rect x="18" y="44" width="384" height="182" rx="12" fill="none" stroke={accent} strokeDasharray="8 6" opacity="0.85" />
+          <text x="210" y="62" textAnchor="middle" fontSize="10.5" fontWeight="700" fill={accent}>
+            caixa-preta: você usa pelo que FAZ
+          </text>
+          <rect x="18" y="128" width="56" height="20" rx="10" fill={accent} />
+          <text x="46" y="142" textAnchor="middle" fontSize="10" fontWeight="700" fill="#0b1020">
+            A → B
+          </text>
+          <rect x="346" y="128" width="56" height="20" rx="10" fill={accent} />
+          <text x="374" y="142" textAnchor="middle" fontSize="10" fontWeight="700" fill="#0b1020">
+            trajeto
+          </text>
+        </g>
+      )}
+
+      {/* ---- 4: camadas ---- */}
+      {step === 4 && (
+        <g>
+          <rect x="118" y="34" width="184" height="18" rx="6" fill="#233046" stroke={accent} />
+          <text x="210" y="47" textAnchor="middle" fontSize="9.5" fontWeight="700" fill={accent}>
+            especificação → algoritmo → implementação
+          </text>
+        </g>
+      )}
+
+      {/* ---- 5: limites de borda ---- */}
+      {step === 5 && (
+        <g>
+          <circle cx="196" cy="96" r="17" fill="none" stroke={warn} strokeWidth="2.5" strokeDasharray="4 4" />
+          <g stroke={warn} strokeWidth="2.4" strokeLinecap="round">
+            <line x1="248" y1="150" x2="278" y2="180" />
+            <line x1="278" y1="150" x2="248" y2="180" />
+          </g>
+          <text x="263" y="198" textAnchor="middle" fontSize="10" fontWeight="700" fill={warn}>
+            escada? rampa?
+          </text>
+        </g>
+      )}
+    </svg>
+  )
+}
+
 /** Alterna entre o mapa horizontal (telas largas) e o empilhado (mobile). */
 export function MapDiagram() {
   return (

@@ -692,6 +692,26 @@ mark {
   line-height: 1.15;
 }
 
+/* Fluxograma de etapas (ABSTRAÇÃO) */
+.abst-flow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+button.step-chip {
+  border-radius: 999px;
+  padding: 7px 12px;
+  font-size: 13px;
+}
+button.step-chip.on {
+  border-color: var(--accent);
+  background: rgba(79, 140, 255, 0.16);
+}
+.step-arrow {
+  color: var(--muted);
+}
+
 /* Mapa: horizontal em telas largas, empilhado no mobile */
 .art-wide {
   display: block;
@@ -708,6 +728,18 @@ mark {
   }
   /* fluxo intenção → o que importa → como organizar: empilha e as setas
      ficam na vertical, cada uma na sua linha entre os quadros */
+  .abst-flow {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .step-arrow {
+    text-align: center;
+    font-size: 0;
+  }
+  .step-arrow::before {
+    content: '↓';
+    font-size: 18px;
+  }
   .ccc-flow {
     flex-direction: column;
     align-items: stretch;
