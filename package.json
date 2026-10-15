@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "reset": "node scripts/reset-rooms.mjs",
     "gallery": "node scripts/gen_gallery.mjs"
   },
   "dependencies": {

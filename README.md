@@ -44,6 +44,16 @@ UPSTASH_REDIS_REST_TOKEN=...
 
 > Sem Upstash no Vercel, a gravação em arquivo não persiste entre invocações — use Upstash em produção.
 
+## Limpar as salas (apagar tudo)
+
+```bash
+npm run reset
+```
+
+- **Local:** apaga `./.data/rooms.json`. *Pare o `npm run dev` antes* — o processo mantém as salas em memória e reescreve o arquivo na próxima gravação.
+- **Upstash / Vercel KV:** apaga todas as chaves `oa:room:*` via REST (usa as variáveis de `.env.local`).
+- Cada sala é uma chave independente (`oa:room:CÓDIGO`), então **não há mistura entre salas** — e **criar sala** sempre sorteia um código novo.
+
 ## As fases (Aula 1)
 | Fase | Conceito |
 | --- | --- |
