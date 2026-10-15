@@ -186,7 +186,7 @@ export const PHASES: Phase[] = [
     id: 'pesquisa',
     act: 'PESQUISA',
     activity: 2,
-    title: 'Pesquisa (2 minutos)',
+    title: 'Pesquisa (3 minutos)',
     prompt: '',
     kind: 'pesquisa',
     research: {
