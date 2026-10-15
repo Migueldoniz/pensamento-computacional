@@ -22,7 +22,11 @@ export async function GET(req: Request) {
     revealed: room.revealed,
     votes: room.votes,
     scores: room.scores || {},
-    worksheetsCount: Object.keys(room.worksheets || {}).length,
+    respostas: Object.entries(room.respostas || {}).map(([playerId, r]) => ({
+      playerId,
+      name: r.name,
+      text: r.text,
+    })),
     deadline: room.deadline ?? null,
     serverNow: Date.now(),
   })

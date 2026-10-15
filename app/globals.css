@@ -596,3 +596,14 @@ mark {
   text-align: center;
   min-width: 104px;
 }
+.cards {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+}
+.card-mini {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px;
+  background: var(--panel-2);
+}

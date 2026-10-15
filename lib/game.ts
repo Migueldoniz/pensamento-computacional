@@ -199,24 +199,8 @@ export const PHASES: Phase[] = [
     prompt: '',
     kind: 'pesquisa',
     research: {
-      intro: 'Transforme uma decisão do seu dia numa decisão "computável" — usando abstração.',
-      prompt:
-        'Escolha uma decisão simples do seu dia e diga: (1) quais informações importam, (2) quais não importam e (3) quais são os passos da decisão, na ordem.',
-      scaffold: [
-        'Escolha uma decisão do dia (ex.: "dá pra encaixar mais uma reunião na minha agenda?").',
-        'O que realmente impacta a decisão? (o que você destaca)',
-        'O que não importa para realizar a decisão? (o que você ignora)',
-        'Quais são os passos da decisão, na ordem? (mínimo 3)',
-      ],
-      example: [
-        { label: 'Decisão', value: 'qual fila do supermercado escolher' },
-        { label: 'Destacar', value: 'nº de pessoas na fila · itens de cada pessoa · caixas abertos' },
-        { label: 'Ignorar', value: 'cor da roupa · o que estão comprando' },
-        { label: 'Passos', value: 'contar as pessoas → estimar os itens → comparar as filas → escolher' },
-      ],
-      exampleNote:
-        'Exemplo do próprio Wing (2006): “Which line do you stand in at the supermarket? That’s performance modeling”.',
-      template: 'Decisão: ____   ·   Destacar: ____   ·   Ignorar: ____   ·   Passos: ____',
+      intro: 'Pesquise nas fontes e depois resuma com as suas palavras.',
+      prompt: 'Com base na pesquisa: o que é abstração? Resuma em 1 frase.',
       sourceLabel: 'Abrir as fontes (Wing 2006 + Bombasar et al. 2017)',
       sourceUrl: '/fonte',
       minutes: 2,

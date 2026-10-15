@@ -44,7 +44,7 @@ function HostInner() {
   const [notFound, setNotFound] = useState(false)
   const [muted, setMutedState] = useState(false)
   const [copied, setCopied] = useState(false)
-  const [wkCount, setWkCount] = useState(0)
+  const [respostas, setRespostas] = useState<{ playerId: string; name: string; text: string }[]>([])
 
   useEffect(() => {
     initSound()
@@ -97,7 +97,7 @@ function HostInner() {
       setRevealed(s.revealed)
       setVotes(s.votes)
       setScores(s.scores || {})
-      setWkCount(s.worksheetsCount || 0)
+      setRespostas(s.respostas || [])
       setDeadline(s.deadline ?? null)
       initialized.current = true
     })()
@@ -113,7 +113,7 @@ function HostInner() {
       if (!s) return
       setVotes(s.votes)
       setScores(s.scores || {})
-      setWkCount(s.worksheetsCount || 0)
+      setRespostas(s.respostas || [])
       setOffset(s.serverNow - Date.now())
     }, 1200)
     return () => clearInterval(t)
@@ -428,8 +428,21 @@ function HostInner() {
 
           {phase.kind === 'pesquisa' && phase.research && (
             <div className="col" style={{ gap: 14 }}>
-              <span className="pill on">{wkCount} ficha(s) salva(s)</span>
               <p style={{ margin: 0, fontSize: 18, lineHeight: 1.5 }}>{phase.research.prompt}</p>
+
+              {respostas.length > 0 && (
+                <div className="cards">
+                  {respostas.map((r) => (
+                    <div key={r.playerId} className="card-mini">
+                      <div className="row" style={{ gap: 8, alignItems: 'center' }}>
+                        <CharAvatar c={characterByName(r.name)} size={22} />
+                        <b>{r.name}</b>
+                      </div>
+                      <div style={{ marginTop: 6 }}>{r.text}</div>
+                    </div>
+                  ))}
+                </div>
+              )}
 
               {phase.research.scaffold && (
                 <div className="col" style={{ gap: 6 }}>

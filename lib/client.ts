@@ -10,7 +10,7 @@ export interface RoomSnapshot {
   votes: Record<string, Record<string, string>>
   scores: Record<string, PlayerScore>
   characters: Record<string, string> // charId -> playerId
-  worksheetsCount: number
+  respostas: { playerId: string; name: string; text: string }[]
   deadline: number | null
   serverNow: number
 }
@@ -95,31 +95,15 @@ export async function releaseCharacter(
   })
 }
 
-export interface Worksheet {
-  decisao: string
-  destacar: string
-  ignorar: string
-  steps: string[]
-}
-
-export async function saveWorksheet(
+export async function saveResposta(
   code: string,
   playerId: string,
-  ws: Worksheet,
+  name: string,
+  text: string,
 ): Promise<void> {
-  await fetch('/api/worksheet', {
+  await fetch('/api/resposta', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ code, playerId, ...ws }),
+    body: JSON.stringify({ code, playerId, name, text }),
   })
-}
-
-export async function getWorksheet(code: string, playerId: string): Promise<Worksheet | null> {
-  const r = await fetch(
-    `/api/worksheet?code=${encodeURIComponent(code)}&playerId=${encodeURIComponent(playerId)}`,
-    { cache: 'no-store' },
-  )
-  if (!r.ok) return null
-  const j = await r.json()
-  return j.worksheet ?? null
 }

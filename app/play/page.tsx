@@ -3,7 +3,7 @@
 import { Suspense, useEffect, useRef, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { PHASES, encodeChoice, isCorrect, ACTIVITIES, isInteractive } from '@/lib/game'
-import { getSnapshot, sendVote, postScore, claimCharacter, releaseCharacter, saveWorksheet, getWorksheet, PlayerScore } from '@/lib/client'
+import { getSnapshot, sendVote, postScore, claimCharacter, releaseCharacter, saveResposta, PlayerScore } from '@/lib/client'
 import { Timeline } from '@/components/Timeline'
 import { CHARACTERS, characterById } from '@/lib/characters'
 import { CharAvatar } from '@/components/CharAvatar'
@@ -54,14 +54,9 @@ function PlayerInner() {
   const [score, setScore] = useState<Score>({ score: 0, combo: 0 })
   const [wrong, setWrong] = useState<string[]>([])
 
-  // Ficha da pesquisa (worksheet) — privada por aluno
-  const [wcDecisao, setWcDecisao] = useState('')
-  const [wcDestacar, setWcDestacar] = useState('')
-  const [wcIgnorar, setWcIgnorar] = useState('')
-  const [wcStep, setWcStep] = useState('')
-  const [wcSteps, setWcSteps] = useState<string[]>([])
-  const [wcSaved, setWcSaved] = useState(false)
-  const wcLoaded = useRef(false)
+  // Resposta da pesquisa
+  const [respText, setRespText] = useState('')
+  const [respSent, setRespSent] = useState(false)
 
   const prevIndex = useRef(-1)
   const prevRevealed = useRef(false)
@@ -170,34 +165,7 @@ function PlayerInner() {
     if (room && playerId) postScore(room, playerId, name, next.score, next.combo)
   }, [revealed, phase.id, phase.kind, sent, score.score, score.combo, room, playerId, name])
 
-  // Carrega a ficha da pesquisa (uma vez) — apenas a do próprio aluno.
-  useEffect(() => {
-    if (!room || !playerId || wcLoaded.current) return
-    wcLoaded.current = true
-    // Local primeiro (resiliente se o servidor falhar)
-    try {
-      const local = JSON.parse(localStorage.getItem(`oa_ws:${room}`) || 'null')
-      if (local) {
-        setWcDecisao(local.decisao || '')
-        setWcDestacar(local.destacar || '')
-        setWcIgnorar(local.ignorar || '')
-        setWcSteps(local.steps || [])
-        setWcSaved(true)
-      }
-    } catch {
-      /* ignore */
-    }
-    ;(async () => {
-      const w = await getWorksheet(room, playerId)
-      if (w) {
-        setWcDecisao(w.decisao || '')
-        setWcDestacar(w.destacar)
-        setWcIgnorar(w.ignorar)
-        setWcSteps(w.steps || [])
-        setWcSaved(true)
-      }
-    })()
-  }, [room, playerId])
+  // (a ficha da pesquisa foi substituída por uma resposta única — fase PESQUISA)
 
   useEffect(() => {
     if (countdown == null) {
@@ -228,31 +196,10 @@ function PlayerInner() {
     if (room && playerId) postScore(room, playerId, characterById(id)?.name || 'Anônimo', score.score, score.combo)
   }
 
-  function addStep() {
-    const v = wcStep.trim()
-    if (!v) return
-    setWcSteps((s) => [...s, v])
-    setWcStep('')
-    sfxClick()
-  }
-  function removeStep(i: number) {
-    setWcSteps((s) => s.filter((_, k) => k !== i))
-  }
-  async function saveWs() {
-    if (!room || !playerId) return
-    const ws = {
-      decisao: wcDecisao.trim(),
-      destacar: wcDestacar.trim(),
-      ignorar: wcIgnorar.trim(),
-      steps: wcSteps,
-    }
-    try {
-      localStorage.setItem(`oa_ws:${room}`, JSON.stringify(ws))
-    } catch {
-      /* ignore */
-    }
-    await saveWorksheet(room, playerId, ws)
-    setWcSaved(true)
+  async function sendResposta() {
+    if (!room || !playerId || !respText.trim()) return
+    await saveResposta(room, playerId, name, respText.trim())
+    setRespSent(true)
     sfxClick()
   }
 
@@ -436,15 +383,6 @@ function PlayerInner() {
                 <strong>Para pensar:</strong> {phase.question}
               </div>
             )}
-            {wcSaved && (
-              <div className="bubble" style={{ borderColor: 'var(--ok)' }}>
-                <div className="small muted" style={{ marginBottom: 4 }}>Na pesquisa você respondeu</div>
-                <div className="small">Decisão: {wcDecisao || '—'}</div>
-                <div className="small">Destacar: {wcDestacar || '—'} · Ignorar: {wcIgnorar || '—'}</div>
-                <div className="small">Passos: {wcSteps.length ? wcSteps.join(' → ') : '—'}</div>
-                <div style={{ marginTop: 6 }}><strong>Você mudaria algo agora?</strong></div>
-              </div>
-            )}
           </div>
         )}
 
@@ -475,69 +413,19 @@ function PlayerInner() {
             )}
 
             <div className="col" style={{ gap: 8 }}>
-              <div className="act">Sua ficha</div>
               <label className="small muted">
-                Nome da decisão
+                Sua resposta (1 frase)
                 <input
                   type="text"
-                  value={wcDecisao}
-                  onChange={(e) => setWcDecisao(e.target.value)}
-                  placeholder="ex.: dá pra encaixar mais uma reunião?"
+                  value={respText}
+                  onChange={(e) => setRespText(e.target.value)}
+                  placeholder="ex.: abstrair é escolher o que representar"
                 />
               </label>
-              <label className="small muted">
-                O que impacta a decisão (destacar)
-                <input
-                  type="text"
-                  value={wcDestacar}
-                  onChange={(e) => setWcDestacar(e.target.value)}
-                  placeholder="ex.: horários, duração"
-                />
-              </label>
-              <label className="small muted">
-                O que não importa (ignorar)
-                <input
-                  type="text"
-                  value={wcIgnorar}
-                  onChange={(e) => setWcIgnorar(e.target.value)}
-                  placeholder="ex.: quem convocou"
-                />
-              </label>
-              <div className="small muted">Passos, na ordem (mínimo 3)</div>
-              <div className="row" style={{ gap: 6, flexWrap: 'nowrap' }}>
-                <input
-                  type="text"
-                  value={wcStep}
-                  onChange={(e) => setWcStep(e.target.value)}
-                  placeholder="ex.: ver os horários"
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
-                      e.preventDefault()
-                      addStep()
-                    }
-                  }}
-                />
-                <button onClick={addStep}>adicionar</button>
-              </div>
-              {wcSteps.length > 0 && (
-                <div className="col" style={{ gap: 4 }}>
-                  {wcSteps.map((s, i) => (
-                    <div key={i} className="row" style={{ gap: 8 }}>
-                      <span className="pill on">{i + 1}</span>
-                      <span style={{ flex: 1 }}>{s}</span>
-                      <button className="ghost" onClick={() => removeStep(i)}>remover</button>
-                    </div>
-                  ))}
-                </div>
-              )}
-              <button
-                className="primary"
-                disabled={wcSteps.length < 3 || !wcDecisao.trim() || !wcDestacar.trim() || !wcIgnorar.trim()}
-                onClick={saveWs}
-              >
-                {wcSaved ? 'salvar de novo' : 'salvar minha ficha'}
+              <button className="primary" disabled={!respText.trim()} onClick={sendResposta}>
+                {respSent ? 'enviar de novo' : 'enviar resposta'}
               </button>
-              {wcSaved && <span className="pill on">ficha salva ✓</span>}
+              {respSent && <span className="pill on">enviada ✓ (aparece no telão)</span>}
             </div>
 
             {phase.research.example && (
