@@ -361,6 +361,21 @@ function HostInner() {
 
           {phase.kind === 'conceito' && (
             <div className="col" style={{ gap: 10 }}>
+              {phase.contrast && (
+                <div className="row" style={{ gap: 12, alignItems: 'stretch' }}>
+                  <div className="ccc">
+                    <div className="ccc-tag">{phase.contrast.leftTitle}</div>
+                    <div className="ccc-big">{phase.contrast.leftText}</div>
+                    {phase.contrast.leftNote && <div className="small muted">{phase.contrast.leftNote}</div>}
+                  </div>
+                  <div className="ccc-arrow">→</div>
+                  <div className="ccc">
+                    <div className="ccc-tag">{phase.contrast.rightTitle}</div>
+                    <div className="ccc-big mono">{phase.contrast.rightText}</div>
+                    {phase.contrast.rightNote && <div className="small muted">{phase.contrast.rightNote}</div>}
+                  </div>
+                </div>
+              )}
               {phase.concept?.map((s, i) => (
                 <div key={i} style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
                   <span className="pill on" style={{ flex: 'none' }}>{i + 1}</span>
@@ -371,17 +386,13 @@ function HostInner() {
                 </div>
               ))}
               {phase.strategies && (
-                <div className="col" style={{ gap: 8, marginTop: 2 }}>
+                <div className="col" style={{ gap: 8 }}>
                   <div className="act">Estratégias de abstração</div>
-                  {phase.strategies.map((s, i) => (
-                    <div key={i} style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
-                      <span className="pill on" style={{ flex: 'none' }}>{i + 1}</span>
-                      <div>
-                        <b>{s.name}</b>
-                        {s.detail && <div className="muted small">{s.detail}</div>}
-                      </div>
-                    </div>
-                  ))}
+                  <div className="row" style={{ gap: 8 }}>
+                    {phase.strategies.map((s, i) => (
+                      <span key={i} className="chip">{i + 1}. {s.name}</span>
+                    ))}
+                  </div>
                 </div>
               )}
               {phase.note && <div className="small muted">{phase.note}</div>}

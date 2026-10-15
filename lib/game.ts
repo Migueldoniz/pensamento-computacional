@@ -62,6 +62,14 @@ export interface Phase {
   objectives?: Objective[] // kind 'objetivos'
   objectivesText?: string // kind 'objetivos' (texto único, com **negrito**)
   flow?: { label: string; sub?: string }[] // kind 'objetivos' (fluxograma)
+  contrast?: {
+    leftTitle: string
+    leftText: string
+    leftNote?: string
+    rightTitle: string
+    rightText: string
+    rightNote?: string
+  } // kind 'conceito' (diagrama de contraste)
   concept?: ConceptStep[] // kind 'conceito'
   definition?: string // conceito: definição destacada
   strategies?: { name: string; detail?: string }[] // estratégias (ex.: de abstração)
@@ -145,22 +153,21 @@ export const PHASES: Phase[] = [
     id: 'conceito',
     act: 'CONCEITO',
     activity: 1,
-    title: 'O centro da aula: abstrair a decisão humana',
-    prompt:
-      'Algumas decisões os humanos tomam de bate-pronto, mas a máquina quase não consegue. Por quê?',
+    title: 'Abstrair a decisão humana',
+    prompt: 'Uma decisão humana “de bate-pronto”… e uma decisão que a máquina consegue executar.',
     kind: 'conceito',
-    concept: [
-      { label: 'Decisão humana "de bate-pronto"', detail: '"Essa mensagem é um elogio ou uma zombaria?" — você decide na hora, pelo tom e pelo contexto.' },
-      { label: 'Por que a máquina trava', detail: 'Não há dado claro nem regra clara. O que representar: o texto? o tom? o histórico? Decidir o que representar já é difícil.' },
-      { label: 'Abstrair = filtrar o ruído e isolar o essencial', detail: 'Filtrar os detalhes irrelevantes do mundo real e escolher a representação exata (dados + regras) para o propósito (Wing, 2006).' },
-      { label: 'Ruidoso (mundo real) → Abstrato (computacional)', detail: 'E-mail de 3 parágrafos ("Professor João precisa da sala urgente porque…") → (solicitante: João, sala: Lab 1, início: 15h, fim: 16h). Só o que muda a decisão — é o que a fase SENSORES vai praticar.' },
-      { label: 'Decompor a decisão', detail: 'receber → validar → selecionar → comparar → decidir. (Bloom: Analisar — diferenciar e organizar.)' },
-      { label: 'O que fica', detail: 'O difícil não é programar — é achar a abstração certa. Computar é decidir.' },
-    ],
+    contrast: {
+      leftTitle: 'Humano (ruidoso)',
+      leftText: '“Que ótimo, mais uma reunião!”',
+      leftNote: 'depende de tom, contexto e histórico',
+      rightTitle: 'Computacional (abstrato)',
+      rightText: '(solicitante, sala, início, fim)',
+      rightNote: 'dados + regras explícitas',
+    },
+    definition: 'O difícil não é programar — é escolher o que representar.',
     sources: [
-      'Japaridze (2003) — computação como jogo máquina × ambiente',
-      'Bombasar, Raabe & Santiago (2017) — ensinar pensamento computacional com um jogo',
-      'Wing (2006) — abstração e decomposição',
+      'Wing (2006; 2008): decidir o que destacar/ignorar.',
+      'Exemplo didático autoral (contraste ruidoso → abstrato).',
     ],
     robotThinking: 'Abstraindo a decisão humana…',
     robotCorrect: '',
@@ -192,18 +199,13 @@ export const PHASES: Phase[] = [
     prompt: 'A essência do pensamento computacional é a abstração. Vamos dar nome às peças.',
     kind: 'conceito',
     definition:
-      'Abstração é construir uma representação adequada a um PROPÓSITO: destacar o que é relevante e deixar de fora o que não importa naquele contexto. Não é só “simplificar” — a representação precisa continuar dando conta do problema.',
+      'Abstrair é escolher a representação adequada a um PROPÓSITO: destacar o relevante e ignorar o resto.',
     strategies: [
-      { name: 'Selecionar propriedades (filtro de detalhes)', detail: 'Deixar de fora o que não muda a decisão → Abstração de Dados: (sala, início, fim, solicitante).' },
-      { name: 'Generalizar (achar o padrão)', detail: 'Uma representação que serve para muitos casos — em vez de uma solução por caso.' },
-      { name: 'Separar interface de implementação', detail: 'Você usa uma operação pelo que ela FAZ, não por COMO faz. Ex.: “dados dois horários, há conflito?” responde sim/não — e você não precisa saber a conta por dentro. É a “caixa-preta” (abstração procedural).' },
-      { name: 'Relacionar camadas', detail: 'Especificação → algoritmo → implementação: o que cada nível deixa explícito e o que esconde.' },
-      { name: 'Cuidado: limites de borda', detail: 'Onde a abstração perde informação — ex.: o instante 15h e o tempo de troca de turma.' },
-    ],
-    sources: [
-      'Wing (2006; 2008): decidir o que destacar/ignorar; camadas e relações entre elas.',
-      'Kramer (2007): seleção de detalhes + generalização — e a abstração depende do propósito.',
-      'Armoni (2013): como ensinar abstração a iniciantes (omitir + justificar + revisar).',
+      { name: 'Filtro de detalhes', detail: 'Deixar de fora o que não muda a decisão → Abstração de Dados: (sala, início, fim, solicitante).' },
+      { name: 'Generalizar', detail: 'Uma representação que serve para muitos casos — em vez de uma solução por caso.' },
+      { name: 'Interface ≠ implementação', detail: 'Você usa uma operação pelo que ela FAZ, não por COMO faz. Ex.: “dados dois horários, há conflito?” responde sim/não — e você não precisa saber a conta por dentro. É a “caixa-preta” (abstração procedural).' },
+      { name: 'Camadas', detail: 'Especificação → algoritmo → implementação: o que cada nível deixa explícito e o que esconde.' },
+      { name: 'Limites de borda', detail: 'Onde a abstração perde informação — ex.: o instante 15h e o tempo de troca de turma.' },
     ],
     robotThinking: 'Nomeando as estratégias de abstração…',
     robotCorrect: '',
