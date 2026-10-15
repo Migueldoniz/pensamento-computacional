@@ -343,7 +343,7 @@ function PlayerInner() {
             {phase.art === 'map' && <MapDiagram />}
             {(phase.filter || phase.algorithm) && (
               <div className="col" style={{ gap: 12 }}>
-                <div className="row" style={{ gap: 10, alignItems: 'stretch' }}>
+                <div className="row ccc-flow" style={{ gap: 10, alignItems: 'stretch' }}>
                   <div className="ccc">
                     <div className="ccc-tag">1 · Intenção</div>
                     <div className="ccc-big">“Prepare um sanduíche”</div>

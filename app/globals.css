@@ -695,14 +695,32 @@ mark {
   display: none;
 }
 @media (max-width: 640px) {
-  .ccc-arrow {
-    transform: rotate(90deg);
-    margin: 0 auto;
-  }
   .art-wide {
     display: none;
   }
   .art-tall {
     display: block;
+  }
+  /* fluxo intenção → o que importa → como organizar: empilha e as setas
+     ficam na vertical, cada uma na sua linha entre os quadros */
+  .ccc-flow {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .ccc-flow > .ccc {
+    flex: none;
+    width: 100%;
+  }
+  .ccc-flow > .ccc-arrow {
+    flex: none;
+    width: 100%;
+    text-align: center;
+    font-size: 0;
+    transform: none;
+    margin: 0;
+  }
+  .ccc-flow > .ccc-arrow::before {
+    content: '↓';
+    font-size: 28px;
   }
 }
