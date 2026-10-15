@@ -17,6 +17,15 @@ function fmtTime(s: number) {
   return s >= 60 ? `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}` : String(s)
 }
 
+function dedupeByName<T extends { name: string }>(rows: T[]): T[] {
+  const seen = new Set<string>()
+  return rows.filter((r) => {
+    if (seen.has(r.name)) return false
+    seen.add(r.name)
+    return true
+  })
+}
+
 function HostInner() {
   const params = useSearchParams()
   const router = useRouter()
@@ -35,6 +44,7 @@ function HostInner() {
   const [notFound, setNotFound] = useState(false)
   const [muted, setMutedState] = useState(false)
   const [copied, setCopied] = useState(false)
+  const [wkCount, setWkCount] = useState(0)
 
   useEffect(() => {
     initSound()
@@ -87,6 +97,7 @@ function HostInner() {
       setRevealed(s.revealed)
       setVotes(s.votes)
       setScores(s.scores || {})
+      setWkCount(s.worksheetsCount || 0)
       setDeadline(s.deadline ?? null)
       initialized.current = true
     })()
@@ -102,6 +113,7 @@ function HostInner() {
       if (!s) return
       setVotes(s.votes)
       setScores(s.scores || {})
+      setWkCount(s.worksheetsCount || 0)
       setOffset(s.serverNow - Date.now())
     }, 1200)
     return () => clearInterval(t)
@@ -127,6 +139,7 @@ function HostInner() {
   }, [countdown])
 
   const phase = PHASES[index]
+  const flow = phase.flow
   const interactive = isInteractive(phase.kind)
   const phaseVotes = votes[phase.id] || {}
   const counts = optionCounts(phaseVotes, phase)
@@ -156,14 +169,17 @@ function HostInner() {
 
   const joinUrl = origin && room ? `${origin}/play?room=${room}` : ''
 
-  const ranking = Object.entries(scores)
-    .map(([id, v]) => ({ id, ...v }))
-    .sort((a, b) => b.score - a.score || a.name.localeCompare(b.name))
-    .slice(0, 5)
+  const ranking = dedupeByName(
+    Object.entries(scores)
+      .map(([id, v]) => ({ id, ...v }))
+      .sort((a, b) => b.score - a.score || a.name.localeCompare(b.name)),
+  ).slice(0, 5)
 
-  const rankingAll = Object.entries(scores)
-    .map(([id, v]) => ({ id, ...v }))
-    .sort((a, b) => b.score - a.score || a.name.localeCompare(b.name))
+  const rankingAll = dedupeByName(
+    Object.entries(scores)
+      .map(([id, v]) => ({ id, ...v }))
+      .sort((a, b) => b.score - a.score || a.name.localeCompare(b.name)),
+  )
 
   const go = (delta: number) => {
     setIndex((i) => Math.min(PHASES.length - 1, Math.max(0, i + delta)))
@@ -291,6 +307,7 @@ function HostInner() {
               <button onClick={() => startTimer(15)}>⏱15s</button>
               <button onClick={() => startTimer(20)}>20s</button>
               <button onClick={() => startTimer(30)}>30s</button>
+              <button onClick={() => startTimer(60)}>1min</button>
               <button className="ghost" onClick={() => setDeadline(null)} disabled={deadline == null}>
                 limpar
               </button>
@@ -319,8 +336,20 @@ function HostInner() {
           {phase.definition && <div className="quote">{phase.definition}</div>}
 
           {phase.kind === 'objetivos' && (
-            <div className="col" style={{ gap: 8 }}>
-              {phase.objectivesText ? (
+            <div className="col" style={{ gap: 10 }}>
+              {flow ? (
+                <div className="row" style={{ gap: 8 }}>
+                  {flow.map((f, i) => (
+                    <div key={i} className="row" style={{ gap: 8 }}>
+                      <div className="flow-box">
+                        <b>{f.label}</b>
+                        {f.sub && <div className="small muted">{f.sub}</div>}
+                      </div>
+                      {i < flow.length - 1 && <span style={{ color: 'var(--muted)' }}>→</span>}
+                    </div>
+                  ))}
+                </div>
+              ) : phase.objectivesText ? (
                 <p style={{ margin: 0, fontSize: 18, lineHeight: 1.6 }}>
                   <Rich text={phase.objectivesText} />
                 </p>
@@ -399,6 +428,7 @@ function HostInner() {
 
           {phase.kind === 'pesquisa' && phase.research && (
             <div className="col" style={{ gap: 14 }}>
+              <span className="pill on">{wkCount} ficha(s) salva(s)</span>
               <p style={{ margin: 0, fontSize: 18, lineHeight: 1.5 }}>{phase.research.prompt}</p>
 
               {phase.research.scaffold && (

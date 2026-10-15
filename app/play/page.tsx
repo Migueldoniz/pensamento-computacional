@@ -132,6 +132,7 @@ function PlayerInner() {
   }, [room])
 
   const phase = PHASES[index] || PHASES[0]
+  const flow = phase.flow
   const char = characterById(charId)
   const name = char?.name || 'Anônimo'
   const countdown = useCountdown(deadline, offset)
@@ -359,8 +360,20 @@ function PlayerInner() {
         {phase.definition && <div className="quote">{phase.definition}</div>}
 
         {phase.kind === 'objetivos' && (
-          <div className="col" style={{ gap: 6 }}>
-            {phase.objectivesText ? (
+          <div className="col" style={{ gap: 8 }}>
+            {flow ? (
+              <div className="row" style={{ gap: 6 }}>
+                {flow.map((f, i) => (
+                  <div key={i} className="row" style={{ gap: 6 }}>
+                    <div className="flow-box">
+                      <b>{f.label}</b>
+                      {f.sub && <div className="small muted">{f.sub}</div>}
+                    </div>
+                    {i < flow.length - 1 && <span style={{ color: 'var(--muted)' }}>→</span>}
+                  </div>
+                ))}
+              </div>
+            ) : phase.objectivesText ? (
               <p style={{ margin: 0, fontSize: 17, lineHeight: 1.6 }}>
                 <Rich text={phase.objectivesText} />
               </p>

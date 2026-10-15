@@ -61,6 +61,7 @@ export interface Phase {
   timeline?: TimelineSpec
   objectives?: Objective[] // kind 'objetivos'
   objectivesText?: string // kind 'objetivos' (texto único, com **negrito**)
+  flow?: { label: string; sub?: string }[] // kind 'objetivos' (fluxograma)
   concept?: ConceptStep[] // kind 'conceito'
   definition?: string // conceito: definição destacada
   strategies?: { name: string; detail?: string }[] // estratégias (ex.: de abstração)
@@ -127,6 +128,13 @@ export const PHASES: Phase[] = [
     title: 'Objetivos da aula',
     prompt: 'Computar é decidir: um programa é uma máquina que decide contra o que o ambiente manda.',
     kind: 'objetivos',
+    flow: [
+      { label: 'Entender', sub: 'o que é decidir' },
+      { label: 'Analisar', sub: 'o que importa' },
+      { label: 'Decompor', sub: 'em partes' },
+      { label: 'Planejar', sub: 'a solução' },
+      { label: 'Transferir', sub: 'para outro caso' },
+    ],
     objectivesText:
       'Ao final desta aula, você vai **entender** o que é decidir, **analisar** o que realmente importa, **decompor** o problema em partes, **planejar** a solução passo a passo e **transferir** o que aprendeu para uma situação nova.',
     robotThinking: 'Objetivos carregados.',
@@ -170,7 +178,7 @@ export const PHASES: Phase[] = [
     strategies: [
       { name: 'Selecionar propriedades (filtro de detalhes)', detail: 'Deixar de fora o que não muda a decisão → Abstração de Dados: (sala, início, fim, solicitante).' },
       { name: 'Generalizar (achar o padrão)', detail: 'Uma representação que serve para muitos casos — em vez de uma solução por caso.' },
-      { name: 'Separar interface de implementação', detail: 'Usar “há conflito?” sabendo o que faz e devolve — sem ver como funciona por dentro (abstração procedural).' },
+      { name: 'Separar interface de implementação', detail: 'Você usa uma operação pelo que ela FAZ, não por COMO faz. Ex.: “dados dois horários, há conflito?” responde sim/não — e você não precisa saber a conta por dentro. É a “caixa-preta” (abstração procedural).' },
       { name: 'Relacionar camadas', detail: 'Especificação → algoritmo → implementação: o que cada nível deixa explícito e o que esconde.' },
       { name: 'Cuidado: limites de borda', detail: 'Onde a abstração perde informação — ex.: o instante 15h e o tempo de troca de turma.' },
     ],
@@ -193,12 +201,12 @@ export const PHASES: Phase[] = [
     research: {
       intro: 'Transforme uma decisão do seu dia numa decisão "computável" — usando abstração.',
       prompt:
-        'Escolha uma decisão simples do seu dia e diga: (1) quais informações importam, (2) quais não importam e (3) em que passos você decide.',
+        'Escolha uma decisão simples do seu dia e diga: (1) quais informações importam, (2) quais não importam e (3) quais são os passos da decisão, na ordem.',
       scaffold: [
         'Escolha uma decisão do dia (ex.: "dá pra encaixar mais uma reunião na minha agenda?").',
         'O que realmente impacta a decisão? (o que você destaca)',
         'O que não importa para realizar a decisão? (o que você ignora)',
-        'Em que etapas você decide, na ordem? (mínimo 3 passos)',
+        'Quais são os passos da decisão, na ordem? (mínimo 3)',
       ],
       example: [
         { label: 'Decisão', value: 'qual fila do supermercado escolher' },
@@ -269,7 +277,7 @@ export const PHASES: Phase[] = [
     kind: 'single',
     options: [
       { id: 'validar', label: 'Validar o intervalo (início antes do fim)' },
-      { id: 'selecionar', label: 'Selecionar reservas da mesma data' },
+      { id: 'selecionar', label: 'Consultar reservas na mesma data' },
       { id: 'autenticar', label: 'Autenticar quem está pedindo a reserva' },
       { id: 'comparar', label: 'Comparar sobreposição entre intervalos' },
     ],
@@ -291,12 +299,12 @@ export const PHASES: Phase[] = [
       'Algoritmo é uma sequência finita de passos que transforma uma ENTRADA numa SAÍDA esperada (Wing, 2008: “um algoritmo é uma abstração de um procedimento passo a passo”). Aqui: entrada = os dados da reserva; saída = “aceitar” ou “recusar”. Ordenar bem os passos é, literalmente, montar o algoritmo.',
     kind: 'order',
     options: [
-      { id: 'selecionar', label: 'Selecionar reservas da mesma data' },
+      { id: 'selecionar', label: 'Consultar reservas na mesma data' },
       { id: 'receber', label: 'Receber data, início e fim' },
       { id: 'sobrepor', label: 'Verificar sobreposição com as selecionadas' },
       { id: 'validar', label: 'Verificar se o início antecede o fim' },
       { id: 'decidir', label: 'Rejeitar se houver conflito; senão aceitar' },
-      { id: 'obrigatorios', label: 'Verificar dados obrigatórios' },
+      { id: 'obrigatorios', label: 'Verificar se tudo foi preenchido corretamente' },
     ],
     correctOrder: ['receber', 'obrigatorios', 'validar', 'selecionar', 'sobrepor', 'decidir'],
     explain:
@@ -423,7 +431,7 @@ export const PHASES: Phase[] = [
     id: 'd5',
     act: 'DECISÃO 5/5',
     activity: 5,
-    title: 'Pedido: 15h15 – 15h45  (invade a segunda)',
+    title: 'Pedido: 15h15 – 15h45',
     prompt:
       'Mesma situação: aprovadas 14h–15h e 15h30–16h30, na mesma sala. Agora o pedido é das 15h15 às 15h45. Aceitar ou recusar?',
     kind: 'single',

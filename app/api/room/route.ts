@@ -22,6 +22,7 @@ export async function GET(req: Request) {
     revealed: room.revealed,
     votes: room.votes,
     scores: room.scores || {},
+    worksheetsCount: Object.keys(room.worksheets || {}).length,
     deadline: room.deadline ?? null,
     serverNow: Date.now(),
   })
