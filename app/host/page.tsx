@@ -192,6 +192,13 @@ function HostInner() {
     sfxStart()
   }
 
+  const addTime = (seconds: number) => {
+    setDeadline((d) => {
+      const base = d ?? Date.now() + offset
+      return Math.max(Date.now() + offset + 1000, base + seconds * 1000)
+    })
+  }
+
   const copyLink = async () => {
     try {
       await navigator.clipboard.writeText(joinUrl)
@@ -302,28 +309,16 @@ function HostInner() {
             )}
           </div>
 
-          {interactive && (
-            <div className="row" style={{ justifyContent: 'center', gap: 6 }}>
-              <button onClick={() => startTimer(15)}>⏱15s</button>
-              <button onClick={() => startTimer(20)}>20s</button>
-              <button onClick={() => startTimer(30)}>30s</button>
-              <button onClick={() => startTimer(60)}>1min</button>
-              <button className="ghost" onClick={() => setDeadline(null)} disabled={deadline == null}>
-                limpar
-              </button>
-            </div>
-          )}
-
-          {phase.kind === 'pesquisa' && (
-            <div className="row" style={{ justifyContent: 'center', gap: 6 }}>
-              <button className="primary" onClick={() => startTimer((phase.research?.minutes || 3) * 60)}>
-                ▶ iniciar {phase.research?.minutes || 3} min
-              </button>
-              <button className="ghost" onClick={() => setDeadline(null)} disabled={deadline == null}>
-                limpar
-              </button>
-            </div>
-          )}
+          <div className="row" style={{ justifyContent: 'center', gap: 6 }}>
+            <button onClick={() => startTimer(30)}>30s</button>
+            <button onClick={() => startTimer(60)}>1min</button>
+            <button onClick={() => startTimer(180)}>3min</button>
+            <button onClick={() => addTime(-30)} disabled={deadline == null}>−30s</button>
+            <button onClick={() => addTime(30)}>+30s</button>
+            <button className="ghost" onClick={() => setDeadline(null)} disabled={deadline == null}>
+              limpar
+            </button>
+          </div>
         </div>
 
         <div className="card col" style={{ gap: 8 }}>

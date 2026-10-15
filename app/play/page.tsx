@@ -425,7 +425,7 @@ function PlayerInner() {
               <button className="primary" disabled={!respText.trim()} onClick={sendResposta}>
                 {respSent ? 'enviar de novo' : 'enviar resposta'}
               </button>
-              {respSent && <span className="pill on">enviada ✓ (aparece no telão)</span>}
+              {respSent && <span className="pill on">enviada ✓</span>}
             </div>
 
             {phase.research.example && (
