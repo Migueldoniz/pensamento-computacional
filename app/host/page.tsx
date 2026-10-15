@@ -704,7 +704,7 @@ function HostInner() {
             </div>
           )}
 
-          {ranking.length > 0 && phase.activity >= 3 && (
+          {ranking.length > 0 && phase.activity >= 3 && phase.kind !== 'premiacao' && (
             <div className="col" style={{ gap: 4 }}>
               <div className="act">Ranking</div>
               {ranking.map((r, i) => (
