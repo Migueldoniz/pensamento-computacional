@@ -3,7 +3,7 @@
 import { Suspense, useEffect, useRef, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { PHASES, encodeChoice, isCorrect, isInteractive } from '@/lib/game'
-import { getSnapshot, sendVote, postScore, claimCharacter, releaseCharacter, PlayerScore } from '@/lib/client'
+import { getSnapshot, sendVote, postScore, claimCharacter, PlayerScore } from '@/lib/client'
 import { Timeline } from '@/components/Timeline'
 import { CHARACTERS, characterById } from '@/lib/characters'
 import { CharAvatar } from '@/components/CharAvatar'
@@ -268,12 +268,6 @@ function PlayerInner() {
           >
             {muted ? '🔇' : '🔊'}
           </button>
-          <button className="ghost" onClick={async () => {
-              if (room && playerId && charId) await releaseCharacter(room, playerId)
-              setReady(false)
-            }}>
-              {char?.emoji} trocar
-            </button>
           <span className="pill">sala {room}</span>
         </span>
       </div>
