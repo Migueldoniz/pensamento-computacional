@@ -44,6 +44,8 @@ function PlayerInner() {
 
   const [index, setIndex] = useState(0)
   const [revealed, setRevealed] = useState(false)
+  const [showFilter, setShowFilter] = useState(false)
+  const [showAlgo, setShowAlgo] = useState(false)
   const [notFound, setNotFound] = useState(false)
   const [deadline, setDeadline] = useState<number | null>(null)
   const [offset, setOffset] = useState(0)
@@ -59,6 +61,12 @@ function PlayerInner() {
   // Resposta da pesquisa
   const [respText, setRespText] = useState('')
   const [respSent, setRespSent] = useState(false)
+
+  // revelações do slide CONCEITO voltam ao início ao trocar de fase
+  useEffect(() => {
+    setShowFilter(false)
+    setShowAlgo(false)
+  }, [index])
 
   const prevIndex = useRef(-1)
   const prevRevealed = useRef(false)
@@ -334,34 +342,68 @@ function PlayerInner() {
             {phase.art === 'sandwich' && <SandwichArt />}
             {phase.art === 'map' && <MapDiagram />}
             {(phase.filter || phase.algorithm) && (
-              <div className="row" style={{ gap: 10, alignItems: 'stretch' }}>
-                <div className="ccc">
-                  <div className="ccc-tag">1 · Intenção</div>
-                  <div className="ccc-big">“Prepare um sanduíche”</div>
-                  <div className="small muted">define o objetivo, não o como</div>
-                </div>
-                <span className="ccc-arrow">→</span>
-                <div className="ccc">
-                  <div className="ccc-tag">2 · O que importa?</div>
-                  <div className="col" style={{ gap: 6 }}>
-                    {phase.filter?.map((f, i) => (
-                      <div key={i} className="row" style={{ gap: 8, flexWrap: 'nowrap' }}>
-                        <span style={{ color: f.ok ? 'var(--ok)' : 'var(--bad)', fontWeight: 800 }}>
-                          {f.ok ? '✓' : '✗'}
-                        </span>
-                        <span>{f.text}</span>
-                      </div>
-                    ))}
+              <div className="col" style={{ gap: 12 }}>
+                <div className="row" style={{ gap: 10, alignItems: 'stretch' }}>
+                  <div className="ccc">
+                    <div className="ccc-tag">1 · Intenção</div>
+                    <div className="ccc-big">“Prepare um sanduíche”</div>
+                    <div className="small muted">define o objetivo, não o como</div>
                   </div>
+                  {showFilter && (
+                    <>
+                      <span className="ccc-arrow">→</span>
+                      <div className="ccc">
+                        <div className="ccc-tag">2 · O que importa?</div>
+                        <div className="col" style={{ gap: 6 }}>
+                          {phase.filter?.map((f, i) => (
+                            <div key={i} className="row" style={{ gap: 8, flexWrap: 'nowrap' }}>
+                              <span style={{ color: f.ok ? 'var(--ok)' : 'var(--bad)', fontWeight: 800 }}>
+                                {f.ok ? '✓' : '✗'}
+                              </span>
+                              <span>{f.text}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </>
+                  )}
+                  {showAlgo && (
+                    <>
+                      <span className="ccc-arrow">→</span>
+                      <div className="ccc">
+                        <div className="ccc-tag">3 · Como organizar</div>
+                        <ol className="steps">
+                          {phase.algorithm?.map((a, i) => (
+                            <li key={i}>{a}</li>
+                          ))}
+                        </ol>
+                      </div>
+                    </>
+                  )}
                 </div>
-                <span className="ccc-arrow">→</span>
-                <div className="ccc">
-                  <div className="ccc-tag">3 · Instruções</div>
-                  <ol className="steps">
-                    {phase.algorithm?.map((a, i) => (
-                      <li key={i}>{a}</li>
-                    ))}
-                  </ol>
+
+                <div className="row" style={{ gap: 10 }}>
+                  {!showFilter && (
+                    <button className="primary" onClick={() => setShowFilter(true)}>
+                      🔍 O que importa para o preparo?
+                    </button>
+                  )}
+                  {!showAlgo && (
+                    <button className="primary" onClick={() => setShowAlgo(true)}>
+                      🧩 Como organizar a solução?
+                    </button>
+                  )}
+                  {(showFilter || showAlgo) && (
+                    <button
+                      className="ghost"
+                      onClick={() => {
+                        setShowFilter(false)
+                        setShowAlgo(false)
+                      }}
+                    >
+                      recolher
+                    </button>
+                  )}
                 </div>
               </div>
             )}
