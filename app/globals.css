@@ -76,6 +76,11 @@ h2 {
   margin: 0 0 8px;
 }
 
+.phase-title {
+  margin: 0;
+  font-size: 20px;
+}
+
 p {
   line-height: 1.5;
 }
@@ -221,6 +226,68 @@ button.ghost {
   }
   .host-wrap .grid2 > .card {
     min-height: 80vh;
+  }
+}
+
+/* Telas grandes (≥1440px): fontes um pouco maiores */
+@media (min-width: 1440px) {
+  html,
+  body {
+    font-size: 17.5px;
+  }
+  h1 {
+    font-size: 31px;
+  }
+  h2 {
+    font-size: 24px;
+  }
+  .phase-title {
+    font-size: 23px;
+  }
+  .bubble {
+    font-size: 20px;
+  }
+  button.opt {
+    font-size: 19px;
+  }
+  .ccc-big {
+    font-size: 22px;
+  }
+  .ccc-tag {
+    font-size: 13px;
+  }
+  .big-list {
+    font-size: 22px;
+  }
+  .small {
+    font-size: 14px;
+  }
+  .act {
+    font-size: 13px;
+  }
+  .pill {
+    font-size: 13px;
+  }
+  .chip {
+    font-size: 15px;
+  }
+  .rule-row {
+    font-size: 17px;
+  }
+  .lb-row {
+    font-size: 16px;
+  }
+  .source {
+    font-size: 17px;
+  }
+  .source h3 {
+    font-size: 18px;
+  }
+  .timer span {
+    font-size: 37px;
+  }
+  button.step-chip {
+    font-size: 14px;
   }
 }
 

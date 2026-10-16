@@ -363,7 +363,7 @@ function HostInner() {
         <div className="card col" style={{ gap: 8 }}>
           <div className="row" style={{ gap: 8 }}>
             <span className="act">{phase.act}</span>
-            <h2 style={{ margin: 0, fontSize: 20 }}>{phase.title}</h2>
+            <h2 className="phase-title">{phase.title}</h2>
           </div>
           {phase.prompt && <p style={{ margin: 0, whiteSpace: 'pre-line' }}>{phase.prompt}</p>}
 
