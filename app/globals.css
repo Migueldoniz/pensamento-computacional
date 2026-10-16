@@ -233,8 +233,9 @@ button.ghost {
 @media (min-width: 1440px) {
   html,
   body {
-    font-size: 17.5px;
+    font-size: 19px;
   }
+  /* títulos: mantidos como estão */
   h1 {
     font-size: 31px;
   }
@@ -244,50 +245,55 @@ button.ghost {
   .phase-title {
     font-size: 23px;
   }
-  .bubble {
+  /* botões do host (coluna da esquerda): mantidos */
+  button {
+    font-size: 17.5px;
+  }
+  /* opções de voto são conteúdo de leitura */
+  button.opt {
     font-size: 20px;
   }
-  button.opt {
-    font-size: 19px;
+  .bubble {
+    font-size: 22px;
   }
   .ccc-big {
-    font-size: 22px;
+    font-size: 24px;
   }
   .ccc-tag {
-    font-size: 13px;
-  }
-  .big-list {
-    font-size: 22px;
-  }
-  .small {
     font-size: 14px;
   }
+  .big-list {
+    font-size: 24px;
+  }
+  .small {
+    font-size: 15.5px;
+  }
   .act {
-    font-size: 13px;
+    font-size: 14px;
   }
   .pill {
-    font-size: 13px;
+    font-size: 14px;
   }
   .chip {
-    font-size: 15px;
-  }
-  .rule-row {
-    font-size: 17px;
-  }
-  .lb-row {
     font-size: 16px;
   }
-  .source {
+  .rule-row {
+    font-size: 19px;
+  }
+  .lb-row {
     font-size: 17px;
   }
-  .source h3 {
+  .source {
     font-size: 18px;
+  }
+  .source h3 {
+    font-size: 19px;
   }
   .timer span {
     font-size: 37px;
   }
   button.step-chip {
-    font-size: 14px;
+    font-size: 15px;
   }
 }
 
