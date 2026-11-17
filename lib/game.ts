@@ -73,6 +73,7 @@ export interface Phase {
   analogies?: { icon: string; title: string; detail: string }[] // kind 'conceito'
   art?: 'sandwich' | 'map' | 'goal' | 'airport' | 'delivery' // kind 'conceito' (ilustração)
   artList?: ('goal' | 'airport' | 'delivery')[] // ilustrações de analogia (qualquer fase)
+  analogyDelta?: ('sandwich' | 'map')[] // analogias da Aula 1 estendidas (v1 → e se…)
   bullets?: string[] // kind 'conceito' (etiquetas curtas)
   questions?: string[] // kind 'conceito' (perguntas orientadoras)
   filter?: { ok: boolean; text: string }[] // kind 'conceito' (o que importa × o que não importa)
@@ -568,7 +569,7 @@ export const PHASES: Phase[] = [
       razao: 'Porque quem pede não pode confirmar a própria reserva.',
       suposicao: 'O sistema avisa por e-mail.',
     },
-    artList: ['goal', 'airport'],
+    analogyDelta: ['sandwich'],
     definition: 'Requisito = comportamento + condição + razão registrada.',
     sources: [
       'Potts et al. (1994): pergunta → resposta → razão.',
@@ -683,6 +684,7 @@ export const PHASES: Phase[] = [
     title: 'O que a versão 1 não sabe?',
     prompt: 'Com o fato novo (solicitar ≠ aprovar), marque o que o plano da Aula 1 não consegue fazer.',
     kind: 'multi',
+    analogyDelta: ['map'],
     options: [
       { id: 'estado', label: 'Não tem estado (pendente/aprovada)' },
       { id: 'quem_aprova', label: 'Não sabe quem aprova' },
