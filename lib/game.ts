@@ -72,7 +72,7 @@ export interface Phase {
   } // kind 'conceito' (diagrama de contraste)
   analogies?: { icon: string; title: string; detail: string }[] // kind 'conceito'
   art?: 'sandwich' | 'map' | 'goal' | 'airport' | 'delivery' // kind 'conceito' (ilustração)
-  artList?: ('goal' | 'airport' | 'delivery')[] // ilustrações de analogia (qualquer fase)
+  artList?: ('goal' | 'airport' | 'delivery' | 'checklist')[] // ilustrações de analogia (qualquer fase)
   analogyDelta?: ('sandwich' | 'map')[] // analogias da Aula 1 estendidas (v1 → e se…)
   bullets?: string[] // kind 'conceito' (etiquetas curtas)
   questions?: string[] // kind 'conceito' (perguntas orientadoras)
@@ -531,8 +531,9 @@ export const PHASES: Phase[] = [
     activity: 1,
     title: 'O que ficou da Aula 1',
     prompt:
-      'Na Aula 1, o robô decidia aceitar ou recusar pelo conflito de horário — a versão 1 do plano.\n\nLembra da carta que deixamos de fora no CÉREBRO, de propósito? AUTENTICAR QUEM PEDE. Ela volta hoje: quem pede não é quem aprova.',
+      'Na Aula 1, o robô decidia aceitar ou recusar pelo conflito de horário — a versão 1 do plano.\n\nLembra da carta que deixamos de fora no CÉREBRO, de propósito? AUTENTICAR QUEM PEDE. Ela volta hoje: quem pede não é quem aprova.\n\nE o sanduíche da Aula 1? Ele volta com uma pergunta nova.',
     kind: 'info',
+    analogyDelta: ['sandwich'],
     robotThinking: 'Retomando a missão anterior…',
     robotCorrect: '',
     robotWrong: '',
@@ -569,7 +570,6 @@ export const PHASES: Phase[] = [
       razao: 'Porque quem pede não pode confirmar a própria reserva.',
       suposicao: 'O sistema avisa por e-mail.',
     },
-    analogyDelta: ['sandwich'],
     definition: 'Requisito = comportamento + condição + razão registrada.',
     sources: [
       'Potts et al. (1994): pergunta → resposta → razão.',
@@ -660,22 +660,21 @@ export const PHASES: Phase[] = [
     id: 'a2_entrevista',
     act: 'ENTREVISTA',
     activity: 3,
-    title: 'Perguntas à coordenação',
-    prompt: 'Escrevam três perguntas — e reparem no que separa uma pergunta boa de uma fraca.',
-    kind: 'conceito',
-    contrast: {
-      leftTitle: 'Pergunta fraca',
-      leftText: '“Vocês querem um sistema bom?”',
-      leftNote: '“bom” não é verificável',
-      rightTitle: 'Pergunta boa',
-      rightText: '“Quando uma solicitação está pendente, ela bloqueia o horário?”',
-      rightNote: 'pede condição — dá para responder e testar',
-    },
-    questions: ['Quem aprova?', 'O que acontece com uma pendente?', 'Um caso concreto.'],
-    note: 'Modelo: “Quando ____ acontece, o que o sistema deve fazer?”',
-    robotThinking: 'Ouvindo as perguntas…',
-    robotCorrect: '',
-    robotWrong: '',
+    title: 'Qual pergunta você faria?',
+    prompt: 'A coordenação está na sala. Qual destas perguntas você faria primeiro?',
+    kind: 'single',
+    options: [
+      { id: 'bom', label: '“Vocês querem um sistema bom?”' },
+      { id: 'pendente', label: '“Quando uma solicitação está pendente, ela bloqueia o horário?”' },
+      { id: 'rapido', label: '“O sistema deve ser rápido?”' },
+      { id: 'cor', label: '“Qual a cor do botão de aprovar?”' },
+    ],
+    correctIds: ['pendente'],
+    explain:
+      'Pergunta boa pede uma CONDIÇÃO ou um EXEMPLO. “Bom”, “rápido” e “cor” não definem nada verificável. Agora escrevam as suas três no chat — eu respondo pelo cartão da coordenação.',
+    robotThinking: 'Escolhendo a pergunta…',
+    robotCorrect: 'Essa pergunta rende requisito!',
+    robotWrong: 'Essa pergunta não leva a nada verificável.',
   },
   {
     id: 'a2_diagnostico',
@@ -732,6 +731,7 @@ export const PHASES: Phase[] = [
     prompt:
       'Qual destas frases dá para testar (verificar sim/não)?\n\nAnalogia: “arruma o quarto” não dá para conferir; “põe a roupa no armário, o lixo na lixeira e a cama esticada” dá.',
     kind: 'single',
+    artList: ['checklist'],
     options: [
       {
         id: 'bom',
@@ -757,6 +757,14 @@ export const PHASES: Phase[] = [
     prompt:
       'Reserva APROVADA 14h–15h no Lab A. Chega um pedido de um professor para 14h30–15h30 no mesmo Lab A.\n\nPela regra que você tem hoje, o que o sistema faz?',
     kind: 'single',
+    timeline: {
+      day: '20/10 · Lab A',
+      window: [14, 16.5],
+      lanes: [
+        { name: 'Aprovada', blocks: [{ start: 14, end: 15, kind: 'existing' }] },
+        { name: 'Novo pedido', blocks: [{ start: 14.5, end: 15.5, kind: 'request' }] },
+      ],
+    },
     options: [
       { id: 'aceitar', label: 'Aceita, porque é um professor (mais importante)' },
       { id: 'recusar', label: 'Recusa, porque a reserva aprovada bloqueia' },

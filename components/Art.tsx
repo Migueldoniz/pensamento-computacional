@@ -383,10 +383,58 @@ export function DeliveryArt({ size = 380 }: { size?: number }) {
   )
 }
 
+/** ✅ "Arruma o quarto": o que dá para verificar (requisito verificável). */
+export function ChecklistArt({ size = 360 }: { size?: number }) {
+  const { accent, muted, line, panel, warn, ok } = ART
+  return (
+    <svg
+      viewBox="0 0 360 160"
+      role="img"
+      aria-label="Arruma o quarto (vago) versus uma lista de itens conferíveis"
+      style={{ display: 'block', width: '100%', maxWidth: size, height: 'auto', margin: '0 auto' }}
+    >
+      {/* vago */}
+      <rect x="8" y="12" width="156" height="136" rx="12" fill={panel} stroke={warn} />
+      <text x="86" y="34" textAnchor="middle" fontSize="11" fontWeight="700" fill={warn}>
+        “arruma o quarto”
+      </text>
+      <text x="86" y="86" textAnchor="middle" fontSize="42" fill={warn}>
+        ?
+      </text>
+      <text x="86" y="122" textAnchor="middle" fontSize="10" fill={muted}>
+        dá para conferir? não
+      </text>
+
+      {/* verificável */}
+      <rect x="196" y="12" width="156" height="136" rx="12" fill={panel} stroke={ok} />
+      <text x="274" y="34" textAnchor="middle" fontSize="11" fontWeight="700" fill={ok}>
+        “arruma o quarto”
+      </text>
+      <g fontSize="10" fill="#e7eaf0">
+        <rect x="212" y="50" width="12" height="12" rx="3" fill="none" stroke={ok} strokeWidth="2" />
+        <path d="M214 56 L218 60 L223 52" fill="none" stroke={ok} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <text x="232" y="60">roupa no armário</text>
+
+        <rect x="212" y="74" width="12" height="12" rx="3" fill="none" stroke={ok} strokeWidth="2" />
+        <path d="M214 80 L218 84 L223 76" fill="none" stroke={ok} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <text x="232" y="84">lixo na lixeira</text>
+
+        <rect x="212" y="98" width="12" height="12" rx="3" fill="none" stroke={ok} strokeWidth="2" />
+        <path d="M214 104 L218 108 L223 100" fill="none" stroke={ok} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <text x="232" y="108">cama esticada</text>
+      </g>
+      <text x="274" y="134" textAnchor="middle" fontSize="10" fontWeight="700" fill={ok}>
+        dá para conferir? sim
+      </text>
+    </svg>
+  )
+}
+
 /** Renderiza uma analogia pelo nome. */
 export function AnalogyArt({ kind }: { kind: string }) {
   if (kind === 'goal') return <GoalArt />
   if (kind === 'airport') return <AirportArt />
   if (kind === 'delivery') return <DeliveryArt />
+  if (kind === 'checklist') return <ChecklistArt />
   return null
 }
