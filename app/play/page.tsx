@@ -2,7 +2,7 @@
 
 import { Suspense, useEffect, useRef, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
-import { PHASES, encodeChoice, isCorrect, isInteractive } from '@/lib/game'
+import { phasesFor, encodeChoice, isCorrect, isInteractive } from '@/lib/game'
 import { getSnapshot, sendVote, postScore, claimCharacter, PlayerScore } from '@/lib/client'
 import { Timeline } from '@/components/Timeline'
 import { CHARACTERS, characterById } from '@/lib/characters'
@@ -53,6 +53,7 @@ function PlayerInner() {
   const [offset, setOffset] = useState(0)
   const [scores, setScores] = useState<Record<string, PlayerScore>>({})
   const [takenChars, setTakenChars] = useState<Record<string, string>>({})
+  const [season, setSeason] = useState<'1' | '2'>('1')
 
   const [sent, setSent] = useState<string | null>(null)
   const [multi, setMulti] = useState<string[]>([])
@@ -140,7 +141,6 @@ function PlayerInner() {
         prevIndex.current = s.index
         setSent(null)
         setMulti([])
-        setSeq([])
       }
       // sala limpa pelo apresentador → pede para escolher o personagem de novo
       const ep = s.epoch ?? 0
@@ -152,6 +152,7 @@ function PlayerInner() {
         return
       }
       setIndex(s.index)
+      setSeason(s.season || '1')
       setRevealed(s.revealed)
       setDeadline(s.deadline ?? null)
       setScores(s.scores || {})
@@ -166,8 +167,26 @@ function PlayerInner() {
     }
   }, [room])
 
-  const phase = PHASES[index] || PHASES[0]
+  const phases = phasesFor(season)
+  const phase = phases[index] || phases[0]
   const flow = phase.flow
+
+  // inicia a lista de ordenação já completa (o aluno reordena arrastando / ▲▼)
+  useEffect(() => {
+    const p = phasesFor(season)[index]
+    if (p?.kind === 'order') setSeq((p.options || []).map((o) => o.id))
+  }, [index, season])
+
+  function moveSeq(i: number, dir: number) {
+    setSeq((s) => {
+      const j = i + dir
+      if (j < 0 || j >= s.length) return s
+      const n = [...s]
+      const [m] = n.splice(i, 1)
+      n.splice(j, 0, m)
+      return n
+    })
+  }
   const char = characterById(charId)
   const name = char?.name || 'Anônimo'
   const countdown = useCountdown(deadline, offset)
@@ -657,23 +676,40 @@ function PlayerInner() {
         )}
 
         {phase.kind === 'order' && (
-          <div className="col" style={{ gap: 12, marginTop: 8 }}>
-            <div className="small muted">Toque na ordem correta — o número aparece à esquerda.</div>
-            {phase.options?.map((o) => {
-              const pos = seq.indexOf(o.id)
-              const cls = ['opt', pos >= 0 ? 'sel' : ''].filter(Boolean).join(' ')
+          <div className="col" style={{ gap: 10, marginTop: 8 }}>
+            <div className="small muted">Arraste para reordenar — ou use ▲ ▼.</div>
+            {seq.map((id, i) => {
+              const o = phase.options?.find((x) => x.id === id)
               return (
-                <button
-                  key={o.id}
-                  className={cls}
-                  disabled={locked}
-                  onClick={() => setSeq((s) => (s.includes(o.id) ? s.filter((x) => x !== o.id) : [...s, o.id]))}
+                <div
+                  key={id}
+                  className="order-row"
+                  draggable={!locked}
+                  onDragStart={(e) => e.dataTransfer.setData('text/plain', String(i))}
+                  onDragOver={(e) => e.preventDefault()}
+                  onDrop={(e) => {
+                    e.preventDefault()
+                    const from = Number(e.dataTransfer.getData('text/plain'))
+                    if (from === i || Number.isNaN(from)) return
+                    setSeq((s) => {
+                      const n = [...s]
+                      const [m] = n.splice(from, 1)
+                      n.splice(i, 0, m)
+                      return n
+                    })
+                  }}
                 >
-                  <span>
-                    {pos >= 0 ? `${pos + 1}. ` : ''}
-                    {o.label}
+                  <span className="order-num">{i + 1}</span>
+                  <span className="order-label">{o?.label}</span>
+                  <span className="order-ctrl">
+                    <button onClick={() => moveSeq(i, -1)} disabled={locked || i === 0}>
+                      ▲
+                    </button>
+                    <button onClick={() => moveSeq(i, 1)} disabled={locked || i === seq.length - 1}>
+                      ▼
+                    </button>
                   </span>
-                </button>
+                </div>
               )
             })}
             <button
@@ -709,7 +745,7 @@ function PlayerInner() {
                 <div className="act">Para revisitar</div>
                 {wrong.map((id) => (
                   <div key={id} className="small muted">
-                    • {PHASES.find((p) => p.id === id)?.title || id}
+                    • {phases.find((p) => p.id === id)?.title || id}
                   </div>
                 ))}
               </div>

@@ -9,9 +9,9 @@ export default function Home() {
   const [code, setCode] = useState('')
   const [busy, setBusy] = useState(false)
 
-  const create = async () => {
+  const create = async (season: '1' | '2') => {
     setBusy(true)
-    const r = await recordRoom()
+    const r = await recordRoom(undefined, season)
     try {
       localStorage.setItem(`oa_host:${r.code}`, r.token)
     } catch {
@@ -38,8 +38,11 @@ export default function Home() {
         </div>
 
         <div className="card col">
-          <button className="primary" onClick={create} disabled={busy}>
-            {busy ? 'Criando…' : 'Criar sala (apresentador)'}
+          <button className="primary" onClick={() => create('1')} disabled={busy}>
+            {busy ? 'Criando…' : 'Criar sala · Aula 1 (Pensamento Computacional)'}
+          </button>
+          <button className="primary" onClick={() => create('2')} disabled={busy}>
+            {busy ? 'Criando…' : 'Criar sala · Aula 2 (Requisitos)'}
           </button>
 
           <div className="row">

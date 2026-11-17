@@ -6,11 +6,12 @@ export const dynamic = 'force-dynamic'
 export async function POST(req: Request) {
   const body = await req.json().catch(() => ({} as any))
   const code = String(body?.code || genCode()).toUpperCase().slice(0, 8)
+  const season = body?.season === '2' ? '2' : '1'
   const existing = await getRoom(code)
-  if (existing) return NextResponse.json({ code, token: existing.token })
+  if (existing) return NextResponse.json({ code, token: existing.token, season: existing.season || '1' })
   const token = genToken()
-  await createRoom(code, token)
-  return NextResponse.json({ code, token })
+  await createRoom(code, token, season)
+  return NextResponse.json({ code, token, season })
 }
 
 export async function GET(req: Request) {
@@ -24,6 +25,7 @@ export async function GET(req: Request) {
     scores: room.scores || {},
     characters: room.characters || {},
     players: Object.keys(room.characters || {}).length,
+    season: room.season || '1',
     epoch: room.epoch || 0,
     respostas: Object.entries(room.respostas || {}).map(([playerId, r]) => ({
       playerId,

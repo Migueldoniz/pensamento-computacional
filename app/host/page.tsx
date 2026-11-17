@@ -3,7 +3,7 @@
 import { Suspense, useEffect, useRef, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { QRCodeSVG } from 'qrcode.react'
-import { PHASES, optionCounts, correctSoFar, isInteractive } from '@/lib/game'
+import { phasesFor, optionCounts, correctSoFar, isInteractive } from '@/lib/game'
 import { getSnapshot, recordRoom, setProgress, resetRoom, PlayerScore } from '@/lib/client'
 import { Robot, type Mood } from '@/components/Robot'
 import { Timeline } from '@/components/Timeline'
@@ -53,6 +53,7 @@ function HostInner() {
   const [respostas, setRespostas] = useState<{ playerId: string; name: string; text: string }[]>([])
   const [totalPlayers, setTotalPlayers] = useState(0)
   const [clearing, setClearing] = useState(false)
+  const [season, setSeason] = useState<'1' | '2'>('1')
 
   useEffect(() => {
     initSound()
@@ -107,6 +108,7 @@ function HostInner() {
       setScores(s.scores || {})
       setRespostas(s.respostas || [])
       setTotalPlayers(s.players || 0)
+      setSeason(s.season || '1')
       setDeadline(s.deadline ?? null)
       initialized.current = true
     })()
@@ -124,6 +126,7 @@ function HostInner() {
       setScores(s.scores || {})
       setRespostas(s.respostas || [])
       setTotalPlayers(s.players || 0)
+      setSeason(s.season || '1')
       setOffset(s.serverNow - Date.now())
     }, 1200)
     return () => clearInterval(t)
@@ -154,7 +157,8 @@ function HostInner() {
     }
   }, [countdown])
 
-  const phase = PHASES[index]
+  const phases = phasesFor(season)
+  const phase = phases[index]
   const flow = phase.flow
   const interactive = isInteractive(phase.kind)
   const phaseVotes = votes[phase.id] || {}
@@ -198,7 +202,7 @@ function HostInner() {
   )
 
   const go = (delta: number) => {
-    setIndex((i) => Math.min(PHASES.length - 1, Math.max(0, i + delta)))
+    setIndex((i) => Math.min(phases.length - 1, Math.max(0, i + delta)))
     setRevealed(false)
     setDeadline(null)
   }
@@ -341,7 +345,7 @@ function HostInner() {
 
           <div className="row" style={{ justifyContent: 'center', gap: 8 }}>
             <button onClick={() => go(-1)} disabled={index === 0}>◀</button>
-            <button onClick={() => go(1)} disabled={index === PHASES.length - 1}>▶</button>
+            <button onClick={() => go(1)} disabled={index === phases.length - 1}>▶</button>
             {interactive && (
               <button className="primary" onClick={() => { sfxClick(); setRevealed((r) => !r) }}>
                 {revealed ? 'esconder' : 'revelar'}
@@ -748,7 +752,7 @@ function HostInner() {
       </div>
 
       <div className="row" style={{ marginTop: 10, gap: 6 }}>
-        {PHASES.map((p, i) => (
+        {phases.map((p, i) => (
           <span
             key={p.id}
             className={`pill ${i === index ? 'on' : ''}`}

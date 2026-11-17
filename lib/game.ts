@@ -567,6 +567,10 @@ export const PHASES: Phase[] = [
       razao: 'Porque quem pede não pode confirmar a própria reserva.',
       suposicao: 'O sistema avisa por e-mail.',
     },
+    analogies: [
+      { icon: '⚽', title: 'Regra de jogo', detail: '“Para marcar gol, a bola cruza a linha — SE tocar a mão, não vale.” Requisito é comportamento + condição.' },
+      { icon: '✈️', title: '“Te busco no aeroporto”', detail: 'Ninguém perguntou o terminal nem a hora. “Você vai estar às 10h” é uma suposição — e é ela que quebra o encontro.' },
+    ],
     definition: 'Requisito = comportamento + condição + razão registrada.',
     sources: [
       'Potts et al. (1994): pergunta → resposta → razão.',
@@ -657,9 +661,18 @@ export const PHASES: Phase[] = [
     act: 'ENTREVISTA',
     activity: 3,
     title: 'Perguntas à coordenação',
-    prompt:
-      'Escrevam três perguntas para a coordenação:\n1. Quem aprova?\n2. O que acontece com uma solicitação pendente?\n3. Um caso concreto.\n\nModelo: “Quando ____ acontece, o que o sistema deve fazer?”',
-    kind: 'info',
+    prompt: 'Escrevam três perguntas — e reparem no que separa uma pergunta boa de uma fraca.',
+    kind: 'conceito',
+    contrast: {
+      leftTitle: 'Pergunta fraca',
+      leftText: '“Vocês querem um sistema bom?”',
+      leftNote: '“bom” não é verificável',
+      rightTitle: 'Pergunta boa',
+      rightText: '“Quando uma solicitação está pendente, ela bloqueia o horário?”',
+      rightNote: 'pede condição — dá para responder e testar',
+    },
+    questions: ['Quem aprova?', 'O que acontece com uma pendente?', 'Um caso concreto.'],
+    note: 'Modelo: “Quando ____ acontece, o que o sistema deve fazer?”',
     robotThinking: 'Ouvindo as perguntas…',
     robotCorrect: '',
     robotWrong: '',
@@ -692,7 +705,8 @@ export const PHASES: Phase[] = [
     act: 'ESTADOS',
     activity: 4,
     title: 'A sequência da aprovação',
-    prompt: 'Ordene as etapas para APROVAR uma solicitação.',
+    prompt:
+      'Ordene as etapas para APROVAR uma solicitação.\n\nAnalogia: como um pedido de delivery — “no carrinho” não reserva o estoque; “pago” reserva. Pendente não bloqueia; aprovada bloqueia.',
     kind: 'order',
     options: [
       { id: 'receber', label: 'Receber o pedido de aprovação' },
@@ -713,7 +727,8 @@ export const PHASES: Phase[] = [
     act: 'REQUISITO',
     activity: 4,
     title: 'Qual é o requisito verificável?',
-    prompt: 'Qual destas frases dá para testar (verificar sim/não)?',
+    prompt:
+      'Qual destas frases dá para testar (verificar sim/não)?\n\nAnalogia: “arruma o quarto” não dá para conferir; “põe a roupa no armário, o lixo na lixeira e a cama esticada” dá.',
     kind: 'single',
     options: [
       {
@@ -738,7 +753,7 @@ export const PHASES: Phase[] = [
     activity: 5,
     title: 'Aprovada × pedido “importante”',
     prompt:
-      'Reserva aprovada 14h–15h no Lab A. Chega um pedido “importante” para 14h30–15h30 no mesmo Lab A. O que o sistema deve fazer?',
+      'Reserva aprovada 14h–15h no Lab A. Chega um pedido “importante” para 14h30–15h30 no mesmo Lab A.\n\nCuidado com a suposição: ninguém disse que “importante” tem prioridade. O que o sistema deve fazer?',
     kind: 'single',
     options: [
       { id: 'cancelar', label: 'Cancelar a reserva aprovada automaticamente' },
@@ -786,6 +801,14 @@ export const PHASES: Phase[] = [
     robotWrong: '',
   },
 ]
+
+/** Onde começa a Aula 2 (índice na lista combinada). */
+export const SEASON2_START = PHASES.findIndex((p) => p.id === 'a2_retomada')
+
+/** Fases de uma temporada: '1' → Aula 1, '2' → Aula 2. */
+export function phasesFor(season: '1' | '2' | string): Phase[] {
+  return season === '2' ? PHASES.slice(SEASON2_START) : PHASES.slice(0, SEASON2_START)
+}
 
 /** Contagem por opção para os desafios de escolha. */
 export function optionCounts(votes: Record<string, string> | undefined, phase: Phase) {
