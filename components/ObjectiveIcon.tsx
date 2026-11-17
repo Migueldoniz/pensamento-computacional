@@ -50,6 +50,24 @@ export function ObjectiveIcon({ name, size = 44 }: { name: string; size?: number
           <path d="M26 22 L21 21 M26 22 L24 17" {...p} />
         </>
       )}
+      {name === 'apply' && (
+        <>
+          <circle cx="20" cy="20" r="13" {...p} />
+          <polygon points="16,13 16,27 29,20" fill="currentColor" stroke="none" />
+        </>
+      )}
+      {name === 'create' && (
+        <>
+          <path d="M7 33 L14 26 L27 13 L33 19 L20 32 Z" {...p} />
+          <line x1="14" y1="26" x2="20" y2="32" {...p} />
+        </>
+      )}
+      {name === 'evaluate' && (
+        <>
+          <circle cx="20" cy="20" r="13" {...p} />
+          <path d="M13 20 L18 25 L27 14" {...p} />
+        </>
+      )}
     </svg>
   )
 }

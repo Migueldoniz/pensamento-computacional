@@ -10,6 +10,7 @@ import { CharAvatar } from '@/components/CharAvatar'
 import { Rich } from '@/components/Rich'
 import { SandwichArt } from '@/components/Art'
 import { AbstractionFlow } from '@/components/AbstractionFlow'
+import { ReqDialogue } from '@/components/ReqDialogue'
 import { ObjectivesPolygon } from '@/components/ObjectivesPolygon'
 import { useCountdown } from '@/lib/useCountdown'
 import { initSound, isMuted, setMuted, sfxCorrect, sfxWrong, sfxTick, sfxClick, sfxWin } from '@/lib/sound'
@@ -362,6 +363,7 @@ function PlayerInner() {
           <div className="col" style={{ gap: 16 }}>
             {phase.art === 'sandwich' && <SandwichArt />}
             {phase.journey && <AbstractionFlow steps={phase.journey} />}
+            {phase.dialogue && <ReqDialogue d={phase.dialogue} />}
             {(phase.filter || phase.algorithm) && (
               <div className="col" style={{ gap: 12 }}>
                 <div className="row ccc-flow" style={{ gap: 10, alignItems: 'stretch' }}>

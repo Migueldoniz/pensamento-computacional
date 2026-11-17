@@ -12,12 +12,14 @@ const RESEARCH_PROMPT = PHASES.find((p) => p.kind === 'pesquisa')?.research?.pro
  * Pergunta da pesquisa + envio da resposta, no fim da página das fontes.
  * O aluno lê as fontes e responde aqui mesmo (sem voltar para /play).
  */
-export function RespostaBox({ room }: { room: string }) {
+export function RespostaBox({ room, prompt }: { room: string; prompt?: string }) {
   const [playerId, setPlayerId] = useState('')
   const [name, setName] = useState('Anônimo')
   const [text, setText] = useState('')
   const [sent, setSent] = useState(false)
   const [busy, setBusy] = useState(false)
+
+  const question = prompt ?? RESEARCH_PROMPT
 
   useEffect(() => {
     try {
@@ -49,7 +51,7 @@ export function RespostaBox({ room }: { room: string }) {
     <section className="source" style={{ borderColor: 'var(--accent)' }}>
       <div className="source-tag">Pergunta</div>
       <p style={{ margin: '8px 0 12px', fontSize: 18, lineHeight: 1.5 }}>
-        <Rich text={RESEARCH_PROMPT} />
+        <Rich text={question} />
       </p>
 
       <div className="col" style={{ gap: 10 }}>
