@@ -515,7 +515,7 @@ export const PHASES: Phase[] = [
     activity: 5,
     title: 'Fim da missão',
     prompt:
-      'Aguardo vocês para a nossa próxima missão: quando as regras que nos deram não bastarem, vamos descobrir quem realmente decide.',
+      'Aguardo vocês para a nossa próxima missão: quando as regras que nos deram não bastarem, vamos descobrir quem realmente decide. Guardem a carta AUTENTICAR — ela volta lá.',
     kind: 'premiacao',
     sources: ['Wing (2006; 2008)', 'Kramer (2007)', 'Armoni (2013)'],
     robotThinking: 'Missão cumprida.',
@@ -531,7 +531,7 @@ export const PHASES: Phase[] = [
     activity: 1,
     title: 'O que ficou da Aula 1',
     prompt:
-      'Na Aula 1, o robô decidia aceitar ou recusar pelo conflito de horário — a versão 1 do plano.\n\nLembra da carta que deixamos de fora no CÉREBRO, de propósito? AUTENTICAR QUEM PEDE. Ela volta hoje: quem pede não é quem aprova.\n\nE o sanduíche da Aula 1? Ele volta com uma pergunta nova.',
+      'Na Aula 1, o robô decidia aceitar ou recusar pelo conflito de horário — a versão 1 do plano.\n\nE deixamos uma etapa de fora, de propósito: AUTENTICAR QUEM PEDE. Hoje ela volta — porque quem pede não é quem aprova.\n\nE o sanduíche da Aula 1? Ele volta com uma pergunta nova.',
     kind: 'info',
     analogyDelta: ['sandwich'],
     robotThinking: 'Retomando a missão anterior…',
