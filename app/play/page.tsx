@@ -8,7 +8,7 @@ import { Timeline } from '@/components/Timeline'
 import { CHARACTERS, characterById } from '@/lib/characters'
 import { CharAvatar } from '@/components/CharAvatar'
 import { Rich } from '@/components/Rich'
-import { SandwichArt } from '@/components/Art'
+import { SandwichArt, AnalogyArt } from '@/components/Art'
 import { AbstractionFlow } from '@/components/AbstractionFlow'
 import { ReqDialogue } from '@/components/ReqDialogue'
 import { ObjectivesPolygon } from '@/components/ObjectivesPolygon'
@@ -356,6 +356,9 @@ function PlayerInner() {
         {phase.prompt && <p style={{ whiteSpace: 'pre-line' }}>{phase.prompt}</p>}
 
         {phase.definition && <div className="quote">{phase.definition}</div>}
+        {phase.artList?.map((k) => (
+          <AnalogyArt key={k} kind={k} />
+        ))}
 
         {phase.kind === 'objetivos' && (
           <div className="col" style={{ gap: 8 }}>

@@ -227,3 +227,166 @@ export function MapStage({ step, size = 460 }: { step: number; size?: number }) 
     </svg>
   )
 }
+
+/* ===================== Analogias da Aula 2 ===================== */
+
+const ART = {
+  accent: '#4f8cff',
+  muted: '#9aa4b2',
+  line: '#2a313d',
+  panel: '#161b24',
+  warn: '#e0533d',
+  ok: '#34d399',
+}
+
+/** ⚽ "Regra de jogo": comportamento + condição (requisito). */
+export function GoalArt({ size = 320 }: { size?: number }) {
+  const { accent, muted, line, panel, warn } = ART
+  return (
+    <svg
+      viewBox="0 0 320 196"
+      role="img"
+      aria-label="Gol: a bola cruza a linha, mas se tocar a mão não vale"
+      style={{ display: 'block', width: '100%', maxWidth: size, height: 'auto', margin: '0 auto' }}
+    >
+      <rect x="8" y="12" width="304" height="172" rx="12" fill={panel} stroke={line} />
+
+      <line x1="64" y1="52" x2="64" y2="132" stroke="#e7eaf0" strokeWidth="5" strokeLinecap="round" />
+      <line x1="256" y1="52" x2="256" y2="132" stroke="#e7eaf0" strokeWidth="5" strokeLinecap="round" />
+      <line x1="64" y1="52" x2="256" y2="52" stroke="#e7eaf0" strokeWidth="5" strokeLinecap="round" />
+
+      <g stroke="#3a4252" strokeWidth="1.2" opacity="0.8">
+        <line x1="96" y1="52" x2="96" y2="100" />
+        <line x1="128" y1="52" x2="128" y2="100" />
+        <line x1="192" y1="52" x2="192" y2="100" />
+        <line x1="224" y1="52" x2="224" y2="100" />
+        <line x1="80" y1="80" x2="240" y2="80" />
+      </g>
+
+      <line x1="160" y1="44" x2="160" y2="142" stroke={accent} strokeWidth="3" strokeDasharray="7 6" />
+
+      <circle cx="178" cy="112" r="13" fill="#e7eaf0" />
+      <polygon points="178,103 186,108 183,117 173,117 170,108" fill="#0b1020" />
+
+      <g stroke={warn} strokeWidth="3" strokeLinecap="round">
+        <line x1="204" y1="92" x2="230" y2="118" />
+        <line x1="230" y1="92" x2="204" y2="118" />
+      </g>
+      <text x="217" y="134" textAnchor="middle" fontSize="10" fontWeight="700" fill={warn}>
+        mão
+      </text>
+
+      <text x="160" y="160" textAnchor="middle" fontSize="10.5" fill={muted}>
+        comportamento: cruzar a linha
+      </text>
+      <text x="160" y="175" textAnchor="middle" fontSize="10.5" fontWeight="700" fill={accent}>
+        condição: SE tocar a mão, não vale
+      </text>
+    </svg>
+  )
+}
+
+/** ✈️ "Te busco no aeroporto": a suposição (pergunta que ninguém fez). */
+export function AirportArt({ size = 320 }: { size?: number }) {
+  const { accent, muted, line, panel, warn } = ART
+  return (
+    <svg
+      viewBox="0 0 320 196"
+      role="img"
+      aria-label="Pessoa com cartaz no aeroporto e perguntas não feitas"
+      style={{ display: 'block', width: '100%', maxWidth: size, height: 'auto', margin: '0 auto' }}
+    >
+      <rect x="8" y="12" width="304" height="172" rx="12" fill={panel} stroke={line} />
+
+      <rect x="24" y="34" width="188" height="58" rx="10" fill="#1e242e" stroke={accent} strokeWidth="2" />
+      <text x="118" y="58" textAnchor="middle" fontSize="12" fontWeight="700" fill="#e7eaf0">
+        TE BUSCO
+      </text>
+      <text x="118" y="78" textAnchor="middle" fontSize="12" fontWeight="700" fill={accent}>
+        NO AEROPORTO
+      </text>
+
+      <circle cx="48" cy="126" r="13" fill={muted} />
+      <rect x="33" y="142" width="30" height="30" rx="12" fill={muted} />
+      <line x1="48" y1="94" x2="48" y2="120" stroke={muted} strokeWidth="3" strokeLinecap="round" />
+
+      <text x="236" y="58" fontSize="11" fontWeight="700" fill={warn}>
+        terminal?
+      </text>
+      <text x="236" y="82" fontSize="11" fontWeight="700" fill={warn}>
+        horário?
+      </text>
+      <text x="236" y="106" fontSize="11" fontWeight="700" fill={warn}>
+        voo?
+      </text>
+      <text x="266" y="150" fontSize="26" fill={warn}>
+        ?
+      </text>
+
+      <text x="160" y="176" textAnchor="middle" fontSize="10.5" fill={muted}>
+        ninguém perguntou → a suposição quebra o encontro
+      </text>
+    </svg>
+  )
+}
+
+/** 📦 "Pedido de delivery": o ciclo de vida (estado). */
+export function DeliveryArt({ size = 380 }: { size?: number }) {
+  const { accent, muted, line, panel, warn, ok } = ART
+  const node = (x: number, label: string, color: string) => (
+    <g key={label}>
+      <circle cx={x} cy="62" r="9" fill={color} />
+      <text x={x} y="92" textAnchor="middle" fontSize="10" fill={muted}>
+        {label}
+      </text>
+    </g>
+  )
+  return (
+    <svg
+      viewBox="0 0 380 150"
+      role="img"
+      aria-label="Pedido de delivery: recebido, preparando, a caminho, entregue; cancelado"
+      style={{ display: 'block', width: '100%', maxWidth: size, height: 'auto', margin: '0 auto' }}
+    >
+      <rect x="8" y="12" width="364" height="126" rx="12" fill={panel} stroke={line} />
+
+      <line x1="50" y1="62" x2="330" y2="62" stroke={line} strokeWidth="4" strokeLinecap="round" />
+      <line x1="50" y1="62" x2="230" y2="62" stroke={ok} strokeWidth="4" strokeLinecap="round" />
+
+      {node(50, 'recebido', ok)}
+      {node(140, 'preparando', ok)}
+      {node(230, 'a caminho', accent)}
+      {node(330, 'entregue', '#3a4252')}
+
+      <line
+        x1="140"
+        y1="71"
+        x2="140"
+        y2="104"
+        stroke={warn}
+        strokeWidth="2.5"
+        strokeDasharray="5 4"
+        strokeLinecap="round"
+      />
+      <circle cx="140" cy="112" r="7" fill="none" stroke={warn} strokeWidth="2.5" />
+      <text x="140" y="116" textAnchor="middle" fontSize="9" fontWeight="700" fill={warn}>
+        ✕
+      </text>
+      <text x="158" y="116" fontSize="10" fill={warn}>
+        cancelado
+      </text>
+
+      <text x="190" y="136" textAnchor="middle" fontSize="10.5" fill={muted}>
+        “no carrinho” não reserva · “pago/aprovado” reserva
+      </text>
+    </svg>
+  )
+}
+
+/** Renderiza uma analogia pelo nome. */
+export function AnalogyArt({ kind }: { kind: string }) {
+  if (kind === 'goal') return <GoalArt />
+  if (kind === 'airport') return <AirportArt />
+  if (kind === 'delivery') return <DeliveryArt />
+  return null
+}

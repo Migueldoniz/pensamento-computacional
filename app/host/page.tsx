@@ -11,7 +11,7 @@ import { useCountdown } from '@/lib/useCountdown'
 import { initSound, isMuted, setMuted, sfxCorrect, sfxWrong, sfxStart, sfxTick, sfxClick } from '@/lib/sound'
 import { CharAvatar } from '@/components/CharAvatar'
 import { Rich } from '@/components/Rich'
-import { SandwichArt } from '@/components/Art'
+import { SandwichArt, AnalogyArt } from '@/components/Art'
 import { AbstractionFlow } from '@/components/AbstractionFlow'
 import { ReqDialogue } from '@/components/ReqDialogue'
 import { ObjectivesPolygon } from '@/components/ObjectivesPolygon'
@@ -373,6 +373,9 @@ function HostInner() {
           {phase.prompt && <p style={{ margin: 0, whiteSpace: 'pre-line' }}>{phase.prompt}</p>}
 
           {phase.definition && <div className="quote">{phase.definition}</div>}
+          {phase.artList?.map((k) => (
+            <AnalogyArt key={k} kind={k} />
+          ))}
 
           {phase.kind === 'objetivos' && (
             <div className="col" style={{ gap: 10 }}>

@@ -71,7 +71,8 @@ export interface Phase {
     rightNote?: string
   } // kind 'conceito' (diagrama de contraste)
   analogies?: { icon: string; title: string; detail: string }[] // kind 'conceito'
-  art?: 'sandwich' | 'map' // kind 'conceito' (ilustração)
+  art?: 'sandwich' | 'map' | 'goal' | 'airport' | 'delivery' // kind 'conceito' (ilustração)
+  artList?: ('goal' | 'airport' | 'delivery')[] // ilustrações de analogia (qualquer fase)
   bullets?: string[] // kind 'conceito' (etiquetas curtas)
   questions?: string[] // kind 'conceito' (perguntas orientadoras)
   filter?: { ok: boolean; text: string }[] // kind 'conceito' (o que importa × o que não importa)
@@ -567,10 +568,7 @@ export const PHASES: Phase[] = [
       razao: 'Porque quem pede não pode confirmar a própria reserva.',
       suposicao: 'O sistema avisa por e-mail.',
     },
-    analogies: [
-      { icon: '⚽', title: 'Regra de jogo', detail: '“Para marcar gol, a bola cruza a linha — SE tocar a mão, não vale.” Requisito é comportamento + condição.' },
-      { icon: '✈️', title: '“Te busco no aeroporto”', detail: 'Ninguém perguntou o terminal nem a hora. “Você vai estar às 10h” é uma suposição — e é ela que quebra o encontro.' },
-    ],
+    artList: ['goal', 'airport'],
     definition: 'Requisito = comportamento + condição + razão registrada.',
     sources: [
       'Potts et al. (1994): pergunta → resposta → razão.',
@@ -588,12 +586,13 @@ export const PHASES: Phase[] = [
     prompt: '',
     kind: 'pesquisa',
     research: {
-      intro: 'Leia os dois recortes e responda com as suas palavras.',
-      prompt: 'O que um requisito precisa ter para ser discutível (Potts) e verificável (Arora)?',
+      intro: 'Leia os dois trechos e responda com as suas palavras.',
+      prompt:
+        'Segundo Potts, o que é o processo de análise? E, segundo Arora, o que os templates aumentam?',
       sourceLabel: 'Abrir as fontes (Potts + Arora)',
       sourceUrl: '/fonte2',
       minutes: 3,
-      hint: 'Procure: na discussão, o que é obrigatório? E o que permite checar a conformidade?',
+      hint: 'Procure no trecho de Potts a expressão “perguntas e respostas”; no de Arora, a palavra “precisão”.',
     },
     robotThinking: 'Aguardando a pesquisa…',
     robotCorrect: '',
@@ -708,6 +707,7 @@ export const PHASES: Phase[] = [
     prompt:
       'Ordene as etapas para APROVAR uma solicitação.\n\nAnalogia: como um pedido de delivery — “no carrinho” não reserva o estoque; “pago” reserva. Pendente não bloqueia; aprovada bloqueia.',
     kind: 'order',
+    artList: ['delivery'],
     options: [
       { id: 'receber', label: 'Receber o pedido de aprovação' },
       { id: 'consultar', label: 'Consultar reservas aprovadas da mesma data e laboratório' },
@@ -751,21 +751,21 @@ export const PHASES: Phase[] = [
     id: 'a2_chefao',
     act: 'CHEFÃO',
     activity: 5,
-    title: 'Aprovada × pedido “importante”',
+    title: 'Aprovada × novo pedido',
     prompt:
-      'Reserva aprovada 14h–15h no Lab A. Chega um pedido “importante” para 14h30–15h30 no mesmo Lab A.\n\nCuidado com a suposição: ninguém disse que “importante” tem prioridade. O que o sistema deve fazer?',
+      'Reserva APROVADA 14h–15h no Lab A. Chega um pedido de um professor para 14h30–15h30 no mesmo Lab A.\n\nPela regra que você tem hoje, o que o sistema faz?',
     kind: 'single',
     options: [
-      { id: 'cancelar', label: 'Cancelar a reserva aprovada automaticamente' },
-      { id: 'recusar', label: 'Recusar o novo pedido direto' },
-      { id: 'consultar', label: 'Registrar a dúvida e consultar a coordenação' },
-      { id: 'presumir', label: 'Presumir que “importante” sempre vence' },
+      { id: 'aceitar', label: 'Aceita, porque é um professor (mais importante)' },
+      { id: 'recusar', label: 'Recusa, porque a reserva aprovada bloqueia' },
+      { id: 'cancelar', label: 'Cancela a aprovada e aceita a nova' },
+      { id: 'duas', label: 'Aceita as duas no mesmo horário' },
     ],
-    correctIds: ['consultar'],
+    correctIds: ['recusar'],
     explain:
-      'Cancelar sozinho e presumir prioridade são suposições sem pergunta. O seguro é perguntar: “aprovada pode ser cancelada? quem tem prioridade?”',
+      'A regra que temos é: aprovada bloqueia. “Prioridade” e “cancelamento” NÃO foram definidos — se o sistema decidir sozinho, vira suposição. O certo é recusar e registrar a pergunta para a coordenação.',
     robotThinking: 'Decisão difícil…',
-    robotCorrect: 'Perguntei antes de agir.',
+    robotCorrect: 'Apliquei a regra que existe.',
     robotWrong: 'Agi por suposição!',
   },
   {

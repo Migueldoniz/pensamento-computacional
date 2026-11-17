@@ -83,7 +83,7 @@ export default function Fonte2Page({ searchParams }: { searchParams: { room?: st
       <div className="col" style={{ gap: 14, marginTop: 18 }}>
         <RespostaBox
           room={room}
-          prompt="O que um requisito precisa ter para ser **discutível** (Potts) e **verificável** (Arora)?"
+          prompt="Segundo **Potts**, o que é o processo de análise? E, segundo **Arora**, o que os templates aumentam?"
         />
         <Link href={back} className="small">
           ← voltar à sala{room ? ` ${room}` : ''}
