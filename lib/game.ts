@@ -540,7 +540,6 @@ export const PHASES: Phase[] = [
       { name: 'Algoritmo', detail: 'Ordenar as etapas que resolvem o problema.' },
       { name: 'Avaliação', detail: 'Julgar a decisão e reconhecer onde a abstração falha.' },
     ],
-    analogyDelta: ['sandwich'],
     robotThinking: 'Retomando a missão anterior…',
     robotCorrect: '',
     robotWrong: '',
