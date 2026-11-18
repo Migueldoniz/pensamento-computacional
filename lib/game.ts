@@ -572,12 +572,13 @@ export const PHASES: Phase[] = [
     kind: 'conceito',
     dialogue: {
       doc: 'Só a coordenação aprova.',
-      pergunta: 'Quem pode aprovar?',
-      resposta: 'Só a coordenação.',
-      razao: 'Porque quem pede não pode confirmar a própria reserva.',
+      pergunta: 'Uma solicitação pendente já bloqueia o horário?',
+      resposta: 'Não. Só a reserva aprovada bloqueia.',
+      razao: 'Porque duas pessoas podem pedir o mesmo horário — e uma pode desistir.',
       suposicao: 'O sistema avisa por e-mail.',
     },
-    definition: 'Requisito = comportamento + condição + razão registrada.',
+    definition:
+      'Um requisito não nasce pronto: ele é escrito, contestado e revisado — e a razão de cada mudança fica registrada.',
     sources: [
       'Potts et al. (1994): pergunta → resposta → razão.',
       'Arora et al. (2015): o template que permite verificar.',
