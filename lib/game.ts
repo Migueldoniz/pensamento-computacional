@@ -74,6 +74,7 @@ export interface Phase {
   art?: 'sandwich' | 'map' | 'goal' | 'airport' | 'delivery' // kind 'conceito' (ilustração)
   artList?: ('goal' | 'airport' | 'delivery' | 'checklist')[] // ilustrações de analogia (qualquer fase)
   analogyDelta?: ('sandwich' | 'map')[] // analogias da Aula 1 estendidas (v1 → e se…)
+  recap?: { name: string; detail?: string }[] // retomada: conceitos da aula anterior
   bullets?: string[] // kind 'conceito' (etiquetas curtas)
   questions?: string[] // kind 'conceito' (perguntas orientadoras)
   filter?: { ok: boolean; text: string }[] // kind 'conceito' (o que importa × o que não importa)
@@ -529,10 +530,16 @@ export const PHASES: Phase[] = [
     id: 'a2_retomada',
     act: 'RETOMADA',
     activity: 1,
-    title: 'O que ficou da Aula 1',
+    title: 'O que vocês aprenderam na Aula 1',
     prompt:
-      'Na Aula 1, o robô decidia aceitar ou recusar pelo conflito de horário — a versão 1 do plano.\n\nE deixamos uma etapa de fora, de propósito: AUTENTICAR QUEM PEDE. Hoje ela volta — porque quem pede não é quem aprova.\n\nE o sanduíche da Aula 1? Ele volta com uma pergunta nova.',
+      'Na Aula 1, vocês aprenderam a representar e organizar o problema.\n\nE deixamos uma etapa de fora, de propósito: AUTENTICAR QUEM PEDE. Hoje ela volta — porque quem pede não é quem aprova.\n\nA pergunta de hoje é outra: essa representação corresponde ao que as pessoas realmente precisam?',
     kind: 'info',
+    recap: [
+      { name: 'Abstração', detail: 'Escolher o que representar: só os dados que mudam a decisão.' },
+      { name: 'Decomposição', detail: 'Separar responsabilidades: validar não é comparar.' },
+      { name: 'Algoritmo', detail: 'Ordenar as etapas que resolvem o problema.' },
+      { name: 'Avaliação', detail: 'Julgar a decisão e reconhecer onde a abstração falha.' },
+    ],
     analogyDelta: ['sandwich'],
     robotThinking: 'Retomando a missão anterior…',
     robotCorrect: '',

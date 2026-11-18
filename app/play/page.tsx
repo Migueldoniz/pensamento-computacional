@@ -355,6 +355,20 @@ function PlayerInner() {
         </div>
         <h2>{phase.title}</h2>
         {phase.prompt && <p style={{ whiteSpace: 'pre-line' }}>{phase.prompt}</p>}
+        {phase.recap && (
+          <div className="col" style={{ gap: 8 }}>
+            <div className="act">O que ficou da Aula 1</div>
+            {phase.recap.map((r, i) => (
+              <div key={i} style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
+                <span className="pill on" style={{ flex: 'none' }}>{i + 1}</span>
+                <div>
+                  <b>{r.name}</b>
+                  {r.detail && <div className="muted small">{r.detail}</div>}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
 
         {phase.definition && <div className="quote">{phase.definition}</div>}
         {phase.analogyDelta?.map((k) => (
