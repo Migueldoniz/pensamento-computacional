@@ -567,7 +567,8 @@ export const PHASES: Phase[] = [
     act: 'CONCEITO',
     activity: 1,
     title: 'A conversa de requisitos',
-    prompt: 'Um requisito não é uma frase solta: ele nasce de uma conversa — com três peças.',
+    prompt:
+      'Um requisito não é uma frase solta. Primeiro ele é escrito; depois vem a conversa: alguém pergunta, outro responde e a resposta é justificada.',
     kind: 'conceito',
     dialogue: {
       doc: 'Só a coordenação aprova.',

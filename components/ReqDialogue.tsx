@@ -18,8 +18,9 @@ export function ReqDialogue({
   return (
     <div className="col" style={{ gap: 10 }}>
       <div className="ccc">
-        <div className="ccc-tag">① Documentação</div>
+        <div className="ccc-tag">① O requisito</div>
         <div className="ccc-big">“{d.doc}”</div>
+        <div className="small muted">como está escrito</div>
       </div>
 
       {s1 && (
