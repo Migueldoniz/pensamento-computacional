@@ -3,6 +3,10 @@ import { storageMode } from '@/lib/store'
 
 export const dynamic = 'force-dynamic'
 
+/** Diagnóstico: qual armazenamento está ativo. */
 export async function GET() {
-  return NextResponse.json({ storage: storageMode() })
+  return NextResponse.json({
+    mode: storageMode(),
+    vercel: Boolean(process.env.VERCEL),
+  })
 }

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { recordRoom } from '@/lib/client'
 
@@ -8,6 +8,14 @@ export default function Home() {
   const router = useRouter()
   const [code, setCode] = useState('')
   const [busy, setBusy] = useState(false)
+  const [health, setHealth] = useState<{ mode: string; vercel: boolean } | null>(null)
+
+  useEffect(() => {
+    fetch('/api/health')
+      .then((r) => r.json())
+      .then(setHealth)
+      .catch(() => {})
+  }, [])
 
   const create = async (season: '1' | '2' | '3') => {
     setBusy(true)
@@ -62,10 +70,22 @@ export default function Home() {
             <button onClick={join}>Entrar (plateia)</button>
           </div>
 
-          <p className="small muted">
-            Sem configurar nada, as salas são salvas em arquivo local
-            (<span className="mono">.data/rooms.json</span>). No Vercel, use Upstash.
-          </p>
+          {health && health.vercel && health.mode === 'file' && (
+            <div className="bubble" style={{ borderColor: 'var(--bad)', fontSize: 14 }}>
+              ⚠ <strong>Este deploy está sem Upstash.</strong> No Vercel, o arquivo local não persiste —
+              as salas <strong>somem</strong> e aparece “Sala não encontrada”. Configure{' '}
+              <span className="mono">UPSTASH_REDIS_REST_URL</span> e{' '}
+              <span className="mono">UPSTASH_REDIS_REST_TOKEN</span> e faça o <em>redeploy</em>.
+            </div>
+          )}
+          {health && health.mode === 'file' && !health.vercel && (
+            <p className="small muted">
+              💾 Armazenamento local (arquivo). Tudo certo para rodar na sua máquina.
+            </p>
+          )}
+          {health && health.mode === 'upstash' && (
+            <p className="small muted">☁️ Armazenamento Upstash conectado.</p>
+          )}
         </div>
       </div>
     </main>
