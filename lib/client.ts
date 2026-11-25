@@ -11,14 +11,14 @@ export interface RoomSnapshot {
   scores: Record<string, PlayerScore>
   characters: Record<string, string> // charId -> playerId
   players: number // total de participantes na sala
-  season: '1' | '2' // temporada (Aula 1 ou Aula 2)
+  season: '1' | '2' | '3' // temporada (Aula 1, 2 ou 3)
   epoch: number // muda quando o apresentador limpa a sala
   respostas: { playerId: string; name: string; text: string }[]
   deadline: number | null
   serverNow: number
 }
 
-export async function recordRoom(code?: string, season?: '1' | '2'): Promise<{ code: string; token: string }> {
+export async function recordRoom(code?: string, season?: '1' | '2' | '3'): Promise<{ code: string; token: string }> {
   const r = await fetch('/api/room', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },

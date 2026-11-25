@@ -430,11 +430,61 @@ export function ChecklistArt({ size = 360 }: { size?: number }) {
   )
 }
 
+/** 🪜 "Níveis de abstração": problema → algoritmo → programa → execução. */
+export function LevelsArt({ size = 380 }: { size?: number }) {
+  const { accent, muted, line, panel, ok } = ART
+  const levels = [
+    { n: '1', label: 'Problema', q: 'o que é necessário?', color: accent },
+    { n: '2', label: 'Algoritmo', q: 'o que deve fazer?', color: accent },
+    { n: '3', label: 'Programa', q: 'como é feito?', color: muted },
+    { n: '4', label: 'Execução', q: 'o que faz?', color: ok },
+  ]
+  return (
+    <svg
+      viewBox="0 0 380 300"
+      role="img"
+      aria-label="Quatro níveis: problema, algoritmo, programa, execução"
+      style={{ display: 'block', width: '100%', maxWidth: size, height: 'auto', margin: '0 auto' }}
+    >
+      <rect x="8" y="10" width="364" height="280" rx="12" fill={panel} stroke={line} />
+
+      {/* eixo */}
+      <line x1="30" y1="46" x2="30" y2="254" stroke={muted} strokeWidth="2" strokeDasharray="4 4" />
+      <text x="30" y="36" textAnchor="middle" fontSize="8.5" fill={muted}>
+        abstrato
+      </text>
+      <text x="30" y="270" textAnchor="middle" fontSize="8.5" fill={muted}>
+        concreto
+      </text>
+
+      {levels.map((l, i) => {
+        const y = 34 + i * 58
+        return (
+          <g key={l.n}>
+            <rect x="54" y={y} width="300" height="48" rx="10" fill="#1e242e" stroke={l.color} strokeWidth="1.6" />
+            <circle cx="76" cy={y + 24} r="11" fill={l.color} />
+            <text x="76" y={y + 28} textAnchor="middle" fontSize="11" fontWeight="800" fill="#0b1020">
+              {l.n}
+            </text>
+            <text x="96" y={y + 20} fontSize="12" fontWeight="700" fill="#e7eaf0">
+              {l.label}
+            </text>
+            <text x="96" y={y + 36} fontSize="10" fill={muted}>
+              {l.q}
+            </text>
+          </g>
+        )
+      })}
+    </svg>
+  )
+}
+
 /** Renderiza uma analogia pelo nome. */
 export function AnalogyArt({ kind }: { kind: string }) {
   if (kind === 'goal') return <GoalArt />
   if (kind === 'airport') return <AirportArt />
   if (kind === 'delivery') return <DeliveryArt />
   if (kind === 'checklist') return <ChecklistArt />
+  if (kind === 'levels') return <LevelsArt />
   return null
 }

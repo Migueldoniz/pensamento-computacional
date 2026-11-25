@@ -54,7 +54,7 @@ function HostInner() {
   const [respostas, setRespostas] = useState<{ playerId: string; name: string; text: string }[]>([])
   const [totalPlayers, setTotalPlayers] = useState(0)
   const [clearing, setClearing] = useState(false)
-  const [season, setSeason] = useState<'1' | '2'>('1')
+  const [season, setSeason] = useState<'1' | '2' | '3'>('1')
 
   useEffect(() => {
     initSound()

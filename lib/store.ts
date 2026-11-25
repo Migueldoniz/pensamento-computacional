@@ -22,7 +22,7 @@ export interface RoomState {
   respostas: Record<string, Resposta> // playerId -> resposta da pesquisa (pública)
   deadline: number | null // epoch ms do fim do cronômetro da rodada
   token: string
-  season: '1' | '2' // qual temporada (Aula 1 ou Aula 2)
+  season: '1' | '2' | '3' // qual temporada (Aula 1, 2 ou 3)
   epoch?: number // sobe a cada "limpar sala" (força nova escolha de personagem)
   updatedAt: number
 }
@@ -130,7 +130,7 @@ export async function getRoom(code: string): Promise<RoomState | null> {
   return kvGet(keyOf(code))
 }
 
-export async function createRoom(code: string, token: string, season: '1' | '2' = '1'): Promise<RoomState> {
+export async function createRoom(code: string, token: string, season: '1' | '2' | '3' = '1'): Promise<RoomState> {
   const state: RoomState = {
     index: 0,
     revealed: false,

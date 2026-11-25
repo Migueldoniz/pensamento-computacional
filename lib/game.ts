@@ -72,7 +72,7 @@ export interface Phase {
   } // kind 'conceito' (diagrama de contraste)
   analogies?: { icon: string; title: string; detail: string }[] // kind 'conceito'
   art?: 'sandwich' | 'map' | 'goal' | 'airport' | 'delivery' // kind 'conceito' (ilustração)
-  artList?: ('goal' | 'airport' | 'delivery' | 'checklist')[] // ilustrações de analogia (qualquer fase)
+  artList?: ('goal' | 'airport' | 'delivery' | 'checklist' | 'levels')[] // ilustrações de analogia (qualquer fase)
   analogyDelta?: ('sandwich' | 'map')[] // analogias da Aula 1 estendidas (v1 → e se…)
   recap?: { name: string; detail?: string }[] // retomada: conceitos da aula anterior
   bullets?: string[] // kind 'conceito' (etiquetas curtas)
@@ -818,14 +818,239 @@ export const PHASES: Phase[] = [
     robotCorrect: '',
     robotWrong: '',
   },
+
+  // ===================== AULA 3 — NÍVEIS DE ABSTRAÇÃO =====================
+
+  {
+    id: 'a3_retomada',
+    act: 'RETOMADA',
+    activity: 1,
+    title: 'Onde está o plano da Aula 1?',
+    prompt:
+      'Na Aula 1, vocês montaram o plano: receber → validar → selecionar → comparar → decidir.\n\nEsse plano é a MESMA coisa que o código? E que a execução com uma reserva real?\n\nHoje: onde vocês estão entre o problema e a execução?',
+    kind: 'info',
+    robotThinking: 'Localizando o plano…',
+    robotCorrect: '',
+    robotWrong: '',
+  },
+  {
+    id: 'a3_objetivos',
+    act: 'OBJETIVOS',
+    activity: 1,
+    title: 'Níveis de abstração',
+    prompt: '',
+    kind: 'objetivos',
+    flow: [
+      { icon: 'understand', label: 'Entender' },
+      { icon: 'analyze', label: 'Distinguir' },
+      { icon: 'transfer', label: 'Transitar' },
+      { icon: 'plan', label: 'Escolher' },
+      { icon: 'evaluate', label: 'Avaliar' },
+    ],
+    robotThinking: 'Carregando objetivos…',
+    robotCorrect: '',
+    robotWrong: '',
+  },
+  {
+    id: 'a3_conceito',
+    act: 'CONCEITO',
+    activity: 1,
+    title: 'Quatro níveis do mesmo problema',
+    prompt:
+      'O mesmo agendador pode ser descrito em quatro níveis. O que muda é o quanto você decide e o quanto você esconde.',
+    kind: 'conceito',
+    artList: ['levels'],
+    definition:
+      'Nível de abstração = o quanto de decisão você deixa explícito e o quanto esconde.',
+    sources: ['Armoni (2013): hierarquia PGK — problema → algoritmo → programa → execução.'],
+    robotThinking: 'Subindo e descendo níveis…',
+    robotCorrect: '',
+    robotWrong: '',
+  },
+  {
+    id: 'a3_pesquisa',
+    act: 'PESQUISA',
+    activity: 2,
+    title: 'Pesquisa (3 minutos)',
+    prompt: '',
+    kind: 'pesquisa',
+    research: {
+      intro: 'Leia o trecho e responda com as suas palavras.',
+      prompt: 'Quais são os 4 níveis da hierarquia de Armoni (2013) e o que muda de um para o outro?',
+      sourceLabel: 'Abrir a fonte (Armoni, 2013)',
+      sourceUrl: '/fonte3',
+      minutes: 3,
+      hint: 'Procure os quatro nomes: problema, algoritmo, programa, execução.',
+    },
+    robotThinking: 'Aguardando a pesquisa…',
+    robotCorrect: '',
+    robotWrong: '',
+  },
+  {
+    id: 'a3_jogo1',
+    act: 'JOGO 1/3',
+    activity: 3,
+    title: 'Em que nível está?',
+    prompt: '“Precisamos evitar duas aulas na mesma sala.”',
+    kind: 'single',
+    options: [
+      { id: 'problema', label: 'Problema' },
+      { id: 'algoritmo', label: 'Algoritmo' },
+      { id: 'programa', label: 'Programa' },
+      { id: 'execucao', label: 'Execução' },
+    ],
+    correctIds: ['problema'],
+    explain: 'É o nível do PROBLEMA: diz o que é necessário, sem dizer como.',
+    robotThinking: 'Classificando o nível…',
+    robotCorrect: 'Nível identificado.',
+    robotWrong: 'Esse não é o nível certo.',
+  },
+  {
+    id: 'a3_jogo2',
+    act: 'JOGO 2/3',
+    activity: 3,
+    title: 'Em que nível está?',
+    prompt: '“Receber → validar → selecionar → comparar → decidir.”',
+    kind: 'single',
+    options: [
+      { id: 'problema', label: 'Problema' },
+      { id: 'algoritmo', label: 'Algoritmo' },
+      { id: 'programa', label: 'Programa' },
+      { id: 'execucao', label: 'Execução' },
+    ],
+    correctIds: ['algoritmo'],
+    explain: 'É o nível do ALGORITMO: os passos, sem linguagem específica.',
+    robotThinking: 'Classificando o nível…',
+    robotCorrect: 'Passos, sem código.',
+    robotWrong: 'Olhe de novo: há código aqui?',
+  },
+  {
+    id: 'a3_jogo3',
+    act: 'JOGO 3/3',
+    activity: 3,
+    title: 'Em que nível está?',
+    prompt: '“if (novoInicio < fimExistente && novoFim > inicioExistente) return CONFLITO”',
+    kind: 'single',
+    options: [
+      { id: 'problema', label: 'Problema' },
+      { id: 'algoritmo', label: 'Algoritmo' },
+      { id: 'programa', label: 'Programa' },
+      { id: 'execucao', label: 'Execução' },
+    ],
+    correctIds: ['programa'],
+    explain: 'É o nível do PROGRAMA: a lógica já escrita numa linguagem.',
+    robotThinking: 'Classificando o nível…',
+    robotCorrect: 'Isso é código.',
+    robotWrong: 'Tem sintaxe aqui…',
+  },
+  {
+    id: 'a3_simulacao',
+    act: 'SIMULAÇÃO',
+    activity: 3,
+    title: 'Qual nível usar?',
+    prompt:
+      'Você precisa EXPLICAR à coordenação como o sistema decide, sem falar de código. Qual nível usar?',
+    kind: 'single',
+    options: [
+      { id: 'problema', label: 'Problema' },
+      { id: 'algoritmo', label: 'Algoritmo' },
+      { id: 'programa', label: 'Programa' },
+      { id: 'execucao', label: 'Execução' },
+    ],
+    correctIds: ['algoritmo'],
+    explain:
+      'Para explicar a lógica sem código, use o ALGORITMO. Programa seria detalhe demais; problema, de menos.',
+    robotThinking: 'Escolhendo o nível…',
+    robotCorrect: 'Nível adequado ao público.',
+    robotWrong: 'Nível errado para a tarefa.',
+  },
+  {
+    id: 'a3_diagnostico',
+    act: 'DIAGNÓSTICO',
+    activity: 4,
+    title: 'O que é específico do programa?',
+    prompt: 'Ao descer do algoritmo para o programa, o que aparece de novo?',
+    kind: 'multi',
+    options: [
+      { id: 'sintaxe', label: 'Sintaxe da linguagem' },
+      { id: 'tipos', label: 'Tipos de dados' },
+      { id: 'logica', label: 'A lógica de sobreposição' },
+      { id: 'condicoes', label: 'As condições (início < fim)' },
+      { id: 'bibliotecas', label: 'Bibliotecas e funções da linguagem' },
+    ],
+    correctIds: ['sintaxe', 'tipos', 'bibliotecas'],
+    explain:
+      'Sintaxe, tipos e bibliotecas são do PROGRAMA. A lógica e as condições vêm do algoritmo — e permanecem.',
+    robotThinking: 'Comparando os níveis…',
+    robotCorrect: 'Só o que é de programação.',
+    robotWrong: 'Isso também está no algoritmo.',
+  },
+  {
+    id: 'a3_chefao',
+    act: 'CHEFÃO',
+    activity: 5,
+    title: 'O erro de nível',
+    prompt:
+      'A especificação diz: “O sistema deve usar um if em JavaScript para comparar os horários.”\n\nQual é o problema?',
+    kind: 'single',
+    options: [
+      { id: 'ok', label: 'Nenhum: está bem específico' },
+      { id: 'nivel', label: 'Misturou o nível do PROGRAMA no nível do PROBLEMA' },
+      { id: 'falta', label: 'Faltou dizer a cor do botão' },
+      { id: 'exec', label: 'Está no nível da execução' },
+    ],
+    correctIds: ['nivel'],
+    explain:
+      'A especificação deve dizer O QUE é necessário, não COMO implementar. “if em JavaScript” é decisão de programa — e cedo demais.',
+    robotThinking: 'Analisando a especificação…',
+    robotCorrect: 'Nível detectado: misturado.',
+    robotWrong: 'Não é esse o problema.',
+  },
+  {
+    id: 'a3_debrief',
+    act: 'DEBRIEF',
+    activity: 5,
+    title: 'O que vocês acabaram de fazer',
+    prompt: 'O mesmo problema em quatro níveis: problema → algoritmo → programa → execução.',
+    kind: 'debrief',
+    pillars: [
+      { name: 'Problema', detail: 'O que é necessário.' },
+      { name: 'Algoritmo', detail: 'O que deve fazer (passos, sem linguagem).' },
+      { name: 'Programa', detail: 'Como é feito (linguagem, tipos, sintaxe).' },
+      { name: 'Execução', detail: 'O que faz (rodar com dados reais).' },
+    ],
+    quote:
+      '“O nível do objeto apreende o que é popularmente chamado de ‘algoritmo’ — uma solução que não está numa linguagem de programação específica.” (Armoni, 2013, p. 273)',
+    question: 'Em que nível você costuma parar? E qual nível você pula?',
+    sources: ['Armoni (2013) — hierarquia PGK'],
+    robotThinking: 'Consolidando…',
+    robotCorrect: '',
+    robotWrong: '',
+  },
+  {
+    id: 'a3_outro',
+    act: 'ENCERRAMENTO',
+    activity: 5,
+    title: 'Fim da missão',
+    prompt:
+      'Saber em que nível você está — e por quê — é o que separa quem programa de quem projeta.',
+    kind: 'premiacao',
+    sources: ['Armoni (2013)'],
+    robotThinking: 'Missão cumprida.',
+    robotCorrect: '',
+    robotWrong: '',
+  },
 ]
 
 /** Onde começa a Aula 2 (índice na lista combinada). */
 export const SEASON2_START = PHASES.findIndex((p) => p.id === 'a2_retomada')
+export const SEASON3_START = PHASES.findIndex((p) => p.id === 'a3_retomada')
 
-/** Fases de uma temporada: '1' → Aula 1, '2' → Aula 2. */
-export function phasesFor(season: '1' | '2' | string): Phase[] {
-  return season === '2' ? PHASES.slice(SEASON2_START) : PHASES.slice(0, SEASON2_START)
+/** Fases de uma temporada: '1' → Aula 1, '2' → Aula 2, '3' → Aula 3. */
+export function phasesFor(season: '1' | '2' | '3' | string): Phase[] {
+  if (season === '3') return PHASES.slice(SEASON3_START)
+  if (season === '2') return PHASES.slice(SEASON2_START, SEASON3_START)
+  return PHASES.slice(0, SEASON2_START)
 }
 
 /** Contagem por opção para os desafios de escolha. */

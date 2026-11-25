@@ -6,7 +6,7 @@ export const dynamic = 'force-dynamic'
 export async function POST(req: Request) {
   const body = await req.json().catch(() => ({} as any))
   const code = String(body?.code || genCode()).toUpperCase().slice(0, 8)
-  const season = body?.season === '2' ? '2' : '1'
+  const season = body?.season === '3' ? '3' : body?.season === '2' ? '2' : '1'
   const existing = await getRoom(code)
   if (existing) return NextResponse.json({ code, token: existing.token, season: existing.season || '1' })
   const token = genToken()

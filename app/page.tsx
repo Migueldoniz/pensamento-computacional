@@ -9,7 +9,7 @@ export default function Home() {
   const [code, setCode] = useState('')
   const [busy, setBusy] = useState(false)
 
-  const create = async (season: '1' | '2') => {
+  const create = async (season: '1' | '2' | '3') => {
     setBusy(true)
     const r = await recordRoom(undefined, season)
     try {
@@ -43,6 +43,9 @@ export default function Home() {
           </button>
           <button className="primary" onClick={() => create('2')} disabled={busy}>
             {busy ? 'Criando…' : 'Criar sala · Aula 2 (Requisitos)'}
+          </button>
+          <button className="primary" onClick={() => create('3')} disabled={busy}>
+            {busy ? 'Criando…' : 'Criar sala · Aula 3 (Níveis de abstração)'}
           </button>
 
           <div className="row">

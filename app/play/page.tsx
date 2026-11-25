@@ -54,7 +54,7 @@ function PlayerInner() {
   const [offset, setOffset] = useState(0)
   const [scores, setScores] = useState<Record<string, PlayerScore>>({})
   const [takenChars, setTakenChars] = useState<Record<string, string>>({})
-  const [season, setSeason] = useState<'1' | '2'>('1')
+  const [season, setSeason] = useState<'1' | '2' | '3'>('1')
 
   const [sent, setSent] = useState<string | null>(null)
   const [multi, setMulti] = useState<string[]>([])
