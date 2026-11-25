@@ -39,7 +39,7 @@ function upstash(): { url: string; token: string } | null {
     [process.env.UPSTASH_REDIS_REST_URL, process.env.UPSTASH_REDIS_REST_TOKEN],
     [process.env.KV_REST_API_URL, process.env.KV_REST_API_TOKEN],
   ]
-  for (const [url, token] of known) if (url && token) return { url, token }
+  for (const [url, token] of known) if (url && token) return { url: url.replace(/\/+$/, ''), token }
 
   // Varredura: qualquer variável que termine em REST_API_URL, com o token
   // correspondente (REST_API_TOKEN). Cobre nomes prefixados por integrações.
