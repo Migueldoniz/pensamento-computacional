@@ -862,6 +862,29 @@ export const PHASES: Phase[] = [
     artList: ['levels'],
     definition:
       'Nível de abstração = o que você decide em cada camada e o que esconde atrás da interface.',
+    concept: [
+      {
+        label: 'Problema',
+        detail:
+          'O que é necessário. Ex.: “evitar duas aulas na mesma sala”; “a coordenação precisa saber quem pediu”.',
+      },
+      {
+        label: 'Algoritmo',
+        detail:
+          'O que deve fazer. Ex.: receber → validar → selecionar → comparar → decidir; “há conflito se novo_início < fim_existente E novo_fim > início_existente”.',
+      },
+      {
+        label: 'Programa',
+        detail:
+          'Como é feito. Ex.: uma função que recebe duas datas e devolve verdadeiro/falso — com tipos, sintaxe e bibliotecas.',
+      },
+      {
+        label: 'Execução',
+        detail:
+          'O que faz. Ex.: rodar 14h–15h + 14h30–15h30 → recusa; 15h–16h → aceita.',
+      },
+    ],
+    note: 'A interface é o que uma camada precisa saber da outra. O resto fica escondido.',
     sources: [
       'Wing (2008): o processo de abstração introduz camadas; interfaces bem definidas permitem construir sistemas complexos.',
       'Armoni (2013): hierarquia PGK — problema → algoritmo → programa → execução.',
@@ -947,6 +970,44 @@ export const PHASES: Phase[] = [
     robotThinking: 'Classificando o nível…',
     robotCorrect: 'Isso é código.',
     robotWrong: 'Tem sintaxe aqui…',
+  },
+  {
+    id: 'a3_jogo4',
+    act: 'JOGO 4/5',
+    activity: 3,
+    title: 'Em que nível está?',
+    prompt: '“Rodei o sistema com 14h–15h e 14h30–15h30: ele recusou e mostrou ‘conflito’.”',
+    kind: 'single',
+    options: [
+      { id: 'problema', label: 'Problema' },
+      { id: 'algoritmo', label: 'Algoritmo' },
+      { id: 'programa', label: 'Programa' },
+      { id: 'execucao', label: 'Execução' },
+    ],
+    correctIds: ['execucao'],
+    explain: 'É o nível da EXECUÇÃO: um caso concreto rodado, com entrada e saída.',
+    robotThinking: 'Classificando o nível…',
+    robotCorrect: 'Um caso concreto.',
+    robotWrong: 'Isso é um caso rodado…',
+  },
+  {
+    id: 'a3_jogo5',
+    act: 'JOGO 5/5',
+    activity: 3,
+    title: 'Em que nível está?',
+    prompt: '“A coordenação precisa conseguir cancelar uma reserva já aprovada.”',
+    kind: 'single',
+    options: [
+      { id: 'problema', label: 'Problema' },
+      { id: 'algoritmo', label: 'Algoritmo' },
+      { id: 'programa', label: 'Programa' },
+      { id: 'execucao', label: 'Execução' },
+    ],
+    correctIds: ['problema'],
+    explain: 'É o nível do PROBLEMA: uma necessidade, ainda sem dizer como fazer.',
+    robotThinking: 'Classificando o nível…',
+    robotCorrect: 'Necessidade, não solução.',
+    robotWrong: 'Isso ainda não diz como.',
   },
   {
     id: 'a3_simulacao',
